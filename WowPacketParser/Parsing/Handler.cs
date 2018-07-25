@@ -112,10 +112,14 @@ namespace WowPacketParser.Parsing
             Action<Packet> handler;
             var hasHandler = VersionHandlers.TryGetValue(key, out handler);
 
-            if (!hasHandler && ClientVersion.FallbackVersionDefiningBuild != ClientVersionBuild.Zero)
+            ClientVersionBuild tmpFallback = ClientVersion.VersionDefiningBuild;
+            for (int i = 0; i < 3 && !hasHandler; i++)
             {
-                key = new KeyValuePair<ClientVersionBuild, Opcode>(ClientVersion.FallbackVersionDefiningBuild, opcode);
+                // If no handler was found, try to find a handler
+                key = new KeyValuePair<ClientVersionBuild, Opcode>(tmpFallback, opcode);
                 hasHandler = VersionHandlers.TryGetValue(key, out handler);
+                if (!hasHandler)
+                    tmpFallback = ClientVersion.FallbackVersionDefiningBuild(tmpFallback);
             }
 
             if (!hasHandler)

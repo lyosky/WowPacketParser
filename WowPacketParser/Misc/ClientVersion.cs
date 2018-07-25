@@ -467,19 +467,16 @@ namespace WowPacketParser.Misc
             }
         }
 
-        public static ClientVersionBuild FallbackVersionDefiningBuild
+        public static ClientVersionBuild FallbackVersionDefiningBuild(ClientVersionBuild definingbuild)
         {
-            get
+            switch (definingbuild)
             {
-                switch (VersionDefiningBuild)
-                {
-                    case ClientVersionBuild.V7_0_3_22248:
-                        return ClientVersionBuild.V6_0_2_19033;
-                    case ClientVersionBuild.V8_0_1_27101:
-                        return ClientVersionBuild.V7_0_3_22248;
-                    default:
-                        return ClientVersionBuild.Zero;
-                }
+                case ClientVersionBuild.V7_0_3_22248:
+                    return ClientVersionBuild.V6_0_2_19033;
+                case ClientVersionBuild.V8_0_1_27101:
+                    return ClientVersionBuild.V7_0_3_22248;
+                default:
+                    return ClientVersionBuild.Zero;
             }
         }
 
@@ -529,18 +526,22 @@ namespace WowPacketParser.Misc
             Handler.ResetHandlers();
             UpdateFields.ResetUFDictionaries();
 
-            if (FallbackVersionDefiningBuild != ClientVersionBuild.Zero)
+            ClientVersionBuild tmpFallback = FallbackVersionDefiningBuild(VersionDefiningBuild);
+            for (int i = 0; i < 2; i++)
             {
+                if (tmpFallback == ClientVersionBuild.Zero)
+                    break;
                 try
                 {
-                    var asm = Assembly.Load($"WowPacketParserModule.{FallbackVersionDefiningBuild}");
-                    Trace.WriteLine($"Loading module WowPacketParserModule.{FallbackVersionDefiningBuild}.dll (fallback)");
+                    var asm = Assembly.Load($"WowPacketParserModule.{tmpFallback}");
+                    Trace.WriteLine($"Loading module WowPacketParserModule.{tmpFallback}.dll (fallback)");
 
-                    Handler.LoadHandlers(asm, FallbackVersionDefiningBuild);
+                    Handler.LoadHandlers(asm, tmpFallback);
                 }
                 catch (FileNotFoundException)
                 {
                 }
+                tmpFallback = FallbackVersionDefiningBuild(tmpFallback);
             }
 
             try
