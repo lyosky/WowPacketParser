@@ -222,6 +222,10 @@ namespace WowPacketParser.Misc
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V7_3_5_26822, new DateTime(2018, 06, 12)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V7_3_5_26899, new DateTime(2018, 06, 22)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V7_3_5_26972, new DateTime(2018, 06, 29)),
+
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_0_1_27101, new DateTime(2018, 07, 17)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_0_1_27144, new DateTime(2018, 07, 20)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_0_1_27165, new DateTime(2018, 07, 25)),
         };
 
         private static ClientType _expansion;
@@ -449,6 +453,10 @@ namespace WowPacketParser.Misc
                     case ClientVersionBuild.V7_3_5_26899:
                     case ClientVersionBuild.V7_3_5_26972:
                         return ClientVersionBuild.V7_0_3_22248;
+                    case ClientVersionBuild.V8_0_1_27101:
+                    case ClientVersionBuild.V8_0_1_27144:
+                    case ClientVersionBuild.V8_0_1_27165:
+                        return ClientVersionBuild.V8_0_1_27101;
                     case ClientVersionBuild.BattleNetV37165:
                         return ClientVersionBuild.BattleNetV37165;
                     case ClientVersionBuild.Zero:
@@ -467,6 +475,8 @@ namespace WowPacketParser.Misc
                 {
                     case ClientVersionBuild.V7_0_3_22248:
                         return ClientVersionBuild.V6_0_2_19033;
+                    case ClientVersionBuild.V8_0_1_27101:
+                        return ClientVersionBuild.V7_0_3_22248;
                     default:
                         return ClientVersionBuild.Zero;
                 }
@@ -481,6 +491,8 @@ namespace WowPacketParser.Misc
 
         private static ClientType GetExpansion(ClientVersionBuild build)
         {
+            if (build >= ClientVersionBuild.V8_0_1_27101)
+                return ClientType.BattleForAzeroth;
             if (build >= ClientVersionBuild.V7_0_3_22248)
                 return ClientType.Legion;
             if (build >= ClientVersionBuild.V6_0_2_19033)
