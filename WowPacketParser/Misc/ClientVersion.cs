@@ -527,10 +527,9 @@ namespace WowPacketParser.Misc
             UpdateFields.ResetUFDictionaries();
 
             ClientVersionBuild tmpFallback = FallbackVersionDefiningBuild(VersionDefiningBuild);
-            for (int i = 0; i < 2; i++)
+
+            while (tmpFallback != ClientVersionBuild.Zero)
             {
-                if (tmpFallback == ClientVersionBuild.Zero)
-                    break;
                 try
                 {
                     var asm = Assembly.Load($"WowPacketParserModule.{tmpFallback}");
