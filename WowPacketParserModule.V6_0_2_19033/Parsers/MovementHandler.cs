@@ -374,7 +374,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
                 ActivePhases.Add(id);
             }
 
-            if (DBC.Phases.Any())
+            if (Settings.UseDBC && DBC.Phases.Any())
             {
                 foreach (var phaseGroup in DBC.GetPhaseGroups(ActivePhases))
                     packet.WriteLine($"PhaseGroup: { phaseGroup } Phases: { string.Join(" - ", DBC.Phases[phaseGroup]) }");
