@@ -119,6 +119,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
         }
 
+        [Parser(Opcode.SMSG_SPELL_START)]
+        public static void HandleSpellStart(Packet packet)
+        {
+            ReadSpellCastData(packet, "Cast");
+        }
+
         [Parser(Opcode.SMSG_SPELL_GO)]
         public static void HandleSpellGo(Packet packet)
         {
