@@ -41,5 +41,94 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             ReadTalentInfoUpdate(packet, "Info");
         }
+
+        public static void ReadSpellCastData(Packet packet, params object[] idx)
+        {
+            packet.ReadPackedGuid128("CasterGUID", idx);
+            packet.ReadPackedGuid128("CasterUnit", idx);
+
+            packet.ReadPackedGuid128("CastID", idx);
+            packet.ReadPackedGuid128("OriginalCastID", idx);
+
+            var spellID = packet.ReadUInt32<SpellId>("SpellID", idx);
+            packet.ReadUInt32("SpellXSpellVisualID", idx);
+
+            packet.ReadUInt32("CastFlags", idx);
+            packet.ReadUInt32("CastFlagsEx", idx);
+            packet.ReadInt32("CastTime", idx);
+
+            V6_0_2_19033.Parsers.SpellHandler.ReadMissileTrajectoryResult(packet, idx, "MissileTrajectory");
+
+            packet.ReadUInt32("Ammo.DisplayID", idx);
+
+            packet.ReadByte("DestLocSpellCastIndex", idx);
+
+            V6_0_2_19033.Parsers.SpellHandler.ReadCreatureImmunities(packet, idx, "Immunities");
+
+            V6_0_2_19033.Parsers.SpellHandler.ReadSpellHealPrediction(packet, idx, "Predict");
+
+            packet.ResetBitReader();
+
+            var hitTargetsCount = packet.ReadBits("HitTargetsCount", 16, idx);
+            var missTargetsCount = packet.ReadBits("MissTargetsCount", 16, idx);
+            var missStatusCount = packet.ReadBits("MissStatusCount", 16, idx);
+            packet.ResetBitReader();
+            var remainingPowerCount = packet.ReadByte("RemainingPowerCount", idx);
+
+            var hasRuneData = packet.ReadBit("HasRuneData", idx);
+            var targetPointsCount = packet.ReadBits("TargetPointsCount", 16, idx);
+
+            for (var i = 0; i < missStatusCount; ++i)
+                V6_0_2_19033.Parsers.SpellHandler.ReadSpellMissStatus(packet, idx, "MissStatus", i);
+
+            V7_0_3_22248.Parsers.SpellHandler.ReadSpellTargetData(packet, spellID, idx, "Target");
+
+            for (var i = 0; i < hitTargetsCount; ++i)
+                packet.ReadPackedGuid128("HitTarget", idx, i);
+
+            for (var i = 0; i < missTargetsCount; ++i)
+                packet.ReadPackedGuid128("MissTarget", idx, i);
+
+            for (var i = 0; i < remainingPowerCount; ++i)
+                V6_0_2_19033.Parsers.SpellHandler.ReadSpellPowerData(packet, idx, "RemainingPower", i);
+
+            if (hasRuneData)
+                V7_0_3_22248.Parsers.SpellHandler.ReadRuneData(packet, idx, "RemainingRunes");
+
+            for (var i = 0; i < targetPointsCount; ++i)
+                V6_0_2_19033.Parsers.SpellHandler.ReadLocation(packet, idx, "TargetPoints", i);
+        }
+
+        public static void ReadSpellCastLogData(Packet packet, params object[] idx)
+        {
+            packet.ReadInt64("Health", idx);
+            packet.ReadInt32("AttackPower", idx);
+            packet.ReadInt32("SpellPower", idx);
+            packet.ReadInt32("UnkInt32_801", idx);
+
+            packet.ResetBitReader();
+
+            var spellLogPowerDataCount = packet.ReadBits("SpellLogPowerData", 9, idx);
+
+            // SpellLogPowerData
+            for (var i = 0; i < spellLogPowerDataCount; ++i)
+            {
+                packet.ReadInt32("PowerType", idx, i);
+                packet.ReadInt32("Amount", idx, i);
+                packet.ReadInt32("Cost", idx, i);
+            }
+        }
+
+        [Parser(Opcode.SMSG_SPELL_GO)]
+        public static void HandleSpellGo(Packet packet)
+        {
+            ReadSpellCastData(packet, "Cast");
+
+            packet.ResetBitReader();
+
+            var hasLogData = packet.ReadBit();
+            if (hasLogData)
+                ReadSpellCastLogData(packet, "LogData");
+        }
     }
 }
