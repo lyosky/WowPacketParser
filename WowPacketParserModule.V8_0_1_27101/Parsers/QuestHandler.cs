@@ -10,6 +10,30 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 {
     public static class QuestHandler
     {
+        public static void ReadUnkQuestRewards(Packet packet, params object[] idx)
+        {
+            packet.ReadUInt32("UnkUint32_10", idx);
+            packet.ReadUInt32("UnkUint32_11", idx);
+            packet.ReadUInt32("UnkUint32_12", idx);
+
+            packet.ResetBitReader();
+
+            bool unkBit = packet.ReadBit("UnkBit", idx);
+
+            if (unkBit)
+            {
+                packet.ReadByte("UnkByte", idx);
+                int count = packet.ReadInt32("UnkUint32_9", idx);
+
+                for (var j = 0; j < count; ++j)
+                    packet.ReadUInt32("UnkUint32_13", idx, j);
+
+                int length = packet.ReadInt32();
+                packet.ReadWoWString("UnkString", length, idx);
+            }
+            packet.ReadUInt32("UnkUint32_15", idx);
+        }
+
         public static void ReadQuestRewards(Packet packet, params object[] idx)
         {
             packet.ReadUInt32("ChoiceItemCount", idx);
@@ -54,26 +78,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             for (var i = 0; i < 6; ++i)
             {
-                packet.ReadUInt32("UnkUint32_10", idx, i);
-                packet.ReadUInt32("UnkUint32_11", idx, i);
-                packet.ReadUInt32("UnkUint32_12", idx, i);
-
-                packet.ResetBitReader();
-
-                bool unkBit = packet.ReadBit("UnkBit", idx, i);
-
-                if (unkBit)
-                {
-                    packet.ReadByte("UnkByte", idx, i);
-                    int count = packet.ReadInt32("UnkUint32_9", idx, i);
-
-                    for (var j = 0; j < count; ++j)
-                        packet.ReadUInt32("UnkUint32_13", idx, i, j);
-
-                    int length = packet.ReadInt32();
-                    packet.ReadWoWString("UnkString", length, idx, i);
-                }
-                packet.ReadUInt32("UnkUint32_15", idx, i);
+                ReadUnkQuestRewards(packet, i);
             }
 
             packet.ResetBitReader();
@@ -370,6 +375,51 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
 
             Storage.QuestTemplates.Add(quest, packet.TimeSpan);
+        }
+
+        [Parser(Opcode.SMSG_QUERY_QUEST_REWARD_RESPONSE)]
+        public static void HandleQueryQuestRewardResponse(Packet packet)
+        {
+            packet.ReadInt32("QuestId");
+            packet.ReadInt32("QuestRewardId");
+
+            var itemCount = packet.ReadInt32("ItemCount");
+            int currencyCount = packet.ReadInt32("CurrencyCount");
+
+            packet.ReadInt64("MoneyReward");
+            var unkCount = packet.ReadInt32("UnkCount801");
+
+            for (int i = 0; i < currencyCount; i++)
+            {
+                packet.ReadInt32("CurrencyID", i);
+                packet.ReadInt32("Amount", i);
+            }
+
+            for (var i = 0; i < itemCount; ++i)
+            {
+                V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, i);
+                packet.ReadInt32("Quantity", i);
+            }
+
+            for (var i = 0; i < unkCount; ++i)
+            {
+                var unk2Count = packet.ReadInt32("Unk1", i);
+                packet.ReadInt32("Unk2", i);
+                var unk3Count = packet.ReadUInt64("Unk2Count", i);
+
+                for (ulong z = 0; z < unk3Count; ++z)
+                {
+                    packet.ReadInt32("Unk3", i, z);
+                    packet.ReadInt32("Unk4", i, z);
+                }
+                packet.ReadBit("UnkBit", i);
+
+                for (int z = 0; z < unk2Count; ++z)
+                {
+                    ReadUnkQuestRewards(packet, z);
+                    packet.ReadInt32("Unk5");
+                }
+            }
         }
     }
 }
