@@ -53,9 +53,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var spellID = packet.ReadUInt32<SpellId>("SpellID", idx);
             packet.ReadUInt32("SpellXSpellVisualID", idx);
 
-            packet.ReadUInt32("CastFlags", idx);
+            packet.ReadUInt32("CastFlags", idx); // all three are signed in client but we use them as unsigned for a while, wotevs
             packet.ReadUInt32("CastFlagsEx", idx);
-            packet.ReadInt32("CastTime", idx);
+            packet.ReadUInt32("CastTime", idx);
 
             V6_0_2_19033.Parsers.SpellHandler.ReadMissileTrajectoryResult(packet, idx, "MissileTrajectory");
 
