@@ -45,6 +45,7 @@
     <Compile Include="Enums\UpdateFields.cs" />
     <Compile Include="Parsers\CharacterHandler.cs" />
     <Compile Include="Parsers\CombatLogHandler.cs" />
+    <Compile Include="Parsers\CreatureHandler.cs" />
     <Compile Include="Parsers\MiscellaneousHandler.cs" />
     <Compile Include="Parsers\QuestHandler.cs" />
     <Compile Include="Parsers\SpellHandler.cs" />
