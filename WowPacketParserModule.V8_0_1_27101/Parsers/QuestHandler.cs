@@ -421,5 +421,14 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 }
             }
         }
+
+        [Parser(Opcode.CMSG_QUEST_POI_QUERY)]
+        public static void HandleQuestPOIQuery(Packet packet)
+        {
+            packet.ReadUInt32("MissingQuestCount");
+
+            for (var i = 0; i < 100; i++)
+                packet.ReadInt32<QuestId>("MissingQuestPOIs", i);
+        }
     }
 }
