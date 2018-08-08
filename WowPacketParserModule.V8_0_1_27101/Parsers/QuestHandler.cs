@@ -430,5 +430,60 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             for (var i = 0; i < 100; i++)
                 packet.ReadInt32<QuestId>("MissingQuestPOIs", i);
         }
+
+        [Parser(Opcode.SMSG_QUEST_POI_QUERY_RESPONSE)]
+        public static void HandleQuestPoiQueryResponse(Packet packet)
+        {
+            packet.ReadUInt32("NumPOIs");
+            int questPOIData = packet.ReadInt32("QuestPOIData");
+
+            for (int i = 0; i < questPOIData; ++i)
+            {
+                int questId = packet.ReadInt32("QuestID", i);
+
+                int questPOIBlobData = packet.ReadInt32("QuestPOIBlobData", i);
+
+                for (int j = 0; j < questPOIBlobData; ++j)
+                {
+                    QuestPOI questPoi = new QuestPOI
+                    {
+                        QuestID = questId,
+                        ID = j,
+                        BlobIndex = packet.ReadInt32("BlobIndex", i, j),
+                        ObjectiveIndex = packet.ReadInt32("ObjectiveIndex", i, j),
+                        QuestObjectiveID = packet.ReadInt32("QuestObjectiveID", i, j),
+                        QuestObjectID = packet.ReadInt32("QuestObjectID", i, j),
+                        MapID = packet.ReadInt32("MapID", i, j),
+                        WorldMapAreaId = packet.ReadInt32("WorldMapAreaID", i, j),
+                        // Floor was dropped
+                        Priority = packet.ReadInt32("Priority", i, j),
+                        Flags = packet.ReadInt32("Flags", i, j),
+                        WorldEffectID = packet.ReadInt32("WorldEffectID", i, j),
+                        PlayerConditionID = packet.ReadInt32("PlayerConditionID", i, j),
+                    };
+
+                    questPoi.WoDUnk1 = packet.ReadInt32("WoDUnk1", i, j);
+
+                    int questPOIBlobPoint = packet.ReadInt32("QuestPOIBlobPoint", i, j);
+                    for (int k = 0; k < questPOIBlobPoint; ++k)
+                    {
+                        QuestPOIPoint questPoiPoint = new QuestPOIPoint
+                        {
+                            QuestID = questId,
+                            Idx1 = j,
+                            Idx2 = k,
+                            X = packet.ReadInt32("X", i, j, k),
+                            Y = packet.ReadInt32("Y", i, j, k)
+                        };
+                        Storage.QuestPOIPoints.Add(questPoiPoint, packet.TimeSpan);
+                    }
+
+                    packet.ResetBitReader();
+                    questPoi.AlwaysAllowMergingBlobs = packet.ReadBit("AlwaysAllowMergingBlobs", i, j);
+
+                    Storage.QuestPOIs.Add(questPoi, packet.TimeSpan);
+                }
+            }
+        }
     }
 }
