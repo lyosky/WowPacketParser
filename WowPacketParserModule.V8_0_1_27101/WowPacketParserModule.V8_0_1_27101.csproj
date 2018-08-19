@@ -44,6 +44,7 @@
     <Compile Include="Enums\SplineFlag.cs" />
     <Compile Include="Enums\UpdateFields.cs" />
     <Compile Include="Parsers\CharacterHandler.cs" />
+    <Compile Include="Parsers\ChatHandler.cs" />
     <Compile Include="Parsers\CombatLogHandler.cs" />
     <Compile Include="Parsers\CreatureHandler.cs" />
     <Compile Include="Parsers\MiscellaneousHandler.cs" />
