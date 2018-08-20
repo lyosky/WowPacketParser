@@ -506,5 +506,64 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadBit("UnkBit", i);
             }
         }
+
+        [Parser(Opcode.SMSG_QUEST_GIVER_OFFER_REWARD_MESSAGE)]
+        public static void QuestGiverOfferReward(Packet packet)
+        {
+            packet.ReadPackedGuid128("QuestGiverGUID");
+
+            packet.ReadInt32("QuestGiverCreatureID");
+            int id = packet.ReadInt32("QuestID");
+
+            QuestOfferReward questOfferReward = new QuestOfferReward
+            {
+                ID = (uint)id
+            };
+
+            for (int i = 0; i < 2; i++)
+                packet.ReadInt32("QuestFlags", i);
+
+            packet.ReadInt32("SuggestedPartyMembers");
+
+            int emotesCount = packet.ReadInt32("EmotesCount");
+
+            // QuestDescEmote
+            questOfferReward.Emote = new uint?[] { 0, 0, 0, 0 };
+            questOfferReward.EmoteDelay = new uint?[] { 0, 0, 0, 0 };
+            for (int i = 0; i < emotesCount; i++)
+            {
+                questOfferReward.Emote[i] = (uint)packet.ReadInt32("Type");
+                questOfferReward.EmoteDelay[i] = packet.ReadUInt32("Delay");
+            }
+
+            packet.ResetBitReader();
+
+            packet.ReadBit("AutoLaunched");
+
+            ReadQuestRewards(packet, "QuestRewards");
+
+            packet.ReadInt32("QuestPackageID");
+            packet.ReadInt32("PortraitGiver");
+            packet.ReadInt32("801_UnkInt32");
+            packet.ReadInt32("PortraitTurnIn");
+
+            packet.ResetBitReader();
+
+            uint questTitleLen = packet.ReadBits(9);
+            uint rewardTextLen = packet.ReadBits(12);
+            uint portraitGiverTextLen = packet.ReadBits(10);
+            uint portraitGiverNameLen = packet.ReadBits(8);
+            uint portraitTurnInTextLen = packet.ReadBits(10);
+            uint portraitTurnInNameLen = packet.ReadBits(8);
+
+            packet.ReadWoWString("QuestTitle", questTitleLen);
+            questOfferReward.RewardText = packet.ReadWoWString("RewardText", rewardTextLen);
+            packet.ReadWoWString("PortraitGiverText", portraitGiverTextLen);
+            packet.ReadWoWString("PortraitGiverName", portraitGiverNameLen);
+            packet.ReadWoWString("PortraitTurnInText", portraitTurnInTextLen);
+            packet.ReadWoWString("PortraitTurnInName", portraitTurnInNameLen);
+
+            Storage.QuestOfferRewards.Add(questOfferReward, packet.TimeSpan);
+        }
     }
 }
