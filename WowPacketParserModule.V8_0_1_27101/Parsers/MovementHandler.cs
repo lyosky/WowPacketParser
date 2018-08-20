@@ -75,6 +75,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 case 3:
                     packet.ReadSingle("FaceDirection", indexes);
                     break;
+                default:
+                    break;
             }
 
             Vector3 endpos = new Vector3();
