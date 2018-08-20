@@ -490,5 +490,21 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 }
             }
         }
+
+        [Parser(Opcode.SMSG_QUEST_SPAWN_TRACKING_UPDATE)]
+        public static void HandleQuestSpawnTrackingUpdate(Packet packet)
+        {
+            int count = packet.ReadInt32();
+
+            for (var i = 0; i < count; i++)
+            {
+                packet.ReadUInt32("UnkUInt32_1", i);
+                packet.ReadUInt32("Entry", i);
+
+                packet.ResetBitReader();
+
+                packet.ReadBit("UnkBit", i);
+            }
+        }
     }
 }
