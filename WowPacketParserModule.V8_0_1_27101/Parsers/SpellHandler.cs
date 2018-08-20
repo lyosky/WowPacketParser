@@ -85,8 +85,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var hitTargetsCount = packet.ReadBits("HitTargetsCount", 16, idx);
             var missTargetsCount = packet.ReadBits("MissTargetsCount", 16, idx);
             var missStatusCount = packet.ReadBits("MissStatusCount", 16, idx);
-            packet.ResetBitReader();
-            var remainingPowerCount = packet.ReadByte("RemainingPowerCount", idx);
+            var remainingPowerCount = packet.ReadBits("RemainingPowerCount", 9, idx);
 
             var hasRuneData = packet.ReadBit("HasRuneData", idx);
             var targetPointsCount = packet.ReadBits("TargetPointsCount", 16, idx);
