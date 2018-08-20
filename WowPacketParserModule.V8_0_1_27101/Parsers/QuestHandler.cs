@@ -10,28 +10,33 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 {
     public static class QuestHandler
     {
-        public static void ReadUnkQuestRewards(Packet packet, params object[] idx)
+        public static void ReadQuestRewardItemChoice(Packet packet, params object[] idx)
         {
-            packet.ReadUInt32("UnkUint32_10", idx);
+            packet.ReadUInt32("ItemID", idx);
             packet.ReadUInt32("UnkUint32_11", idx);
             packet.ReadUInt32("UnkUint32_12", idx);
 
             packet.ResetBitReader();
 
-            bool unkBit = packet.ReadBit("UnkBit", idx);
+            bool hasBonusData = packet.ReadBit("HasItemBonusData", idx);
+            bool hasString = packet.ReadBit("HasUnkString", idx);
 
-            if (unkBit)
+            if (hasBonusData)
             {
-                packet.ReadByte("UnkByte", idx);
-                int count = packet.ReadInt32("UnkUint32_9", idx);
+                packet.ReadByte("Context", idx);
+                int count = packet.ReadInt32("BonusIdCount", idx);
 
                 for (var j = 0; j < count; ++j)
-                    packet.ReadUInt32("UnkUint32_13", idx, j);
+                    packet.ReadUInt32("BonusId", idx, j);
+            }
 
+            if (hasString)
+            {
                 int length = packet.ReadInt32();
                 packet.ReadWoWString("UnkString", length, idx);
             }
-            packet.ReadUInt32("UnkUint32_15", idx);
+
+            packet.ReadUInt32("Quantity", idx);
         }
 
         public static void ReadQuestRewards(Packet packet, params object[] idx)
@@ -78,7 +83,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             for (var i = 0; i < 6; ++i)
             {
-                ReadUnkQuestRewards(packet, i);
+                ReadQuestRewardItemChoice(packet, "QuestRewards", "ItemChoiceData", i);
             }
 
             packet.ResetBitReader();
@@ -145,7 +150,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadBit("StartCheat");
             packet.ReadBit("AutoLaunched");
 
-            ReadQuestRewards(packet);
+            ReadQuestRewards(packet, "QuestRewards");
 
             packet.ReadWoWString("QuestTitle", questTitleLen);
             packet.ReadWoWString("DescriptionText", descriptionTextLen);
@@ -416,7 +421,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
                 for (int z = 0; z < unk2Count; ++z)
                 {
-                    ReadUnkQuestRewards(packet, z);
+                    ReadQuestRewardItemChoice(packet, z);
                     packet.ReadInt32("Unk5");
                 }
             }
