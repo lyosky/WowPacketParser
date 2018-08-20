@@ -51,12 +51,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
 
             packet.ReadUInt32("RewardMoney", idx);
-            packet.ReadUInt32("UnkUint32_2", idx);
-            packet.ReadUInt64("UnkUint64_1", idx);
-            packet.ReadUInt32("UnkUint32_3", idx);
-            packet.ReadUInt32("UnkUint32_4", idx);
-            packet.ReadUInt32("UnkUint32_5", idx);
-            packet.ReadUInt32("UnkUint32_6", idx);
+            packet.ReadUInt32("XP", idx);
+            packet.ReadUInt64("UnkUInt64_HeartOfAzeroth", idx);
+            packet.ReadUInt32("UnkUInt32_HeartOfAzeroth", idx);
+            packet.ReadUInt32("Honor", idx);
+            packet.ReadUInt32("Title", idx);
+            packet.ReadUInt32("FactionFlags", idx);
 
             for (var i = 0; i < 5; ++i)
             {
@@ -69,7 +69,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             for (var i = 0; i < 3; ++i)
                 packet.ReadInt32("SpellCompletionDisplayID", idx, i);
 
-            packet.ReadUInt32("RewardSpell", idx);
+            packet.ReadUInt32("SpellCompletionID", idx);
 
             for (var i = 0; i < 4; ++i)
             {
@@ -77,9 +77,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadInt32("CurrencyQty", idx, i);
             }
 
-            packet.ReadUInt32("UnkUint32_7", idx);
-            packet.ReadUInt32("UnkUint32_8", idx);
-            packet.ReadUInt32("UnkUint32_9", idx);
+            packet.ReadUInt32("SkillLineID", idx);
+            packet.ReadUInt32("NumSkillUps", idx);
+            packet.ReadUInt32("RewardID", idx);
 
             for (var i = 0; i < 6; ++i)
             {
@@ -87,7 +87,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
 
             packet.ResetBitReader();
-            packet.ReadBit("UnkBit2", idx);
+            packet.ReadBit("IsBoostSpell", idx);
         }
 
         [Parser(Opcode.SMSG_QUEST_GIVER_QUEST_DETAILS)]
