@@ -79,7 +79,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadUInt32<SpellId>("SpellID");
             packet.ReadUInt32("SpellXSpellVisualID");
             packet.ReadUInt32("Damage");
-            packet.ReadUInt32("Unk801");
+            packet.ReadUInt32("OriginalDamage");
             packet.ReadInt32("OverKill"); // normally this is uint32 in client, used int here for better readability
 
             packet.ReadByte("SchoolMask");
@@ -143,5 +143,25 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             if (hasSandboxScaling)
                 SpellHandler.ReadSandboxScalingData(packet, "SandboxScalingData");
         }
+
+        [Parser(Opcode.SMSG_SPELL_ABSORB_LOG)]
+        public static void HandleSpellAbsorbLog(Packet packet)
+        {
+            packet.ReadPackedGuid128("Victim");
+            packet.ReadPackedGuid128("Caster");
+
+            packet.ReadInt32("InterruptedSpellID");
+            packet.ReadInt32<SpellId>("SpellID");
+            packet.ReadPackedGuid128("ShieldTargetGUID?");
+            packet.ReadInt32("Absorbed");
+            packet.ReadInt32("OriginalDamage"); // OriginalDamage (before HitResult -> BeforeCrit and Armor etc)
+
+            packet.ResetBitReader();
+
+            var bit100 = packet.ReadBit("HasLogData");
+            if (bit100)
+                SpellHandler.ReadSpellCastLogData(packet);
+        }
+
     }
 }
