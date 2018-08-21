@@ -270,5 +270,19 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ReadBit("SpeedAsTime");
         }
+
+        [Parser(Opcode.SMSG_PLAY_ORPHAN_SPELL_VISUAL)]
+        public static void HandlePlayOrphanSpellVisual(Packet packet)
+        {
+            packet.ReadVector3("SourceLocation");
+            packet.ReadVector3("SourceOrientation");
+            packet.ReadVector3("TargetLocation");
+            packet.ReadPackedGuid128("Target");
+            packet.ReadInt32("SpellVisualID");
+            packet.ReadSingle("TravelSpeed");
+            packet.ReadSingle("UnkFloat");
+            packet.ReadSingle("801_UnkFloat");
+            packet.ReadBit("SpeedAsTime");
+        }
     }
 }
