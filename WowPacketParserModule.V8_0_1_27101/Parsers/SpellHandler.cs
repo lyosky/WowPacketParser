@@ -249,5 +249,26 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 }
             }
         }
+
+        [Parser(Opcode.SMSG_PLAY_SPELL_VISUAL)]
+        public static void HandleCastVisual(Packet packet)
+        {
+            packet.ReadPackedGuid128("Source");
+            packet.ReadPackedGuid128("Target");
+            packet.ReadPackedGuid128("UnkGuid");
+
+            packet.ReadVector3("TargetPosition");
+
+            packet.ReadInt32("SpellVisualID");
+            packet.ReadSingle("TravelSpeed");
+
+            packet.ReadInt16("MissReason");
+            packet.ReadInt16("ReflectStatus");
+
+            packet.ReadSingle("Orientation");
+            packet.ReadSingle("UnkFloat");
+
+            packet.ReadBit("SpeedAsTime");
+        }
     }
 }
