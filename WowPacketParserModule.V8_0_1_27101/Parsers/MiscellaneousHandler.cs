@@ -100,6 +100,38 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             if (hasEuropaTicketSystemStatus)
                 V6_0_2_19033.Parsers.MiscellaneousHandler.ReadCliEuropaTicketConfig(packet, "EuropaTicketSystemStatus");
-        }        
+        }
+
+        [Parser(Opcode.SMSG_FEATURE_SYSTEM_STATUS_GLUE_SCREEN)]
+        public static void HandleFeatureSystemStatusGlueScreen715(Packet packet)
+        {
+            packet.ReadBit("BpayStoreEnabled");
+            packet.ReadBit("BpayStoreAvailable");
+            packet.ReadBit("BpayStoreDisabledByParentalControls");
+            packet.ReadBit("CharUndeleteEnabled");
+            packet.ReadBit("CommerceSystemEnabled");
+            packet.ReadBit("Unk14");
+            packet.ReadBit("WillKickFromWorld");
+            packet.ReadBit("IsExpansionPreorderInStore");
+            packet.ReadBit("KioskModeEnabled");
+            packet.ReadBit("IsCompetitiveModeEnabled");
+            packet.ReadBit("NoHandler"); // not accessed in handler
+            packet.ReadBit("TrialBoostEnabled");
+            packet.ReadBit("TokenBalanceEnabled");
+            packet.ReadBit("LiveRegionCharacterListEnabled");
+            packet.ReadBit("LiveRegionCharacterCopyEnabled");
+            packet.ReadBit("LiveRegionAccountCopyEnabled");
+
+            packet.ReadInt32("TokenPollTimeSeconds");
+            packet.ReadInt32E<ConsumableTokenRedeem>("TokenRedeemIndex");
+            packet.ReadInt64("TokenBalanceAmount");
+            packet.ReadUInt32("BpayStoreProductDeliveryDelay");
+
+            packet.ReadInt32("Unk801_1"); // HasPurchaseInProgress related
+            packet.ReadUInt32("ActiveCharacterUpgradeBoostType");
+            packet.ReadUInt32("ActiveClassTrialBoostType");
+            packet.ReadUInt32("NumExpansions");
+            packet.ReadUInt32("MaximumExpansionLevel");
+        }
     }
 }
