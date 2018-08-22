@@ -673,12 +673,33 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                             key = UpdateFields.GetUpdateFieldName<ItemField>(i);
                             break;
                         }
+                        case ObjectType.AzeriteEmpoweredItem:
+                        {
+                            if (i < UpdateFields.GetUpdateField(ItemField.ITEM_END))
+                                goto case ObjectType.Item;
+                            key = UpdateFields.GetUpdateFieldName<AzeriteEmpoweredItemField>(i);
+                            break;
+                        }
+                        case ObjectType.AzeriteItem:
+                        {
+                            if (i < UpdateFields.GetUpdateField(ItemField.ITEM_END))
+                                goto case ObjectType.Item;
+                            key = UpdateFields.GetUpdateFieldName<AzeriteItemField>(i);
+                            break;
+                        }
                         case ObjectType.Player:
                         {
                             if (i < UpdateFields.GetUpdateField(UnitField.UNIT_END) || i < UpdateFields.GetUpdateField(UnitField.UNIT_FIELD_END))
                                 goto case ObjectType.Unit;
 
                             key = UpdateFields.GetUpdateFieldName<PlayerField>(i);
+                            break;
+                        }
+                        case ObjectType.ActivePlayer:
+                        {
+                            if (i < UpdateFields.GetUpdateField(PlayerField.PLAYER_END))
+                                goto case ObjectType.Player;
+                            key = UpdateFields.GetUpdateFieldName<ActivePlayerField>(i);
                             break;
                         }
                         case ObjectType.Unit:
@@ -770,12 +791,33 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                             key = UpdateFields.GetUpdateFieldName<ItemDynamicField>(i);
                             break;
                         }
+                        case ObjectType.AzeriteEmpoweredItem:
+                        {
+                            if (i < UpdateFields.GetUpdateField(ItemDynamicField.ITEM_DYNAMIC_END))
+                                goto case ObjectType.Item;
+                            key = UpdateFields.GetUpdateFieldName<AzeriteEmpoweredItemDynamicField>(i);
+                            break;
+                        }
+                        case ObjectType.AzeriteItem:
+                        {
+                            if (i < UpdateFields.GetUpdateField(ItemDynamicField.ITEM_DYNAMIC_END))
+                                goto case ObjectType.Item;
+                            key = UpdateFields.GetUpdateFieldName<AzeriteItemDynamicField>(i);
+                            break;
+                        }
                         case ObjectType.Player:
                         {
                             if (i < UpdateFields.GetUpdateField(UnitDynamicField.UNIT_DYNAMIC_END))
                                 goto case ObjectType.Unit;
 
                             key = UpdateFields.GetUpdateFieldName<PlayerDynamicField>(i);
+                            break;
+                        }
+                        case ObjectType.ActivePlayer:
+                        {
+                            if (i < UpdateFields.GetUpdateField(PlayerDynamicField.PLAYER_DYNAMIC_END))
+                                goto case ObjectType.Player;
+                            key = UpdateFields.GetUpdateFieldName<ActivePlayerDynamicField>(i);
                             break;
                         }
                         case ObjectType.Unit:
