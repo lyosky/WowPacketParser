@@ -13,12 +13,13 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
                 case Direction.ServerToClient:
                     return ServerOpcodes;
                 default:
-                    return MiscOpcodes;
-            }
+            return MiscOpcodes;
+        }
         }
 
         private static readonly BiDictionary<Opcode, int> ClientOpcodes = new BiDictionary<Opcode, int>
         {
+            {Opcode.CMSG_TOGGLE_WARMODE, 0x32AC}
         };
 
         private static readonly BiDictionary<Opcode, int> ServerOpcodes = new BiDictionary<Opcode, int>

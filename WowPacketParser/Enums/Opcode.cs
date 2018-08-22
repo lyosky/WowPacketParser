@@ -1084,6 +1084,7 @@ namespace WowPacketParser.Enums
         CMSG_TIME_SYNC_RESPONSE_FAILED,
         CMSG_TOGGLE_DIFFICULTY,
         CMSG_TOGGLE_PVP,
+        CMSG_TOGGLE_WARMODE,
         CMSG_TOGGLE_XP_GAIN,
         CMSG_TOTEM_DESTROYED,
         CMSG_TOY_SET_FAVORITE,
@@ -2882,8 +2883,8 @@ namespace WowPacketParser.Enums
         // Tests
         TEST_430_SYNC_PLAYER_MOVE,
         TEST_422_265C,
-        TEST_422_13022
-
+        TEST_422_13022,
+        
         // ReSharper restore InconsistentNaming
     }
 }
