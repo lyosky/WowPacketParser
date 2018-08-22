@@ -70,7 +70,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
         private static void ReadCreateObjectBlock(Packet packet, WowGuid guid, uint map, object index)
         {
-            var objType = packet.ReadByteE<ObjectType>("Object Type", index);
+            ObjectType objType = ObjectTypeConverter.Convert(packet.ReadByteE<ObjectType801>("Object Type", index));
             packet.ReadInt32("HeirFlags", index);
             WoWObject obj;
             switch (objType)
