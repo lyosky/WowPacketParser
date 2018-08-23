@@ -73,6 +73,119 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
+        public static void ReadUnkEncouter(Packet packet, params object[] idx)
+        {
+            packet.ReadUInt32("UnkUInt32_13", idx);
+            packet.ReadUInt32("UnkUInt32_14", idx);
+
+            var count1 = packet.ReadInt32("UnkCount1", idx);
+            var count2 = packet.ReadInt32("UnkCount2", idx);
+            var count3 = packet.ReadInt32("UnkCount3", idx);
+
+            for (var j = 0; j < count1; ++j)
+            {
+                packet.ReadInt32("UnkInt32_15", idx, j);
+            }
+
+            for (var j = 0; j < count2; ++j)
+            {
+                packet.ReadInt32("UnkInt32_16", idx, j);
+            }
+
+            for (var j = 0; j < count3; ++j)
+            {
+                ReadUnkEncouter(packet, idx, j);
+            }
+        }
+
+        [Parser(Opcode.SMSG_ENCOUNTER_START)]
+        public static void HandleEncounterStart(Packet packet)
+        {
+            packet.ReadInt32("EncounterID");
+            packet.ReadInt32<DifficultyId>("DifficultyID");
+            packet.ReadInt32("GroupSize");
+
+            // Debug only???
+            var count = packet.ReadInt32("UnkCount");
+
+            for (var i = 0; i < count; ++i)
+            {
+                packet.ReadPackedGuid128("Guid", i);
+
+                var count1 = packet.ReadInt32("UnkCount1", i);
+                var count2 = packet.ReadInt32("UnkCount2", i);
+                var count3 = packet.ReadInt32("UnkCount3", i);
+
+                packet.ReadInt32("UnkUint32", i);
+
+                var count4 = packet.ReadInt32("UnkCount4", i);
+                var count5 = packet.ReadInt32("UnkCount5", i);
+
+                for (var j = 0; j < count4; ++j)
+                {
+                    packet.ReadInt32("UnkInt32_5", i, j);
+                }
+
+                for (var j = 0; j < count5; ++j)
+                {
+                    packet.ReadInt32("UnkInt32_6", i, j);
+                }
+
+                var count6 = packet.ReadInt32("UnkInt32_7", i);
+                var count7 = packet.ReadInt32("UnkInt32_8", i);
+
+                for (var j = 0; j < count1; ++j)
+                {
+                    packet.ReadInt32("UnkInt32_9", i, j);
+                }
+                for (var j = 0; j < count2; ++j)
+                {
+                    packet.ReadInt32("UnkInt32_10", i, j);
+                }
+
+                for (var j = 0; j < count3; ++j)
+                {
+                    packet.ReadPackedGuid128("Guid", i, j);
+                    packet.ReadInt32("UnkInt32_11", i, j);
+                }
+
+                for (var j = 0; j < count6; ++j)
+                {
+                    packet.ReadUInt32("UnkInt32_12", i, j);
+                    packet.ReadInt16("UnkInt16_1", i, j);
+                }
+
+                for (var j = 0; j < count7; ++j)
+                {
+                    ReadUnkEncouter(packet, i, j);
+                }
+            }
+        }
+
+        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
+        public static void HandleInstanceEncounterStart(Packet packet)
+        {
+            packet.ReadInt32("InCombatResCount");
+            packet.ReadInt32("MaxInCombatResCount");
+            packet.ReadInt32("CombatResChargeRecovery");
+            packet.ReadInt32("NextCombatResChargeTime");
+
+            packet.ResetBitReader();
+            packet.ReadBit("InProgress");
+        }
+
+        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_SET_SUPPRESSING_RELEASE)]
+        public static void HandleInstanceEncounterSetSuppressingRelease(Packet packet)
+        {
+            packet.ReadBit("ReleaseSuppressed");
+        }
+
+        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_SET_ALLOWING_RELEASE)]
+        public static void HandleInstanceEncounterSetAllowingRelease(Packet packet)
+        {
+            packet.ReadBit("ReleaseAllowed");
+        }
+
         [Parser(Opcode.CMSG_START_CHALLENGE_MODE)]
         public static void HandleStartChallengeMode(Packet packet)
         {
