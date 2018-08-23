@@ -239,13 +239,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             var int10 = packet.ReadUInt32("EarnedAchievementCount");
             for (var i = 0; i < int10; ++i)
-            {
-                packet.ReadInt32("Id", i);
-                packet.ReadPackedTime("Date", i);
-                packet.ReadPackedGuid128("Owner", i);
-                packet.ReadInt32("VirtualRealmAddress", i);
-                packet.ReadInt32("NativeRealmAddress", i);
-            }
+                AchievementHandler.ReadEarnedAchievement(packet, "Earned", i);
         }
 
         [Parser(Opcode.SMSG_GUILD_PERMISSIONS_QUERY_RESULTS)]
@@ -282,7 +276,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
                 packet.ReadTime("DateCreated", i);
                 packet.ReadTime("DateStarted", i);
                 packet.ReadTime("DateUpdated", i);
-                packet.ReadInt64("Quantity", i);
+                packet.ReadUInt64("Quantity", i);
                 packet.ReadPackedGuid128("PlayerGUID", i);
 
                 packet.ReadInt32("Flags", i);
@@ -606,7 +600,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void HandleGuildAchievementEarned(Packet packet)
         {
             packet.ReadPackedGuid128("GuildGUID");
-            packet.ReadInt32<AchievementId>("AchievementID");
+            packet.ReadUInt32<AchievementId>("AchievementID");
             packet.ReadPackedTime("TimeEarned");
         }
 
