@@ -114,5 +114,32 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadBit("OnOffense");
             packet.ReadUInt64("QueueID");
         }
+
+        [Parser(Opcode.SMSG_BATTLEFIELD_LIST)]
+        public static void HandleBattlefieldList(Packet packet)
+        {
+            packet.ReadPackedGuid128("BattlemasterGuid");
+            packet.ReadInt32("BattlemasterListID");
+            packet.ReadByte("MinLevel");
+            packet.ReadByte("MaxLevel");
+            var battlefieldsCount = packet.ReadUInt32("BattlefieldsCount");
+            for (var i = 0; i < battlefieldsCount; ++i) // Battlefields
+                packet.ReadInt32("Battlefield");
+
+            packet.ResetBitReader();
+            packet.ReadBit("PvpAnywhere");
+            packet.ReadBit("HasRandomWinToday");
+        }
+
+        [Parser(Opcode.SMSG_PVP_OPTIONS_ENABLED)]
+        public static void HandlePVPOptionsEnabled(Packet packet)
+        {
+            packet.ReadBit("RatedBattlegrounds");
+            packet.ReadBit("PugBattlegrounds");
+            packet.ReadBit("WargameBattlegrounds");
+            packet.ReadBit("WargameArenas");
+            packet.ReadBit("RatedArenas");
+            packet.ReadBit("ArenaSkirmish");
+        }
     }
 }
