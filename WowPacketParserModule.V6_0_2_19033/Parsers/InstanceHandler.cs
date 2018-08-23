@@ -111,7 +111,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void HandleSetSavedInstanceExtend(Packet packet)
         {
             packet.ReadInt32<MapId>("MapID");
-            packet.ReadInt32<DifficultyId>("DifficultyID");
+            packet.ReadUInt32<DifficultyId>("DifficultyID");
             packet.ReadBit("Extended");
         }
 
