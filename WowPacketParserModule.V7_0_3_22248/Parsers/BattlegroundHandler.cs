@@ -77,5 +77,42 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             for (int i = 0; i < playersCount; i++)
                 ReadPlayerData(packet, "Players", i);
         }
+
+        [Parser(Opcode.SMSG_BATTLEFIELD_MGR_QUEUE_INVITE)]
+        public static void HandleBFMgrQueueInvite(Packet packet)
+        {
+            packet.ReadInt64("QueueID");
+            packet.ReadByte("BattleState");
+
+            packet.ReadInt32("Timeout");
+            packet.ReadInt32("MinLevel");
+            packet.ReadInt32("MaxLevel");
+            packet.ReadInt32<MapId>("MapID");
+            packet.ReadInt32("InstanceID");
+
+            packet.ResetBitReader();
+            packet.ReadBit("Index");
+        }
+
+        [Parser(Opcode.SMSG_BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE)]
+        public static void HandleBFMgrQueueRequestResponse(Packet packet)
+        {
+            packet.ReadInt64("QueueID");
+            packet.ReadInt32<AreaId>("AreaID");
+            packet.ReadSByte("Result");
+            packet.ReadPackedGuid128("FailedPlayerGUID");
+            packet.ReadSByte("BattleState");
+            packet.ResetBitReader();
+            packet.ReadBit("LoggingIn");
+        }
+
+        [Parser(Opcode.SMSG_BATTLEFIELD_MGR_ENTERING)]
+        public static void HandleBFMgrEntering(Packet packet)
+        {
+            packet.ReadBit("ClearedAFK");
+            packet.ReadBit("Relocated");
+            packet.ReadBit("OnOffense");
+            packet.ReadUInt64("QueueID");
+        }
     }
 }
