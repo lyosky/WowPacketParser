@@ -328,6 +328,7 @@
     <Compile Include="Parsers\SpellHandler.cs" />
     <Compile Include="Parsers\TaxiHandler.cs" />
     <Compile Include="Parsers\UpdateHandler.cs" />
+    <Compile Include="Parsers\VoidStorageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
