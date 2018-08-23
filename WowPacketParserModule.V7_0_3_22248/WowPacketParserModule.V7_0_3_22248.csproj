@@ -295,6 +295,7 @@
     <Compile Include="Parsers\AccountDataHandler.cs" />
     <Compile Include="Parsers\AchievementHandler.cs" />
     <Compile Include="Parsers\AreaTriggerHandler.cs" />
+    <Compile Include="Parsers\ArtifactHandler.cs" />
     <Compile Include="Parsers\AuctionHouseHandler.cs" />
     <Compile Include="Parsers\AuthenticationHandler.cs" />
     <Compile Include="Parsers\BattlegroundHandler.cs" />
