@@ -37,11 +37,11 @@ namespace WowPacketParser.Enums.Version
         {
             Type[] enumTypes =
             {
-                typeof(ObjectField), typeof(ItemField), typeof(ContainerField), typeof(UnitField),
-                typeof(PlayerField), typeof(GameObjectField), typeof(DynamicObjectField),
+                typeof(ObjectField), typeof(ItemField), typeof(ContainerField), typeof(AzeriteEmpoweredItemField), typeof(AzeriteItemField), typeof(UnitField),
+                typeof(PlayerField), typeof(ActivePlayerField), typeof(GameObjectField), typeof(DynamicObjectField),
                 typeof(CorpseField), typeof(AreaTriggerField), typeof(SceneObjectField), typeof(ConversationField),
-                typeof(ObjectDynamicField), typeof(ItemDynamicField), typeof(ContainerDynamicField), typeof(UnitDynamicField),
-                typeof(PlayerDynamicField), typeof(GameObjectDynamicField), typeof(DynamicObjectDynamicField),
+                typeof(ObjectDynamicField), typeof(ItemDynamicField), typeof(ContainerDynamicField), typeof(AzeriteEmpoweredItemDynamicField), typeof(AzeriteItemDynamicField), typeof(UnitDynamicField),
+                typeof(PlayerDynamicField), typeof(ActivePlayerDynamicField), typeof(GameObjectDynamicField), typeof(DynamicObjectDynamicField),
                 typeof(CorpseDynamicField), typeof(AreaTriggerDynamicField), typeof(SceneObjectDynamicField), typeof(ConversationDynamicField)
             };
 
@@ -417,6 +417,21 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V7_3_5_26972:
                 {
                     return "V7_3_5_25848";
+                }
+                case ClientVersionBuild.V8_0_1_27101:
+                case ClientVersionBuild.V8_0_1_27144:
+                case ClientVersionBuild.V8_0_1_27165:
+                case ClientVersionBuild.V8_0_1_27178:
+                case ClientVersionBuild.V8_0_1_27219:
+                case ClientVersionBuild.V8_0_1_27291:
+                case ClientVersionBuild.V8_0_1_27326:
+                case ClientVersionBuild.V8_0_1_27355:
+                case ClientVersionBuild.V8_0_1_27356:
+                case ClientVersionBuild.V8_0_1_27366:
+                case ClientVersionBuild.V8_0_1_27377:
+                case ClientVersionBuild.V8_0_1_27404:
+                {
+                    return "V8_0_1_27101";
                 }
                 default:
                 {

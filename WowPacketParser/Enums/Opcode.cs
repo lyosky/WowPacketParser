@@ -1084,6 +1084,7 @@ namespace WowPacketParser.Enums
         CMSG_TIME_SYNC_RESPONSE_FAILED,
         CMSG_TOGGLE_DIFFICULTY,
         CMSG_TOGGLE_PVP,
+        CMSG_TOGGLE_WARMODE,
         CMSG_TOGGLE_XP_GAIN,
         CMSG_TOTEM_DESTROYED,
         CMSG_TOY_SET_FAVORITE,
@@ -2055,6 +2056,8 @@ namespace WowPacketParser.Enums
         SMSG_LF_GUILD_POST_UPDATED,
         SMSG_LF_GUILD_RECRUITS,
         SMSG_LF_GUILD_RECRUIT_LIST_UPDATED,
+        SMSG_LIGHTNING_STORM_CHANGE,
+        SMSG_LIGHTNING_STORM_START,
         SMSG_LIST_TARGETS,
         SMSG_LIVE_REGION_ACCOUNT_RESTORE_RESULT,
         SMSG_LIVE_REGION_CHARACTER_COPY_RESULT,
@@ -2882,8 +2885,8 @@ namespace WowPacketParser.Enums
         // Tests
         TEST_430_SYNC_PLAYER_MOVE,
         TEST_422_265C,
-        TEST_422_13022
-
+        TEST_422_13022,
+        
         // ReSharper restore InconsistentNaming
     }
 }
