@@ -1100,6 +1100,15 @@ namespace WowPacketParser.Parsing.Parsers
             packet.ReadInt32("TimerType");
         }
 
+        [Parser(Opcode.SMSG_REFER_A_FRIEND_FAILURE)]
+        public static void HandleRaFFailure(Packet packet)
+        {
+            packet.ReadInt32("Reason");
+            packet.ResetBitReader();
+            var len = packet.ReadBits(6);
+            packet.ReadWoWString("Str", len);
+        }
+
         [Parser(Opcode.SMSG_MINIGAME_STATE)]
         [Parser(Opcode.CMSG_KEEP_ALIVE)]
         [Parser(Opcode.CMSG_TUTORIAL_RESET)]
