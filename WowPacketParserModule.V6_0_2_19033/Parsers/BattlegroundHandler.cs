@@ -298,7 +298,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
 
             packet.ReadBit("AsGroup");                  
             packet.ReadBit("EligibleForMatchmaking");   
-            packet.ReadBit("SuspendedQueue");           
+            packet.ReadBit("SuspendedQueue");
         }
 
         [Parser(Opcode.SMSG_BATTLEFIELD_STATUS_NONE)]

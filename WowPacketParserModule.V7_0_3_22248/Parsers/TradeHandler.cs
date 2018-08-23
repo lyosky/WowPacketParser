@@ -54,7 +54,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
             for (int j = 0; j < gemsCount; j++)
             {
-                packet.ReadByte("Slot", i, j);
+                packet.ReadByte("Slot", index, j);
                 V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, index, j);
             }
         }

@@ -649,7 +649,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         public static void ReadGlyphBinding(Packet packet, params object[] index)
         {
             packet.ReadUInt32("SpellID", index);
-            packet.ReadUInt16("GlyphID", index),
+            packet.ReadUInt16("GlyphID", index);
         }
 
         [Parser(Opcode.SMSG_ACTIVE_GLYPHS)]
