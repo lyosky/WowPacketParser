@@ -133,5 +133,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadUInt32("NumExpansions");
             packet.ReadUInt32("MaximumExpansionLevel");
         }
+
+        [Parser(Opcode.SMSG_LIGHTNING_STORM_START)]
+        [Parser(Opcode.SMSG_LIGHTNING_STORM_CHANGE)]
+        public static void HandleLightningStorm(Packet packet)
+        {
+            packet.ReadUInt32("LightningStormId"); // in client GetBytes with fixed size wotevs
+        }
     }
 }
