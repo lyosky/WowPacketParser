@@ -872,5 +872,14 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             var accNameLen = packet.ReadBits(11);
             packet.ReadWoWString("AccountName", accNameLen);
         }
+
+        [Parser(Opcode.CMSG_COLLECTION_ITEM_SET_FAVORITE)]
+        public static void HandleCollectionItemSetFavorite(Packet packet)
+        {
+            packet.ReadInt32E<CollectionType>("CollectionType");
+            packet.ReadUInt32("ID");
+            packet.ResetBitReader();
+            packet.ReadBit("IsFavorite");
+        }
     }
 }
