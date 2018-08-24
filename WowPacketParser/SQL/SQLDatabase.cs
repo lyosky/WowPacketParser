@@ -92,8 +92,11 @@ namespace WowPacketParser.SQL
         private static void LoadBroadcastText()
         {
             string query =
-                "SELECT ID, Text, Text1, EmoteID1, EmoteID2, EmoteID3, EmoteDelay1, EmoteDelay2, EmoteDelay3, EmotesID, LanguageID, Flags, ConditionID, SoundEntriesID1, SoundEntriesID2 " +
-                $"FROM {Settings.HotfixesDatabase}.broadcast_text;";
+                "SELECT ID, Text, Text1, EmoteID1, EmoteID2, EmoteID3, EmoteDelay1, EmoteDelay2, EmoteDelay3, EmotesID, LanguageID, Flags, SoundEntriesID1, SoundEntriesID2, ConditionID " +
+                $"FROM {Settings.HotfixesDatabase}.broadcast_text " +
+                $"UNION ALL " +
+                $"SELECT a.ID, a.Text_lang, a.Text1_lang, b.EmoteID1, b.EmoteID2, b.EmoteID3, b.EmoteDelay1, b.EmoteDelay2, b.EmoteDelay3, b.EmotesID, b.LanguageID, b.Flags, b.SoundEntriesID1, b.SoundEntriesID2, b.ConditionID " +
+                $"FROM {Settings.HotfixesDatabase}.broadcast_text_locale a LEFT JOIN {Settings.HotfixesDatabase}.broadcast_text b ON ( (a.ID= b.ID) AND ((a.locale='ruRU') OR (a.locale='zhCN') ) ); ";
             using (var reader = SQLConnector.ExecuteQuery(query))
             {
                 if (reader == null)
