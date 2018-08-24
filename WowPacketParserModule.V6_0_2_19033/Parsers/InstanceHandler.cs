@@ -191,7 +191,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void HandleInstanceEncounterGainCombatResurrectionCharge(Packet packet)
         {
             packet.ReadInt32("InCombatResCount");
-            packet.ReadInt32("CombatResChargeRecovery");
+            packet.ReadUInt32("CombatResChargeRecovery");
         }
 
         [Parser(Opcode.SMSG_ENCOUNTER_START)]
