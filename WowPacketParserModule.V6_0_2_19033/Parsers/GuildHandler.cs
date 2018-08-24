@@ -637,7 +637,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadPackedGuid128("RecruitGUID", indexes);
 
-            packet.ReadInt32("RecruitVirtualRealm", indexes);
+            packet.ReadUInt32("RecruitVirtualRealm", indexes);
 
             packet.ReadInt32("CharacterClass", indexes);
             packet.ReadInt32("CharacterGender", indexes);
@@ -661,7 +661,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void ReadLFGuildApplicationData(Packet packet, params object[] indexes)
         {
             packet.ReadPackedGuid128("GuildGUID", indexes);
-            packet.ReadInt32("GuildVirtualRealm", indexes);
+            packet.ReadUInt32("GuildVirtualRealm", indexes);
 
             packet.ReadInt32("ClassRoles", indexes);
             packet.ReadInt32("PlayStyle", indexes);
@@ -931,8 +931,10 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadUInt32E<GuildFinderOptionsAvailability>("Availability"); // ok
             packet.ReadUInt32E<GuildFinderOptionsRoles>("Class Roles"); // ok
             packet.ReadUInt32E<GuildFinderOptionsLevel>("Level");
-            packet.ReadBit("Listed");
-            packet.ReadWoWString("Comment", packet.ReadBits(10));
+            packet.ResetBitReader();
+            packet.ReadBit("Active");
+            var len = packet.ReadBits(10);
+            packet.ReadWoWString("Comment", len);
         }
 
         [Parser(Opcode.CMSG_SAVE_GUILD_EMBLEM)]
