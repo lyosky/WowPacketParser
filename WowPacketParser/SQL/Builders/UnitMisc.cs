@@ -725,7 +725,7 @@ namespace WowPacketParser.SQL.Builders
                         {
                             Entry = text.Key,
                             GroupId = "@GROUP_ID+" + count,
-                            ID = "@ID+",
+                            ID = "@ID+0",
                             Text = textValue.Item1.Text,
                             Type = textValue.Item1.Type,
                             Language = textValue.Item1.Language,

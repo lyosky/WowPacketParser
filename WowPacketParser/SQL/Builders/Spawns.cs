@@ -352,6 +352,7 @@ namespace WowPacketParser.SQL.Builders
 
                 // set some defaults
                 row.Data.PhaseGroup = 0;
+                row.Data.PhaseID = "0";
 
                 row.Comment = StoreGetters.GetName(StoreNameType.GameObject, (int)gameobject.Key.GetEntry(), false);
                 row.Comment += " (Area: " + StoreGetters.GetName(StoreNameType.Area, go.Area, false) + " - ";

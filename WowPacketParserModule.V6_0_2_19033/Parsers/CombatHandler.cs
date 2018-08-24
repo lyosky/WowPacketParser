@@ -1,4 +1,4 @@
-using WowPacketParser.Enums;
+﻿using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
 using SpellParsers = WowPacketParserModule.V6_0_2_19033.Parsers.SpellHandler;
@@ -65,14 +65,14 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         [Parser(Opcode.SMSG_ATTACKER_STATE_UPDATE)]
         public static void HandleAttackerStateUpdate(Packet packet)
         {
-            var bit52 = packet.ReadBit("HasLogData");
+            var hasLogData = packet.ReadBit("HasLogData");
 
-            if (bit52)
+            if (hasLogData)
                 SpellParsers.ReadSpellCastLogData(packet);
 
             packet.ReadInt32("Size");
 
-            ReadAttackRoundInfo(packet);
+            ReadAttackRoundInfo(packet, "AttackRoundInfo");
         }
 
         [Parser(Opcode.SMSG_ATTACK_START)]
