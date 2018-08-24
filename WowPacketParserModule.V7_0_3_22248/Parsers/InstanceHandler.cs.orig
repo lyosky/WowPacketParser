@@ -74,6 +74,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
+<<<<<<< HEAD
         public static void ReadUnkEncouter(Packet packet, params object[] idx)
         {
             packet.ReadUInt32("UnkUInt32_13", idx);
@@ -163,6 +164,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
+=======
+>>>>>>> d937394390b1bd2458c3d949b4099391b90c01cb
         [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
         public static void HandleInstanceEncounterStart(Packet packet)
         {
@@ -170,6 +173,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadInt32("MaxInCombatResCount");
             packet.ReadInt32("CombatResChargeRecovery");
             packet.ReadInt32("NextCombatResChargeTime");
+<<<<<<< HEAD
 
             packet.ResetBitReader();
             packet.ReadBit("InProgress");
@@ -194,5 +198,10 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadInt32("Slot");
             packet.ReadPackedGuid128("GobGUID");
         }
+=======
+            packet.ResetBitReader();
+            packet.ReadBit("InProgress");
+        }
+>>>>>>> d937394390b1bd2458c3d949b4099391b90c01cb
     }
 }

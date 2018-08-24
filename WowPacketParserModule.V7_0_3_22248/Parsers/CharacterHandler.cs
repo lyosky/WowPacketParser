@@ -144,15 +144,12 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadByte("FacialHairStyleID");
             packet.ReadByte("OutfitID");
 
-            for (uint i = 0; i < 3; ++i)
-                packet.ReadByte("CustomDisplay", i);
-
             packet.ReadWoWString("Name", nameLen);
 
             if (hasTemplateSet)
                 packet.ReadInt32("TemplateSetID");
         }
-
+        
         [Parser(Opcode.SMSG_LEVEL_UP_INFO)]
         public static void HandleLevelUpInfo(Packet packet)
         {
@@ -299,6 +296,93 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
                 packet.ReadUInt32("NumGuildMembers");
                 packet.ReadUInt32("GuildAchievementPoints");
             }
+        }
+
+        [Parser(Opcode.CMSG_CHAR_CUSTOMIZE)]
+        public static void HandleClientCharCustomize(Packet packet)
+        {
+            packet.ReadPackedGuid128("CharGUID");
+
+            packet.ReadByte("SexID");
+            packet.ReadByte("SkinID");
+            packet.ReadByte("HairColorID");
+            packet.ReadByte("HairStyleID");
+            packet.ReadByte("FacialHairStyleID");
+            packet.ReadByte("FaceID");
+
+            for (uint i = 0; i < 3; ++i)
+                packet.ReadByte("CustomDisplay", i);
+
+            packet.ResetBitReader();
+            var bits19 = packet.ReadBits(6);
+            packet.ReadWoWString("CharName", bits19);
+        }
+
+
+        [Parser(Opcode.CMSG_CHAR_RACE_OR_FACTION_CHANGE)]
+        public static void HandleCharRaceOrFactionChange(Packet packet)
+        {
+            packet.ReadBit("FactionChange");
+
+            var bits20 = packet.ReadBits(6);
+
+            packet.ReadPackedGuid128("Guid");
+            packet.ReadByte("SexID");
+            packet.ReadByte("RaceID");
+            packet.ReadByte("SkinID");
+            packet.ReadByte("HairColorID");
+            packet.ReadByte("HairStyleID");
+            packet.ReadByte("FacialHairStyleID");
+            packet.ReadByte("FaceID");
+            for (uint i = 0; i < 3; ++i)
+                packet.ReadByte("CustomDisplay", i);
+            packet.ReadWoWString("Name", bits20);
+        }
+
+        [Parser(Opcode.SMSG_CHAR_FACTION_CHANGE_RESULT)]
+        public static void HandleCharFactionChangeResult(Packet packet)
+        {
+            packet.ReadByte("Result");
+            packet.ReadPackedGuid128("Guid");
+
+            packet.ResetBitReader();
+
+            var bit72 = packet.ReadBit("HasDisplayInfo");
+            if (bit72)
+            {
+                packet.ResetBitReader();
+                var bits55 = packet.ReadBits(6);
+
+                packet.ReadByte("SexID");
+                packet.ReadByte("SkinID");
+                packet.ReadByte("HairColorID");
+                packet.ReadByte("HairStyleID");
+                packet.ReadByte("FacialHairStyleID");
+                packet.ReadByte("FaceID");
+                packet.ReadByte("RaceID");
+
+                for (uint i = 0; i < 3; ++i)
+                    packet.ReadByte("CustomDisplay", i);
+                packet.ReadWoWString("Name", bits55);
+            }
+        }
+
+        [Parser(Opcode.SMSG_CHAR_CUSTOMIZE)]
+        public static void HandleServerCharCustomize(Packet packet)
+        {
+            packet.ReadPackedGuid128("CharGUID");
+            packet.ReadByte("SexID");
+            packet.ReadByte("SkinID");
+            packet.ReadByte("HairColorID");
+            packet.ReadByte("HairStyleID");
+            packet.ReadByte("FacialHairStyleID");
+            packet.ReadByte("FaceID");
+            for (uint i = 0; i < 3; ++i)
+                packet.ReadByte("CustomDisplay", i);
+
+            packet.ResetBitReader();
+            var bits55 = packet.ReadBits(6);
+            packet.ReadWoWString("Name", bits55);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace WowPacketParser.Store.Objects
 
                     var actor = new ConversationActor();
                     actor.ConversationId = Id;
-                    var actorTemplate = actorTemplates[actorIdx & 0xFF]; /// @workaround: structure is incorrect
+                    var actorTemplate = actorTemplates[actorIdx];
                     actor.ConversationActorId = actorTemplate.Id;
                     actor.Guid = actorTemplate.Guid;
                     actor.Idx = actorIdx;
