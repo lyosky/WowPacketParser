@@ -1,4 +1,4 @@
-namespace WowPacketParser.Enums
+﻿namespace WowPacketParser.Enums
 {
     public enum Opcode
     {
@@ -295,7 +295,8 @@ namespace WowPacketParser.Enums
         CMSG_CONTRIBUTION_CONTRIBUTE,
         CMSG_CONTRIBUTION_GET_STATE,
         CMSG_CONTACT_LIST,
-        CMSG_CONVERSATION_UNK1,
+        CMSG_CONVERSATION_LINE_STARTED,
+        //CMSG_CONVERSATION_UNK1,
         CMSG_CONVERT_CONSUMPTION_TIME,
         CMSG_CONVERT_RAID,
         CMSG_COOLDOWN_CHEAT,

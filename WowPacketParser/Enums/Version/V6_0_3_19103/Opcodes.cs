@@ -1,4 +1,4 @@
-using WowPacketParser.Misc;
+﻿using WowPacketParser.Misc;
 
 namespace WowPacketParser.Enums.Version.V6_0_3_19103
 {
@@ -170,7 +170,7 @@ namespace WowPacketParser.Enums.Version.V6_0_3_19103
             {Opcode.CMSG_COMPLETE_MOVIE, 0x13D4},
             {Opcode.CMSG_CONFIRM_RESPEC_WIPE, 0x14B4},
             {Opcode.CMSG_CONNECT_TO_FAILED, 0x0135},
-            {Opcode.CMSG_CONVERSATION_UNK1, 0x0912},
+            {Opcode.CMSG_CONVERSATION_LINE_STARTED, 0x0912},
             {Opcode.CMSG_CONVERT_RAID, 0x0137},
             {Opcode.CMSG_CREATE_SHIPMENT, 0x068B},
             {Opcode.CMSG_QUERY_CREATURE, 0x0505},

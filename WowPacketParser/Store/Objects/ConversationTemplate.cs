@@ -65,9 +65,9 @@ namespace WowPacketParser.Store.Objects
                     line.StartTime = lines[i + 1].UInt32Value;
                     line.UiCameraID = lines[i + 2].UInt32Value;
                     var part = lines[i + 3].UInt32Value;
-                    var actorIdx = (ushort)(part & 0xFFFF);
+                    var actorIdx = (byte)(part & 0xFF);
                     line.ActorIdx = actorIdx;
-                    line.Unk = (ushort)((part >> 16) & 0xFFFF);
+                    line.Flags = (byte)((part >> 8) & 0xFF);
 
                     if (i == 0)
                         FirstLineID = line.Id;
