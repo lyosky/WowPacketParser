@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<LangVersion>6</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sigil, Version=4.7.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
@@ -46,6 +46,7 @@
     <Compile Include="Enums\SplineFlag.cs" />
     <Compile Include="Enums\UpdateFields.cs" />
     <Compile Include="Parsers\AccountDataHandler.cs" />
+    <Compile Include="Parsers\AuthenticationHandler.cs" />
     <Compile Include="Parsers\CharacterHandler.cs" />
     <Compile Include="Parsers\ChatHandler.cs" />
     <Compile Include="Parsers\CombatHandler.cs" />
