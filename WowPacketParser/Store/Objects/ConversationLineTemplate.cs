@@ -18,7 +18,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("ActorIdx")]
         public byte? ActorIdx;
 
-        [DBFieldName("Unk")]
+        [DBFieldName("Flags")]
         public byte? Flags;
 
         [DBFieldName("VerifiedBuild")]
