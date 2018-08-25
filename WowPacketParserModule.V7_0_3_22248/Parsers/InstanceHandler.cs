@@ -74,6 +74,17 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
+        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
+        public static void HandleInstanceEncounterStart(Packet packet)
+        {
+            packet.ReadInt32("InCombatResCount");
+            packet.ReadInt32("MaxInCombatResCount");
+            packet.ReadInt32("CombatResChargeRecovery");
+            packet.ReadInt32("NextCombatResChargeTime");
+            packet.ResetBitReader();
+            packet.ReadBit("InProgress");
+        }
+
         public static void ReadUnkEncouter(Packet packet, params object[] idx)
         {
             packet.ReadUInt32("UnkUInt32_13", idx);
@@ -161,18 +172,6 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
                     ReadUnkEncouter(packet, i, j);
                 }
             }
-        }
-
-        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
-        public static void HandleInstanceEncounterStart(Packet packet)
-        {
-            packet.ReadInt32("InCombatResCount");
-            packet.ReadInt32("MaxInCombatResCount");
-            packet.ReadInt32("CombatResChargeRecovery");
-            packet.ReadInt32("NextCombatResChargeTime");
-
-            packet.ResetBitReader();
-            packet.ReadBit("InProgress");
         }
 
         [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_SET_SUPPRESSING_RELEASE)]
