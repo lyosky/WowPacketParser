@@ -140,5 +140,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             packet.ReadUInt32("LightningStormId"); // in client GetBytes with fixed size wotevs
         }
+
+        [Parser(Opcode.CMSG_QUERY_COMMUNITY_NAME)]
+        public static void HandleQueryCommunityName(Packet packet)
+        {
+            packet.ReadPackedGuid128("BNetAccountGUID");
+            packet.ReadUInt64("CommunityDbID");
+        }
     }
 }

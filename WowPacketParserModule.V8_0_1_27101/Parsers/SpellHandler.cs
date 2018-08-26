@@ -284,5 +284,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadSingle("801_UnkFloat");
             packet.ReadBit("SpeedAsTime");
         }
+
+        [Parser(Opcode.CMSG_CANCEL_CHANNELLING)]
+        public static void HandleRemovedSpell2(Packet packet)
+        {
+            packet.ReadUInt32<SpellId>("Spell ID");
+            packet.ReadUInt32("Unk");
+        }
     }
 }
