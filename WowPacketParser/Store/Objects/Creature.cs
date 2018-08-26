@@ -25,7 +25,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("spawnMask")]
         public uint? SpawnMask;
 
-        [DBFieldName("phaseMask", TargetedDatabase.Zero, TargetedDatabase.Cataclysm)]
+        [DBFieldName("phaseMask", TargetedDatabase.Zero, TargetedDatabase.WrathOfTheLichKing)]
         public uint? PhaseMask;
 
         [DBFieldName("PhaseId", TargetedDatabase.Cataclysm)]

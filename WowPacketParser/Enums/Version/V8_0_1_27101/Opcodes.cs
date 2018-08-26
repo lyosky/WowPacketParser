@@ -740,8 +740,8 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
         private static readonly BiDictionary<Opcode, int> ServerOpcodes = new BiDictionary<Opcode, int>
         {
 
-            {Opcode.SMSG_LIGHTNING_STORM_CHANGE, 0x26D5},
-            {Opcode.SMSG_LIGHTNING_STORM_START, 0x26D6},
+            {Opcode.SMSG_LIGHTNING_STORM_CHANGE, 0x26DD}, ///0x26D5
+            {Opcode.SMSG_LIGHTNING_STORM_START, 0x26DE}, ///0x26D6
 
            {Opcode.SMSG_ABORT_NEW_WORLD, 0x25AD},
            {Opcode.SMSG_ACCOUNT_CRITERIA_UPDATE, 0x2654},///8x 0x2652
@@ -911,8 +911,8 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
            {Opcode.SMSG_CHALLENGE_MODE_START, 0x261E},///8X 0x261D
            {Opcode.SMSG_CHALLENGE_MODE_UPDATE_DEATH_COUNT, 0x261F},///8X 0x261E
            {Opcode.SMSG_CHANGE_PLAYER_DIFFICULTY_RESULT, 0x2735},
-           {Opcode.SMSG_CHANNEL_LIST, 0x2BC3},
-           {Opcode.SMSG_CHANNEL_NOTIFY, 0x2BC0},
+           {Opcode.SMSG_CHANNEL_LIST, 0x2BC3},///8x
+           {Opcode.SMSG_CHANNEL_NOTIFY, 0x2BC0},///8x
            {Opcode.SMSG_CHANNEL_NOTIFY_JOINED, 0x2BC1},///8x
            {Opcode.SMSG_CHANNEL_NOTIFY_LEFT, 0x2BC2},///8x
            {Opcode.SMSG_CHARACTER_CLASS_TRIAL_CREATE, 0x2804},
