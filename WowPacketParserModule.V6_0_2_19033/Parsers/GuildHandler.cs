@@ -197,9 +197,9 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void HandleGuildEventPresenceChange(Packet packet)
         {
             packet.ReadPackedGuid128("Guid");
-
             packet.ReadInt32("VirtualRealmAddress");
 
+            packet.ResetBitReader();
             var bits38 = packet.ReadBits(6);
             packet.ReadBit("LoggedOn");
             packet.ReadBit("Mobile");
@@ -325,12 +325,12 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadPackedGuid128("GuildGUID");
             packet.ReadUInt32("OldGuildVirtualRealmAddress");
             packet.ReadPackedGuid128("OldGuildGUID");
-            packet.ReadUInt32("EmblemColor");
             packet.ReadUInt32("EmblemStyle");
-            packet.ReadUInt32("BorderColor");
+            packet.ReadUInt32("EmblemColor");
             packet.ReadUInt32("BorderStyle");
-            packet.ReadUInt32("BackgroundColor");
-            packet.ReadInt32("Level");
+            packet.ReadUInt32("BorderColor");
+            packet.ReadUInt32("Background");
+            packet.ReadUInt32("AchievementPoints");
 
             packet.ReadWoWString("InviterName", bits149);
             packet.ReadWoWString("OldGuildName", bits216);
@@ -812,6 +812,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadInt32("PetitionID");
 
+            packet.ResetBitReader();
             var hasAllow = packet.ReadBit("Allow");
             if (hasAllow)
                 ReadPetitionInfo(packet, "PetitionInfo");
@@ -838,8 +839,8 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         public static void HandlePetitionRenameGuildResponse(Packet packet)
         {
             packet.ReadPackedGuid128("PetitionGuid");
-            var length = packet.ReadBits("NewGuildNameLength", 7);
             packet.ResetBitReader();
+            var length = packet.ReadBits("NewGuildNameLength", 7);
 
             packet.ReadWoWString("NewGuildName", length);
         }
