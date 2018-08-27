@@ -69,12 +69,19 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadSingle("Unk801");
 
             creature.ModelIDs = new uint?[displayIdCount];
+            var tempModeIDs = new uint?[4];
+            for (int i = 0; i < 4; ++i)
+                tempModeIDs[i] = 0;
+
             for (int i = 0; i < displayIdCount; ++i)
             {
                 creature.ModelIDs[i] = packet.ReadUInt32("CreatureDisplayID", i);
                 packet.ReadSingle("Probability", i);
                 packet.ReadSingle("ProbabilityAlt", i);
+                if (i < 4)
+                    tempModeIDs[i] = creature.ModelIDs[i];
             }
+            creature.ModelIDs = tempModeIDs;
 
             creature.HealthModifier = packet.ReadSingle("HpMulti");
             creature.ManaModifier = packet.ReadSingle("EnergyMulti");
