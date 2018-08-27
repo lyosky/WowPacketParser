@@ -147,5 +147,32 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadPackedGuid128("BNetAccountGUID");
             packet.ReadUInt64("CommunityDbID");
         }
+
+        [Parser(Opcode.SMSG_UPDATE_EXPANSION_LEVEL)]
+        public static void HandleUpdateExpansionLevel(Packet packet)
+        {
+            var bit1 = packet.ReadBit();
+            var bit2 = packet.ReadBit();
+            var bit3 = packet.ReadBit("UnkBit3");
+            var bit4 = 0;
+
+            if (bit3)
+                bit4 = packet.ReadBit("UnkBit4");
+
+            var availableClasses = packet.ReadInt32("AvailableClasses"); // Maybe available races if some special bit is set???
+
+            if (bit1)
+                packet.ReadByteE<ClientType>("ActiveExpansionLevel");
+
+            if (bit2)
+                packet.ReadByteE<ClientType>("AccountExpansionLevel");
+
+            for (var i = 0; i < availableClasses; i++)
+            {
+                packet.ReadByteE<Class>("ClassID", i); // Maybe also Race if some special bit is set???
+                packet.ReadByteE<ClientType>("RequiredExpansion", i);
+            }
+
+        }
     }
 }
