@@ -249,5 +249,24 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             ReadAttackRoundInfo(packet, "AttackRoundInfo");
         }
+
+        [Parser(Opcode.SMSG_SPELL_DAMAGE_SHIELD)]
+        public static void ReadSpellDamageShield(Packet packet)
+        {
+            packet.ReadPackedGuid128("Attacker");
+            packet.ReadPackedGuid128("Defender");
+            packet.ReadUInt32<SpellId>("SpellID");
+            packet.ReadUInt32("TotalDamage");
+            packet.ReadUInt32("OverKill");
+            packet.ReadUInt32("SchoolMask");
+            packet.ReadUInt32("LogAbsorbed");
+            packet.ReadUInt32("UnkUInt32");
+
+            packet.ResetBitReader();
+
+            var bit76 = packet.ReadBit("HasLogData");
+            if (bit76)
+                SpellHandler.ReadSpellCastLogData(packet);
+        }
     }
 }
