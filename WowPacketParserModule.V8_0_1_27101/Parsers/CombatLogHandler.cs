@@ -200,7 +200,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var hasCritRollMade = packet.ReadBit("HasCritRollMade");
             var hasCritRollNeeded = packet.ReadBit("HasCritRollNeeded");
             var hasLogData = packet.ReadBit("HasLogData");
-            var hasSandboxScaling = packet.ReadBit("HasLogData");
+            var hasSandboxScaling = packet.ReadBit("HasSandboxScaling");
 
             if (hasLogData)
                 SpellHandler.ReadSpellCastLogData(packet);
@@ -210,9 +210,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             if (hasCritRollNeeded)
                 packet.ReadSingle("CritRollNeeded");
-
-            if (hasLogData)
-                SpellHandler.ReadSpellCastLogData(packet);
 
             if (hasSandboxScaling)
                 SpellHandler.ReadSandboxScalingData(packet, "SandboxScalingData");
