@@ -32,7 +32,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadPackedGuid128("BnetAccountID");
                 packet.ReadPackedGuid128("Player Guid");
 
-                packet.ReadUInt64("Unk801"); // equals Unk801 in ReadCharactersData (SMSG_ENUM_CHARACTERS_RESULT)
+                packet.ReadUInt64("CommunityDbID");// not known which community is meant yet, guild?
                 packet.ReadUInt32("VirtualRealmAddress");
 
                 packet.ReadByteE<Race>("Race");
@@ -48,7 +48,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             packet.ReadPackedGuid128("Guid", idx);
 
-            packet.ReadUInt64("Unk801", idx); // equals Unk801 in SMSG_QUERY_PLAYER_NAME_RESPONSE
+            packet.ReadUInt64("CommunityDbID", idx); // not known which community is meant yet, guild?
 
             packet.ReadByte("ListPosition", idx);
             var race = packet.ReadByteE<Race>("RaceID", idx);

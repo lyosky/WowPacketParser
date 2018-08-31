@@ -291,5 +291,20 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadUInt32<SpellId>("Spell ID");
             packet.ReadUInt32("Unk");
         }
+
+        [Parser(Opcode.SMSG_ADD_LOSS_OF_CONTROL)]
+        public static void HandleAddLossOfControl(Packet packet)
+        {
+            packet.ReadPackedGuid128("Victim");
+            packet.ReadInt32<SpellId>("SpellID");
+            packet.ReadPackedGuid128("Caster");
+
+            packet.ReadInt32("Duration");
+            packet.ReadInt32("DurationRemaining");
+            packet.ReadInt32E<SpellSchoolMask>("LockoutSchoolMask");
+
+            packet.ReadByteE<SpellMechanic>("Mechanic");
+            packet.ReadByte("Type");
+        }
     }
 }
