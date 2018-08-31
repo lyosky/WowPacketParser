@@ -581,6 +581,7 @@ namespace WowPacketParser.SQL.Builders
                 }
                 else
                 {
+                    template.DynamicFlagsWod = npc.DynamicFlagsWod.GetValueOrDefault(UnitDynamicFlagsWOD.None);
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.Lootable;
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.Tapped;
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.TappedByPlayer;

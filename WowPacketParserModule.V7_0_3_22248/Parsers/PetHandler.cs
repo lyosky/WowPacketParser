@@ -95,11 +95,5 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadBit("AutocastEnabled");
         }
 
-        [Parser(Opcode.SMSG_PET_MODE)]
-        public static void HandlePetMode(Packet packet)
-        {
-            packet.ReadPackedGuid128("PetGUID");
-            ReadPetFlags(packet, "PetModeAndOrders");
-        }
     }
 }
