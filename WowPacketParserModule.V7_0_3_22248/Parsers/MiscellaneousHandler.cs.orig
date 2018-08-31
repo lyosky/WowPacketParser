@@ -335,6 +335,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadInt32("RaceID");
         }
 
+<<<<<<< HEAD
         public static void ReadAreaPoiData(Packet packet, params object[] idx)
         {
             packet.ReadTime("StartTime", idx);
@@ -357,13 +358,13 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
         [Parser(Opcode.CMSG_REQUEST_AREA_POI_UPDATE)]
         public static void HandleAreaPoiZero(Packet packet) { }
-        
+=======
         [Parser(Opcode.SMSG_SET_MOVEMENT_ANIM_KIT)]
         public static void HandlePlayOneShotAnimKit(Packet packet)
         {
             packet.ReadPackedGuid128("Unit");
             packet.ReadUInt16("AnimKitID");
         }
-
+>>>>>>> upstream/master
     }
 }
