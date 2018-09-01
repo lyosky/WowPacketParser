@@ -135,7 +135,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         }
 
         [Parser(Opcode.SMSG_LIGHTNING_STORM_START)]
-        [Parser(Opcode.SMSG_LIGHTNING_STORM_CHANGE)]
+        [Parser(Opcode.SMSG_LIGHTNING_STORM_END)]
         public static void HandleLightningStorm(Packet packet)
         {
             packet.ReadUInt32("LightningStormId"); // in client GetBytes with fixed size wotevs
