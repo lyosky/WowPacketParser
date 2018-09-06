@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -431,6 +431,8 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V8_0_1_27377:
                 case ClientVersionBuild.V8_0_1_27404:
                 case ClientVersionBuild.V8_0_1_27481:
+                case ClientVersionBuild.V8_0_1_27547:
+                case ClientVersionBuild.V8_0_1_27602:
                 {
                     return "V8_0_1_27101";
                 }

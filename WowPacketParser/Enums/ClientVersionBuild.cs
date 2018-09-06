@@ -1,4 +1,4 @@
-namespace WowPacketParser.Enums
+﻿namespace WowPacketParser.Enums
 {
     public enum ClientVersionBuild
     {
@@ -220,6 +220,8 @@ namespace WowPacketParser.Enums
         V8_0_1_27377 = 27377,
         V8_0_1_27404 = 27404,
         V8_0_1_27481 = 27481,
+        V8_0_1_27547 = 27547,
+        V8_0_1_27602 = 27602,
 
         // Battle.net - should probably not mix this but oh well
         BattleNetV37165 = 37165,
