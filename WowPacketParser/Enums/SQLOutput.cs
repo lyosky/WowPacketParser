@@ -20,6 +20,7 @@
         creature_template_locale,
         creature_template_scaling,
         creature_text,
+        creature_text_locale,
         gameobject,
         gameobject_addon,
         gameobject_template,

@@ -730,8 +730,8 @@ namespace WowPacketParser.SQL.Builders
                         Data = new CreatureText
                         {
                             Entry = text.Key,
-                            GroupId = "@GROUP_ID+" + count,
-                            ID = "@ID+0",
+                            GroupId = "" + count,///"@GROUP_ID+" +
+                            ID = "0",///"@ID+0"
                             Text = textValue.Item1.Text,
                             Type = textValue.Item1.Type,
                             Language = textValue.Item1.Language,
@@ -755,7 +755,58 @@ namespace WowPacketParser.SQL.Builders
                 }
             }
 
-            return new SQLInsert<CreatureText>(rows, false).Build();
+            return "SET NAMES 'utf8';" + Environment.NewLine + "SET @GROUP_ID = 0;" + Environment.NewLine + "SET @ID = 0;" + Environment.NewLine + new SQLInsert<CreatureText>(rows, true).Build();
+        }
+
+
+        [BuilderMethod]
+        public static string CreatureTextLocale()
+        {
+            if (Storage.CreatureTexts.IsEmpty() || !Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_text_locale))
+                return string.Empty;
+
+
+
+            /* can't use compare DB without knowing values of groupid or id
+            var entries = Storage.CreatureTexts.Keys.ToList();
+            var creatureTextDb = SQLDatabase.GetDict<uint, CreatureText>(entries);
+            */
+
+            var rows = new RowList<CreatureText>();
+            var rowLocales = new RowList<CreatureTextLocale>();
+            Dictionary<uint, uint> entryCount = new Dictionary<uint, uint>();
+
+            foreach (var text in Storage.CreatureTexts.OrderBy(t => t.Key))
+            {
+                foreach (var textValue in text.Value)
+                {
+                    var count = entryCount.ContainsKey(text.Key) ? entryCount[text.Key] : 0;
+
+                    if (rows.Where(text2 => text2.Data.Text == textValue.Item1.Text).Count() != 0)
+                        continue;
+
+                    var row = new Row<CreatureTextLocale>
+                    {
+                        Data = new CreatureTextLocale
+                        {
+                            Entry = text.Key,
+                            GroupId = "" + count,///@GROUP_ID+
+                            ID = "0",///@ID+
+                            Text = textValue.Item1.Text
+                        },
+
+                    };
+
+                    if (!entryCount.ContainsKey(text.Key))
+                        entryCount.Add(text.Key, count + 1);
+                    else
+                        entryCount[text.Key] = count + 1;
+
+                    rowLocales.Add(row);
+                }
+            }
+
+            return new SQLInsert<CreatureTextLocale>(rowLocales, true).Build();
         }
 
         [BuilderMethod]
