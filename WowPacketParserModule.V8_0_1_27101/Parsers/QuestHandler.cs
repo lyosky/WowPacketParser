@@ -642,5 +642,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, indexes);
             packet.ReadInt32("Quantity", indexes);
         }
+
+        [Parser(Opcode.CMSG_CLOSE_QUEST_CHOICE)]
+        public static void HandleQuestEmpty(Packet packet) { }
     }
 }
