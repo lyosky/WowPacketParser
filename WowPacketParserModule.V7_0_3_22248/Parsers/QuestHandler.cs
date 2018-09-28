@@ -579,6 +579,17 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
 
             Storage.QuestGreetings.Add(questGreeting, packet.TimeSpan);
+
+            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && questGreeting.Greeting != string.Empty)
+            {
+                QuestGreetingLocale localesQuestGreeting = new QuestGreetingLocale
+                {
+                    ID = (uint)questGreeting.ID,
+                    Type = questGreeting.Type,
+                    Greeting = questGreeting.Greeting
+                };
+                Storage.LocalesQuestGreeting.Add(localesQuestGreeting, packet.TimeSpan);
+            }
         }
 
         [Parser(Opcode.SMSG_QUEST_GIVER_INVALID_QUEST, ClientVersionBuild.V7_2_0_23826)]
