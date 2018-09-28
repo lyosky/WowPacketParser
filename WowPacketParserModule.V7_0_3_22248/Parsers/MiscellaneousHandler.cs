@@ -1,4 +1,5 @@
-﻿using WowPacketParser.Enums;
+﻿using WowPacketParser.Loading;
+using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
 using WowPacketParser.Store;
@@ -122,6 +123,16 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
                 packet.AddSniffData(StoreNameType.PageText, (int)entry, "QUERY_RESPONSE");
                 Storage.PageTexts.Add(pageText, packet.TimeSpan);
+
+                if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && pageText.Text != string.Empty)
+                {
+                    PageTextLocale localesPageText = new PageTextLocale
+                    {
+                        ID = (uint)pageText.ID,
+                        Text = pageText.Text
+                    };
+                    Storage.LocalesPageText.Add(localesPageText, packet.TimeSpan);
+                }
             }
         }
 
