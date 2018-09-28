@@ -621,9 +621,11 @@
     <Compile Include="Store\Objects\Player.cs" />
     <Compile Include="Store\Objects\QuestObjective.cs" />
     <Compile Include="Store\Objects\QuestOfferReward.cs" />
+    <Compile Include="Store\Objects\QuestOfferRewardLocale.cs" />
     <Compile Include="Store\Objects\QuestPOI.cs" />
     <Compile Include="Store\Objects\QuestPOIPoint.cs" />
     <Compile Include="Store\Objects\QuestRequestItems.cs" />
+    <Compile Include="Store\Objects\QuestRequestItemsLocale.cs" />
     <Compile Include="Store\Objects\QuestTemplate.cs" />
     <Compile Include="Store\Objects\QuestVisualEffect.cs" />
     <Compile Include="Store\Objects\SceneTemplate.cs" />
