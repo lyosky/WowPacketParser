@@ -599,6 +599,7 @@
     <Compile Include="Store\Objects\GossipMenuOption.cs" />
     <Compile Include="Store\Objects\GossipMenuOptionAction.cs" />
     <Compile Include="Store\Objects\GossipMenuOptionBox.cs" />
+    <Compile Include="Store\Objects\GossipMenuOptionLocale.cs" />
     <Compile Include="Store\Objects\GossipMenuOptionTrainer.cs" />
     <Compile Include="Store\Objects\IBroadcastTextEntry.cs" />
     <Compile Include="Store\Objects\PageTextLocale.cs" />

@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WowPacketParser.Loading;
 using WowPacketParser.Enums;
 using WowPacketParser.Enums.Version;
 using WowPacketParser.Misc;
@@ -403,6 +404,18 @@ namespace WowPacketParser.Parsing.Parsers
                 Storage.GossipMenuOptions.Add(gossipOption, packet.TimeSpan);
                 if (!gossipMenuOptionBox.IsEmpty)
                     Storage.GossipMenuOptionBoxes.Add(gossipMenuOptionBox, packet.TimeSpan);
+
+                if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && gossipOption.OptionText != string.Empty)
+                {
+                    GossipMenuOptionLocale localesGossipMenuOption = new GossipMenuOptionLocale
+                    {
+                        MenuId = (uint)gossipOption.MenuId,
+                        OptionIndex = gossipOption.OptionIndex,
+                        OptionText = gossipOption.OptionText,
+                        BoxText = gossipMenuOptionBox.BoxText
+                    };
+                    Storage.LocalesGossipMenuOption.Add(localesGossipMenuOption, packet.TimeSpan);
+                }
             }
 
             uint questgossips = packet.ReadUInt32("Amount of Quest gossips");

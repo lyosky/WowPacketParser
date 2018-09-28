@@ -105,6 +105,7 @@ namespace WowPacketParser.Store
         public static readonly DataBag<QuestRequestItemsLocale> LocalesQuestRequestItems = new DataBag<QuestRequestItemsLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
         public static readonly DataBag<QuestGreetingLocale> LocalesQuestGreeting = new DataBag<QuestGreetingLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
         public static readonly DataBag<PageTextLocale> LocalesPageText = new DataBag<PageTextLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
+        public static readonly DataBag<GossipMenuOptionLocale> LocalesGossipMenuOption = new DataBag<GossipMenuOptionLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
 
         // Spell Target Position
         public static readonly DataBag<SpellTargetPosition> SpellTargetPositions = new DataBag<SpellTargetPosition>(new List<SQLOutput> { SQLOutput.spell_target_position });
@@ -193,6 +194,7 @@ namespace WowPacketParser.Store
             LocalesQuestRequestItems.Clear();
             LocalesQuestGreeting.Clear();
             LocalesPageText.Clear();
+            LocalesGossipMenuOption.Clear();
 
             HotfixDatas.Clear();
 

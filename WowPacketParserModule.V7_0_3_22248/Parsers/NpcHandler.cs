@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using WowPacketParser.Loading;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
