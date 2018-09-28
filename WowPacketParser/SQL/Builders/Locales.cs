@@ -76,5 +76,17 @@ namespace WowPacketParser.SQL.Builders
             var requestitemsDb = SQLDatabase.Get(new RowList<Store.Objects.QuestRequestItemsLocale>());
             return "SET NAMES 'utf8';" + Environment.NewLine + SQLUtil.Compare(Storage.LocalesQuestRequestItems, requestitemsDb, StoreNameType.None) + Environment.NewLine + "SET NAMES 'latin1';";
         }
+
+        [BuilderMethod]
+        public static string LocalesQuestGreeting()
+        {
+            if (Storage.LocalesQuestGreeting.IsEmpty())
+                return string.Empty;
+            if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.locales_quest))
+                return string.Empty;
+            // pass empty list, because we want to select the whole db table (faster than select only needed columns)
+            var greetingDb = SQLDatabase.Get(new RowList<Store.Objects.QuestGreetingLocale>());
+            return "SET NAMES 'utf8';" + Environment.NewLine + SQLUtil.Compare(Storage.LocalesQuestGreeting, greetingDb, StoreNameType.None) + Environment.NewLine + "SET NAMES 'latin1';";
+        }
     }
 }
