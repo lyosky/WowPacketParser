@@ -52,5 +52,17 @@ namespace WowPacketParser.SQL.Builders
 
             return "SET NAMES 'utf8';" + Environment.NewLine + SQLUtil.Compare(Storage.LocalesQuestObjectives, templatesDb, StoreNameType.None) + Environment.NewLine + "SET NAMES 'latin1';";
         }
+
+        [BuilderMethod]
+        public static string LocalesQuestOfferReward()
+        {
+            if (Storage.LocalesQuestOfferRewards.IsEmpty())
+                return string.Empty;
+            if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.locales_quest))
+                return string.Empty;
+            // pass empty list, because we want to select the whole db table (faster than select only needed columns)
+            var offersDb = SQLDatabase.Get(new RowList<Store.Objects.QuestOfferRewardLocale>());
+            return "SET NAMES 'utf8';" + Environment.NewLine + SQLUtil.Compare(Storage.LocalesQuestOfferRewards, offersDb, StoreNameType.None) + Environment.NewLine + "SET NAMES 'latin1';";
+        }
     }
 }
