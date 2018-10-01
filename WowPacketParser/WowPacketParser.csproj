@@ -465,6 +465,7 @@
     <Compile Include="Misc\BattlenetPacketHeader.cs" />
     <Compile Include="Misc\BiDictionary.cs" />
     <Compile Include="Misc\Bit.cs" />
+    <Compile Include="Misc\ClientLocale.cs" />
     <Compile Include="Misc\ClientVersion.cs" />
     <Compile Include="Misc\ConcurrentPriorityQueue.cs" />
     <Compile Include="Misc\Configuration.cs" />

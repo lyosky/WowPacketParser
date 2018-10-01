@@ -77,7 +77,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             if (!gossipMenuOptionBox.IsEmpty)
                 Storage.GossipMenuOptionBoxes.Add(gossipMenuOptionBox, packet.TimeSpan);
 
-            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && gossipOption.OptionText != string.Empty)
+            if (ClientLocale.PacketLocale != LocaleConstant.enUS && gossipOption.OptionText != string.Empty)
             {
                 GossipMenuOptionLocale localesGossipMenuOption = new GossipMenuOptionLocale
                 {

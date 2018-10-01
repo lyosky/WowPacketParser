@@ -22,10 +22,10 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("areaId")]
         public uint? AreaID;
 
-        //[DBFieldName("spawnMask")]
-        //public uint? SpawnMask;
+        [DBFieldName("spawnMask", TargetedDatabase.Zero, TargetedDatabase.Legion)]
+        public uint? SpawnMask;
 
-        [DBFieldName("spawnDifficulties")]
+        [DBFieldName("spawnDifficulties", TargetedDatabase.Legion)]
         public string spawnDifficulties;
 
         [DBFieldName("phaseMask", TargetedDatabase.Zero, TargetedDatabase.WrathOfTheLichKing)]

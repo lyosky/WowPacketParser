@@ -15,7 +15,7 @@ namespace WowPacketParser.Store.Objects
         public string Text;
 
         [DBFieldName("locale", true)]
-        public string Locale = BinaryPacketReader.GetClientLocale();
+        public string Locale = ClientLocale.PacketLocaleString;
 
         [DBFieldName("VerifiedBuild")]
         public int? VerifiedBuild = ClientVersion.BuildInt;

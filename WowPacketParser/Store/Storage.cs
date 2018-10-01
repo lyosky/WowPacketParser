@@ -104,7 +104,7 @@ namespace WowPacketParser.Store
         public static readonly DataBag<QuestOfferRewardLocale> LocalesQuestOfferRewards = new DataBag<QuestOfferRewardLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
         public static readonly DataBag<QuestRequestItemsLocale> LocalesQuestRequestItems = new DataBag<QuestRequestItemsLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
         public static readonly DataBag<QuestGreetingLocale> LocalesQuestGreeting = new DataBag<QuestGreetingLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
-        public static readonly DataBag<PageTextLocale> LocalesPageText = new DataBag<PageTextLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
+        public static readonly DataBag<PageTextLocale> LocalesPageText = new DataBag<PageTextLocale>(new List<SQLOutput> { SQLOutput.page_text_locale });
         public static readonly DataBag<GossipMenuOptionLocale> LocalesGossipMenuOption = new DataBag<GossipMenuOptionLocale>(new List<SQLOutput> { SQLOutput.locales_quest });
 
         // Spell Target Position

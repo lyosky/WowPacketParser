@@ -101,8 +101,17 @@ namespace WowPacketParser.SQL.Builders
                 if (creature.Zone != -1)
                     row.Data.ZoneID = (uint)creature.Zone;
 
-                row.Data.spawnDifficulties = "" + StoreGetters.GetName(StoreNameType.Difficulty, (int)creature.DifficultyID, false);
-                //row.Data.SpawnMask = (uint)creature.GetDefaultSpawnMask();
+
+                row.Data.SpawnMask = (uint)creature.GetDefaultSpawnMask();
+
+                if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_0_3_22248))
+                {
+                    string data = string.Join(",", creature.GetDefaultSpawnDifficulties());
+                    if (string.IsNullOrEmpty(data))
+                        data = "0";
+                    row.Data.spawnDifficulties = data;
+                }
+
                 row.Data.PhaseMask = creature.PhaseMask;
 
                 if (ClientVersion.AddedInVersion(ClientVersionBuild.V4_3_4_15595) && creature.Phases != null)
@@ -293,8 +302,16 @@ namespace WowPacketParser.SQL.Builders
                 if (go.Zone != -1)
                     row.Data.ZoneID = (uint)go.Zone;
 
-                row.Data.spawnDifficulties = "" + StoreGetters.GetName(StoreNameType.Difficulty, (int)go.DifficultyID, false);
-                //row.Data.SpawnMask = (uint)go.GetDefaultSpawnMask();
+                row.Data.SpawnMask = (uint)go.GetDefaultSpawnMask();
+
+                if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_0_3_22248))
+                {
+                    string data = string.Join(",", go.GetDefaultSpawnDifficulties());
+                    if (string.IsNullOrEmpty(data))
+                        data = "0";
+                    row.Data.spawnDifficulties = data;
+                }
+
                 row.Data.PhaseMask = go.PhaseMask;
 
                 if (ClientVersion.AddedInVersion(ClientVersionBuild.V4_3_4_15595) && go.Phases != null)

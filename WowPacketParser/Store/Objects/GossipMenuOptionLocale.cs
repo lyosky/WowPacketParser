@@ -15,7 +15,7 @@ namespace WowPacketParser.Store.Objects
         public uint? OptionIndex;
 
         [DBFieldName("locale", true)]
-        public string Locale = BinaryPacketReader.GetClientLocale();
+        public string Locale = ClientLocale.PacketLocaleString;
 
         [DBFieldName("OptionText")]
         public string OptionText;

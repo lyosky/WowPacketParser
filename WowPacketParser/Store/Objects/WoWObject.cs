@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
@@ -79,6 +79,16 @@ namespace WowPacketParser.Store.Objects
             }
 
             return MapIsContinent(Map) ? 1 : 3;
+        }
+
+        public List<byte> GetDefaultSpawnDifficulties()
+        {
+            if (Settings.UseDBC && DBC.DBC.MapDifficultyStores != null)
+            {
+                if (DBC.DBC.MapDifficultyStores.ContainsKey((ushort)Map))
+                    return DBC.DBC.MapDifficultyStores[(ushort)Map];
+            }
+            return new List<byte>();
         }
 
         private static bool MapIsContinent(uint mapId)

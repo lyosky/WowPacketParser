@@ -9,7 +9,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("ID", true)]
         public uint? ID;
         [DBFieldName("locale", true)]
-        public string Locale = BinaryPacketReader.GetClientLocale();
+        public string Locale = ClientLocale.PacketLocaleString;
         [DBFieldName("RewardText")]
         public string RewardText;
         [DBFieldName("VerifiedBuild")]

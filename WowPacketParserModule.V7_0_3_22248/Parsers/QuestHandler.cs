@@ -264,7 +264,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
                 uint bits6 = packet.ReadBits(8);
                 questInfoObjective.Description = packet.ReadWoWString("Description", bits6, i);
 
-                if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && questInfoObjective.Description != string.Empty)
+                if (ClientLocale.PacketLocale != LocaleConstant.enUS && questInfoObjective.Description != string.Empty)
                 {
                     QuestObjectivesLocale localesQuestObjectives = new QuestObjectivesLocale
                     {
@@ -290,7 +290,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             quest.QuestTurnTargetName = packet.ReadWoWString("PortraitTurnInName", questTurnTargetNameLen);
             quest.QuestCompletionLog = packet.ReadWoWString("QuestCompletionLog", questCompletionLogLen);
 
-            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS)
+            if (ClientLocale.PacketLocale != LocaleConstant.enUS)
             {
                 LocalesQuest localesQuest = new LocalesQuest
                 {
@@ -369,7 +369,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
             Storage.QuestOfferRewards.Add(questOfferReward, packet.TimeSpan);
 
-            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && questOfferReward.RewardText != string.Empty)
+            if (ClientLocale.PacketLocale != LocaleConstant.enUS && questOfferReward.RewardText != string.Empty)
             {
                 QuestOfferRewardLocale localesQuestOfferReward = new QuestOfferRewardLocale
                 {
@@ -518,7 +518,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
             Storage.QuestRequestItems.Add(questRequestItems, packet.TimeSpan);
 
-            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && questRequestItems.CompletionText != string.Empty)
+            if (ClientLocale.PacketLocale != LocaleConstant.enUS && questRequestItems.CompletionText != string.Empty)
             {
                 QuestRequestItemsLocale localesQuestRequestItems = new QuestRequestItemsLocale
                 {
@@ -580,11 +580,11 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
             Storage.QuestGreetings.Add(questGreeting, packet.TimeSpan);
 
-            if (BinaryPacketReader.GetLocale() != LocaleConstant.enUS && questGreeting.Greeting != string.Empty)
+            if (ClientLocale.PacketLocale != LocaleConstant.enUS && questGreeting.Greeting != string.Empty)
             {
                 QuestGreetingLocale localesQuestGreeting = new QuestGreetingLocale
                 {
-                    ID = (uint)questGreeting.ID,
+                    ID = questGreeting.ID,
                     Type = questGreeting.Type,
                     Greeting = questGreeting.Greeting
                 };
