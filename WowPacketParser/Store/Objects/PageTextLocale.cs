@@ -2,7 +2,6 @@
 using WowPacketParser.Misc;
 using WowPacketParser.SQL;
 
-
 namespace WowPacketParser.Store.Objects
 {
     [DBTableName("page_text_locale")]
@@ -21,4 +20,3 @@ namespace WowPacketParser.Store.Objects
         public int? VerifiedBuild = ClientVersion.BuildInt;
     }
 }
-

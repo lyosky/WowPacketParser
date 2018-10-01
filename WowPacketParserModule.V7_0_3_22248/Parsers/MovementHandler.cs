@@ -517,11 +517,11 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             ActivePhases.Clear();
 
             packet.ReadPackedGuid128("Client");
+
             // PhaseShiftData
             packet.ReadInt32("PhaseShiftFlags");
             var count = packet.ReadInt32("PhaseShiftCount");
             packet.ReadPackedGuid128("PersonalGUID");
-
             for (var i = 0; i < count; ++i)
             {
                 var flags = packet.ReadUInt16("PhaseFlags", i);

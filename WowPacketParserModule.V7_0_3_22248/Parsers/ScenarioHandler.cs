@@ -53,9 +53,9 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         [Parser(Opcode.SMSG_SCENARIO_BOOT)]
         public static void HandleScenarioBoot(Packet packet)
         {
-            packet.ReadUInt32("ScenarioID");
-            packet.ReadUInt32("Unk1");
-            packet.ReadByte("Unk2");
+            packet.ReadInt32("ScenarioID");
+            packet.ReadInt32("Unk1");
+            packet.ReadBits("Unk2", 2);
         }
     }
 }

@@ -74,17 +74,6 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
-        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
-        public static void HandleInstanceEncounterStart(Packet packet)
-        {
-            packet.ReadInt32("InCombatResCount");
-            packet.ReadInt32("MaxInCombatResCount");
-            packet.ReadInt32("CombatResChargeRecovery");
-            packet.ReadInt32("NextCombatResChargeTime");
-            packet.ResetBitReader();
-            packet.ReadBit("InProgress");
-        }
-
         public static void ReadEncounterItemInfo(Packet packet, params object[] idx)
         {
             packet.ReadInt32("ItemID", idx);
@@ -178,6 +167,18 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             }
         }
 
+        [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_START)]
+        public static void HandleInstanceEncounterStart(Packet packet)
+        {
+            packet.ReadInt32("InCombatResCount");
+            packet.ReadInt32("MaxInCombatResCount");
+            packet.ReadInt32("CombatResChargeRecovery");
+            packet.ReadInt32("NextCombatResChargeTime");
+
+            packet.ResetBitReader();
+            packet.ReadBit("InProgress");
+        }
+
         [Parser(Opcode.SMSG_INSTANCE_ENCOUNTER_SET_SUPPRESSING_RELEASE)]
         public static void HandleInstanceEncounterSetSuppressingRelease(Packet packet)
         {
@@ -189,7 +190,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         {
             packet.ReadBit("ReleaseAllowed");
         }
-
+        
         [Parser(Opcode.CMSG_START_CHALLENGE_MODE)]
         public static void HandleStartChallengeMode(Packet packet)
         {

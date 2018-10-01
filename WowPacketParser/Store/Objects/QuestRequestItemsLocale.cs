@@ -1,5 +1,4 @@
 ﻿using WowPacketParser.Loading;
-using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.SQL;
 

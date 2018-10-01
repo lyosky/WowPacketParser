@@ -1,5 +1,5 @@
-﻿using WowPacketParser.Loading;
-using WowPacketParser.Enums;
+﻿using WowPacketParser.Enums;
+using WowPacketParser.Loading;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
 using WowPacketParser.Store;
@@ -373,6 +373,5 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadPackedGuid128("Unit");
             packet.ReadUInt16("AnimKitID");
         }
-
     }
 }

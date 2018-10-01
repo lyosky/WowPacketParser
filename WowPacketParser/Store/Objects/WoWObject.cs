@@ -88,6 +88,7 @@ namespace WowPacketParser.Store.Objects
                 if (DBC.DBC.MapDifficultyStores.ContainsKey((ushort)Map))
                     return DBC.DBC.MapDifficultyStores[(ushort)Map];
             }
+
             return new List<byte>();
         }
 

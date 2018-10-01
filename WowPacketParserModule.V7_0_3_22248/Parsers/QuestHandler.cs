@@ -376,6 +376,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
                     ID = (uint)id,
                     RewardText = questOfferReward.RewardText
                 };
+
                 Storage.LocalesQuestOfferRewards.Add(localesQuestOfferReward, packet.TimeSpan);
             }
         }

@@ -2,6 +2,7 @@
 using System.IO;
 using WowPacketParser.Enums;
 
+
 namespace WowPacketParser.Misc
 {
     public static class ClientLocale
