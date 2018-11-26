@@ -30,7 +30,6 @@ namespace WowPacketParser.Loading
         private int _snifferId;
         private short _snifferVersion;
 
-
         public BinaryPacketReader(SniffType type, string fileName, Encoding encoding)
         {
             _sniffType = type;

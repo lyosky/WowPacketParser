@@ -224,6 +224,7 @@
     <Compile Include="Enums\ItemModifier.cs" />
     <Compile Include="Enums\LootError.cs" />
     <Compile Include="Enums\QuestFlags2.cs" />
+    <Compile Include="Enums\QuestFlags3.cs" />
     <Compile Include="Enums\QuestRequirementType.cs" />
     <Compile Include="Enums\CreatureFamily.cs" />
     <Compile Include="Enums\CreatureRank.cs" />
@@ -588,6 +589,7 @@
     <Compile Include="Store\Objects\CreatureEquipment.cs" />
     <Compile Include="Store\Objects\CreatureTemplateAddon.cs" />
     <Compile Include="Store\Objects\CreatureTemplateLocale.cs" />
+    <Compile Include="Store\Objects\CreatureTemplateModel.cs" />
     <Compile Include="Store\Objects\CreatureTemplateScaling.cs" />
     <Compile Include="Store\Objects\CreatureText.cs" />
     <Compile Include="Store\Objects\CreatureTextLocale.cs" />
@@ -632,6 +634,8 @@
     <Compile Include="Store\Objects\QuestRequestItemsLocale.cs" />
     <Compile Include="Store\Objects\QuestTemplate.cs" />
     <Compile Include="Store\Objects\QuestVisualEffect.cs" />
+    <Compile Include="Store\Objects\ScenarioPOI.cs" />
+    <Compile Include="Store\Objects\ScenarioPOIPoints.cs" />
     <Compile Include="Store\Objects\SceneTemplate.cs" />
     <Compile Include="Store\Objects\SniffData.cs" />
     <Compile Include="Store\Objects\PlayerCreateInfoAction.cs" />

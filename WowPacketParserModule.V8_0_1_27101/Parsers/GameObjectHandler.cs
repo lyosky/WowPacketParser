@@ -29,7 +29,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             gameObject.Type = packet.ReadInt32E<GameObjectType>("Type");
 
-            gameObject.DisplayID = packet.ReadUInt32("Display ID");
+            gameObject.DisplayID = (uint)packet.ReadInt32("Display ID");
 
             var name = new string[4];
             for (int i = 0; i < 4; i++)
@@ -53,7 +53,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 {
                     GameObjectEntry = (uint)entry.Key,
                     Idx = i,
-                    ItemId = packet.ReadUInt32<ItemId>("QuestItem", i)
+                    ItemId = (uint)packet.ReadInt32<ItemId>("QuestItem", i)
                 };
 
                 Storage.GameObjectTemplateQuestItems.Add(questItem, packet.TimeSpan);

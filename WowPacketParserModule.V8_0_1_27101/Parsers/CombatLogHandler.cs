@@ -11,22 +11,22 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
     {
         public static void ReadPeriodicAuraLogEffectData(Packet packet, params object[] idx)
         {
-            packet.ReadUInt32("Effect", idx);
-            packet.ReadUInt32("Amount", idx);
-            packet.ReadUInt32("Unk801", idx);
-            packet.ReadInt32("OverHealOrKill", idx); // normally this is uint32 in client, used int here for better readability
-            packet.ReadUInt32("SchoolMaskOrPower", idx);
-            packet.ReadUInt32("AbsorbedOrAmplitude", idx);
-            packet.ReadUInt32("Resisted", idx);
+            packet.ReadInt32("Effect", idx);
+            packet.ReadInt32("Amount", idx);
+            packet.ReadInt32("OriginalDamage", idx);
+            packet.ReadInt32("OverHealOrKill", idx);
+            packet.ReadInt32("SchoolMaskOrPower", idx);
+            packet.ReadInt32("AbsorbedOrAmplitude", idx);
+            packet.ReadInt32("Resisted", idx);
 
             packet.ResetBitReader();
 
             packet.ReadBit("Crit", idx);
             var hasDebugData = packet.ReadBit("HasPeriodicAuraLogEffectDebugInfo", idx);
-            var hasSandboxScaling = packet.ReadBit("HasSandboxScaling", idx);
+            var hasContentTuning = packet.ReadBit("HasContentTuning", idx);
 
-            if (hasSandboxScaling)
-                SpellHandler.ReadSandboxScalingData(packet, idx, "SandboxScalingData");
+            if (hasContentTuning)
+                SpellHandler.ReadContentTuningParams(packet, idx, "ContentTuning");
 
             if (hasDebugData)
             {
@@ -35,7 +35,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
         }
 
-        public static void ReadSandboxScalingData(Packet packet, params object[] idx)
+        public static void ReadCombatLogContentTuning(Packet packet, params object[] idx)
         {
             packet.ReadByte("Type", idx);
             packet.ReadByte("TargetLevel", idx);
@@ -45,10 +45,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadInt16("PlayerLevelDelta", idx);
             packet.ReadSByte("TargetScalingLevelDelta", idx);
             packet.ReadUInt16("PlayerItemLevel", idx);
-            packet.ReadUInt16("Flags", idx);
-
-            packet.ResetBitReader();
-            packet.ReadBit("UnkBit", idx);
+            packet.ReadUInt16("ScalingHealthItemLevelCurveID", idx);
+            packet.ReadByte("ScalesWithItemLevel", idx);
         }
 
         public static void ReadAttackRoundInfo(Packet packet, params object[] indexes)
@@ -106,7 +104,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             if (hitInfo.HasAnyFlag(SpellHitInfo.HITINFO_BLOCK | SpellHitInfo.HITINFO_UNK12))
                 packet.ReadSingle("Unk Float", indexes);
 
-            ReadSandboxScalingData(packet, indexes, "SandboxScalingData");
+            ReadCombatLogContentTuning(packet, indexes, "ContentTuning");
         }
 
         [Parser(Opcode.SMSG_SPELL_PERIODIC_AURA_LOG)]
@@ -115,9 +113,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadPackedGuid128("TargetGUID");
             packet.ReadPackedGuid128("CasterGUID");
 
-            packet.ReadUInt32<SpellId>("SpellID");
+            packet.ReadInt32<SpellId>("SpellID");
 
-            var periodicAuraLogEffectCount = packet.ReadInt32("PeriodicAuraLogEffectCount");
+            var periodicAuraLogEffectCount = packet.ReadUInt32("PeriodicAuraLogEffectCount");
 
             packet.ResetBitReader();
             var hasLogData = packet.ReadBit("HasLogData");
@@ -150,17 +148,17 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadPackedGuid128("CasterGUID");
             packet.ReadPackedGuid128("CastID");
 
-            packet.ReadUInt32<SpellId>("SpellID");
-            packet.ReadUInt32("SpellXSpellVisualID");
-            packet.ReadUInt32("Damage");
-            packet.ReadUInt32("OriginalDamage");
-            packet.ReadInt32("OverKill"); // normally this is uint32 in client, used int here for better readability
+            packet.ReadInt32<SpellId>("SpellID");
+            packet.ReadInt32("SpellXSpellVisualID");
+            packet.ReadInt32("Damage");
+            packet.ReadInt32("OriginalDamage");
+            packet.ReadInt32("OverKill");
 
             packet.ReadByte("SchoolMask");
 
-            packet.ReadUInt32("Absorbed");
-            packet.ReadUInt32("Resisted");
-            packet.ReadUInt32("ShieldBlock");
+            packet.ReadInt32("Absorbed");
+            packet.ReadInt32("Resisted");
+            packet.ReadInt32("ShieldBlock");
 
             packet.ResetBitReader();
 
@@ -170,7 +168,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             var hasDebugData = packet.ReadBit("HasDebugData");
             var hasLogData = packet.ReadBit("HasLogData");
-            var hasSandboxScaling = packet.ReadBit("HasSandboxScaling");
+            var hasContentTuning = packet.ReadBit("HasContentTuning");
 
             if (hasLogData)
                 SpellHandler.ReadSpellCastLogData(packet, "SpellCastLogData");
@@ -178,8 +176,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             if (hasDebugData)
                 ReadSpellNonMeleeDebugData(packet, "DebugData");
 
-            if (hasSandboxScaling)
-                SpellHandler.ReadSandboxScalingData(packet, "SandboxScalingData");
+            if (hasContentTuning)
+                SpellHandler.ReadContentTuningParams(packet, "ContentTuning");
         }
 
         [Parser(Opcode.SMSG_SPELL_HEAL_LOG)]
@@ -188,11 +186,11 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadPackedGuid128("TargetGUID");
             packet.ReadPackedGuid128("CasterGUID");
 
-            packet.ReadUInt32<SpellId>("SpellID");
-            packet.ReadUInt32("Health");
-            packet.ReadUInt32("OverHeal");
-            packet.ReadUInt32("Absorbed");
-            packet.ReadUInt32("Unk801");
+            packet.ReadInt32<SpellId>("SpellID");
+            packet.ReadInt32("Health");
+            packet.ReadInt32("OriginalHeal");
+            packet.ReadInt32("OverHeal");
+            packet.ReadInt32("Absorbed");
 
             packet.ResetBitReader();
 
@@ -200,7 +198,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var hasCritRollMade = packet.ReadBit("HasCritRollMade");
             var hasCritRollNeeded = packet.ReadBit("HasCritRollNeeded");
             var hasLogData = packet.ReadBit("HasLogData");
-            var hasSandboxScaling = packet.ReadBit("HasSandboxScaling");
+            var hasContentTuning = packet.ReadBit("HasContentTuning");
 
             if (hasLogData)
                 SpellHandler.ReadSpellCastLogData(packet);
@@ -211,8 +209,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             if (hasCritRollNeeded)
                 packet.ReadSingle("CritRollNeeded");
 
-            if (hasSandboxScaling)
-                SpellHandler.ReadSandboxScalingData(packet, "SandboxScalingData");
+            if (hasContentTuning)
+                SpellHandler.ReadContentTuningParams(packet, "ContentTuning");
         }
 
         [Parser(Opcode.SMSG_SPELL_ABSORB_LOG)]
@@ -252,12 +250,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             packet.ReadPackedGuid128("Attacker");
             packet.ReadPackedGuid128("Defender");
-            packet.ReadUInt32<SpellId>("SpellID");
-            packet.ReadUInt32("TotalDamage");
-            packet.ReadUInt32("OverKill");
-            packet.ReadUInt32("SchoolMask");
-            packet.ReadUInt32("LogAbsorbed");
-            packet.ReadUInt32("UnkUInt32");
+            packet.ReadInt32<SpellId>("SpellID");
+            packet.ReadInt32("TotalDamage");
+            packet.ReadInt32("OriginalDamage");
+            packet.ReadInt32("OverKill");
+            packet.ReadInt32("SchoolMask");
+            packet.ReadInt32("LogAbsorbed");
 
             packet.ResetBitReader();
 

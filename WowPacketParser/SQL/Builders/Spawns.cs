@@ -101,7 +101,6 @@ namespace WowPacketParser.SQL.Builders
                 if (creature.Zone != -1)
                     row.Data.ZoneID = (uint)creature.Zone;
 
-
                 row.Data.SpawnMask = (uint)creature.GetDefaultSpawnMask();
 
                 if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_0_3_22248))

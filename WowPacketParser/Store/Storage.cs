@@ -36,6 +36,7 @@ namespace WowPacketParser.Store
         public static readonly DataBag<CreatureTemplateNonWDB> CreatureTemplatesNonWDB = new DataBag<CreatureTemplateNonWDB>(new List<SQLOutput> { SQLOutput.creature_template });
         public static readonly DataBag<CreatureTemplateQuestItem> CreatureTemplateQuestItems = new DataBag<CreatureTemplateQuestItem>(new List<SQLOutput> { SQLOutput.creature_template });
         public static readonly DataBag<CreatureTemplateScaling> CreatureTemplateScalings = new DataBag<CreatureTemplateScaling>(new List<SQLOutput> { SQLOutput.creature_template_scaling });
+        public static readonly DataBag<CreatureTemplateModel> CreatureTemplateModels = new DataBag<CreatureTemplateModel>(new List<SQLOutput> { SQLOutput.creature_template });
 
         // Vendor & trainer
         public static readonly DataBag<NpcTrainer> NpcTrainers = new DataBag<NpcTrainer>(new List<SQLOutput> { SQLOutput.npc_trainer }); // legacy 3.3.5 support
@@ -115,6 +116,10 @@ namespace WowPacketParser.Store
         // Scenes
         public static readonly DataBag<SceneTemplate> Scenes = new DataBag<SceneTemplate>(new List<SQLOutput> { SQLOutput.scene_template });
 
+        // Scenario
+        public static readonly DataBag<ScenarioPOI> ScenarioPOIs = new DataBag<ScenarioPOI>(new List<SQLOutput> { SQLOutput.scenario_poi });
+        public static readonly DataBag<ScenarioPOIPoint> ScenarioPOIPoints = new DataBag<ScenarioPOIPoint>(new List<SQLOutput> { SQLOutput.scenario_poi });
+
         public static readonly DataBag<BroadcastText> BroadcastTexts = new DataBag<BroadcastText>(new List<SQLOutput> { SQLOutput.broadcast_text });
         public static readonly DataBag<BroadcastTextLocale> BroadcastTextLocales = new DataBag<BroadcastTextLocale>(new List<SQLOutput> { SQLOutput.broadcast_text_locale });
 
@@ -139,6 +144,7 @@ namespace WowPacketParser.Store
             CreatureTemplates.Clear();
             CreatureTemplateQuestItems.Clear();
             CreatureTemplateScalings.Clear();
+            CreatureTemplateModels.Clear();
 
             NpcTrainers.Clear();
             NpcVendors.Clear();
@@ -199,6 +205,9 @@ namespace WowPacketParser.Store
             HotfixDatas.Clear();
 
             Scenes.Clear();
+
+            ScenarioPOIs.Clear();
+            ScenarioPOIPoints.Clear();
 
             BroadcastTexts.Clear();
             BroadcastTextLocales.Clear();

@@ -42,13 +42,13 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             {
                 if (stringLens[i][0] > 1)
                 {
-                    string name = packet.ReadCString("Name");
+                    string name = packet.ReadDynamicString("Name", stringLens[i][0], i);
                     if (i == 0)
                         creature.Name = name;
                 }
                 if (stringLens[i][1] > 1)
                 {
-                    string nameAlt = packet.ReadCString("NameAlt");
+                    string nameAlt = packet.ReadDynamicString("NameAlt", stringLens[i][1], i);
                     if (i == 0)
                         creature.FemaleName = nameAlt;
                 }
@@ -63,35 +63,35 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             creature.KillCredits = new uint?[2];
             for (int i = 0; i < 2; ++i)
-                creature.KillCredits[i] = packet.ReadUInt32("ProxyCreatureID", i);
+                creature.KillCredits[i] = (uint)packet.ReadInt32("ProxyCreatureID", i);
 
-            var displayIdCount = packet.ReadInt32("DisplayIdCount");
-            packet.ReadSingle("Unk801");
+            var displayIdCount = packet.ReadUInt32("DisplayIdCount");
+            packet.ReadSingle("TotalProbability");
 
-            creature.ModelIDs = new uint?[displayIdCount];
-            var tempModeIDs = new uint?[4];
-            for (int i = 0; i < 4; ++i)
-                tempModeIDs[i] = 0;
-
-            for (int i = 0; i < displayIdCount; ++i)
+            for (var i = 0; i < displayIdCount; ++i)
             {
-                creature.ModelIDs[i] = packet.ReadUInt32("CreatureDisplayID", i);
-                packet.ReadSingle("Probability", i);
-                packet.ReadSingle("ProbabilityAlt", i);
-                if (i < 4)
-                    tempModeIDs[i] = creature.ModelIDs[i];
+                CreatureTemplateModel model = new CreatureTemplateModel
+                {
+                    CreatureID = (uint)entry.Key,
+                    Idx = (uint)i
+                };
+
+                model.CreatureDisplayID = (uint)packet.ReadInt32("CreatureDisplayID", i);
+                model.DisplayScale = packet.ReadSingle("DisplayScale", i);
+                model.Probability = packet.ReadSingle("Probability", i);
+
+                Storage.CreatureTemplateModels.Add(model, packet.TimeSpan);
             }
-            creature.ModelIDs = tempModeIDs;
 
             creature.HealthModifier = packet.ReadSingle("HpMulti");
             creature.ManaModifier = packet.ReadSingle("EnergyMulti");
 
             uint questItems = packet.ReadUInt32("QuestItems");
-            creature.MovementID = packet.ReadUInt32("CreatureMovementInfoID");
-            creature.HealthScalingExpansion = packet.ReadUInt32E<ClientType>("HealthScalingExpansion");
-            creature.RequiredExpansion = packet.ReadUInt32E<ClientType>("RequiredExpansion");
-            creature.VignetteID = packet.ReadUInt32("VignetteID");
-            packet.ReadInt32("Unk801_2");
+            creature.MovementID = (uint)packet.ReadInt32("CreatureMovementInfoID");
+            creature.HealthScalingExpansion = packet.ReadInt32E<ClientType>("HealthScalingExpansion");
+            creature.RequiredExpansion = packet.ReadInt32E<ClientType>("RequiredExpansion");
+            creature.VignetteID = (uint)packet.ReadInt32("VignetteID");
+            creature.UnitClass = (uint)packet.ReadInt32E<Class>("UnitClass");
 
             if (titleLen > 1)
                 creature.SubName = packet.ReadCString("Title");
@@ -108,7 +108,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 {
                     CreatureEntry = (uint)entry.Key,
                     Idx = i,
-                    ItemId = packet.ReadUInt32<ItemId>("QuestItem", i)
+                    ItemId = (uint)packet.ReadInt32<ItemId>("QuestItem", i)
                 };
 
                 Storage.CreatureTemplateQuestItems.Add(questItem, packet.TimeSpan);

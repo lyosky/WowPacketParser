@@ -21,6 +21,7 @@ namespace WowPacketParser.Misc
             { ObjectTypeLegacy.Conversation,           ObjectType.Conversation },
             { ObjectTypeLegacy.Map,                    ObjectType.Map },
         };
+
         public static ObjectType Convert(ObjectTypeLegacy type)
         {
             if (!ConvDictLegacy.ContainsKey(type))

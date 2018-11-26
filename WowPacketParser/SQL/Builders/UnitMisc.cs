@@ -358,7 +358,7 @@ namespace WowPacketParser.SQL.Builders
                     Row<PointsOfInterest> row = new Row<PointsOfInterest>();
 
                     Type t = pointOfInterest.Item1.ID.GetType();
-                    if (t.Equals(typeof(uint)))
+                    if (t.Equals(typeof(int)))
                         row.Data.ID = pointOfInterest.Item1.ID;
                     else
                         row.Data.ID = "@PID+" + count;
@@ -515,25 +515,13 @@ namespace WowPacketParser.SQL.Builders
                     continue;
 
                 var npc = unit.Value;
-                int minLevel, maxLevel;
-
-                if (npc.ScalingMinLevel != null && npc.ScalingMaxLevel != null)
-                {
-                    minLevel = (int)npc.ScalingMinLevel;
-                    maxLevel = (int)npc.ScalingMaxLevel;
-                }
-                else
-                {
-                    minLevel = (int)levels[unit.Key.GetEntry()].Item1;
-                    maxLevel = (int)levels[unit.Key.GetEntry()].Item2;
-                }
 
                 var template = new CreatureTemplateNonWDB
                 {
                     Entry = unit.Key.GetEntry(),
                     GossipMenuId = npc.GossipId,
-                    MinLevel = minLevel,
-                    MaxLevel = maxLevel,
+                    MinLevel = (int)levels[unit.Key.GetEntry()].Item1,
+                    MaxLevel = (int)levels[unit.Key.GetEntry()].Item2,
                     Faction = npc.Faction.GetValueOrDefault(35),
                     NpcFlag = npc.NpcFlags.GetValueOrDefault(NPCFlags.None),
                     SpeedRun = npc.Movement.RunSpeed,
@@ -545,6 +533,7 @@ namespace WowPacketParser.SQL.Builders
                     UnitFlags2 = npc.UnitFlags2.GetValueOrDefault(UnitFlags2.None),
                     UnitFlags3 = npc.UnitFlags3.GetValueOrDefault(UnitFlags3.None),
                     DynamicFlags = npc.DynamicFlags.GetValueOrDefault(UnitDynamicFlags.None),
+                    DynamicFlagsWod = npc.DynamicFlagsWod.GetValueOrDefault(UnitDynamicFlagsWOD.None),
                     VehicleID = npc.Movement.VehicleId,
                     HoverHeight = npc.HoverHeight.GetValueOrDefault(1.0f)
                 };
@@ -581,7 +570,7 @@ namespace WowPacketParser.SQL.Builders
                 }
                 else
                 {
-                    template.DynamicFlagsWod = npc.DynamicFlagsWod.GetValueOrDefault(UnitDynamicFlagsWOD.None);
+                    //template.DynamicFlagsWod = npc.DynamicFlagsWod.GetValueOrDefault(UnitDynamicFlagsWOD.None);
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.Lootable;
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.Tapped;
                     template.DynamicFlagsWod &= ~UnitDynamicFlagsWOD.TappedByPlayer;

@@ -9,10 +9,10 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         [Parser(Opcode.CMSG_AZERITE_EMPOWERED_ITEM_SELECT_POWER)]
         public static void HandleItemAzerithEmpoweredItemSelectPower(Packet packet)
         {
-            packet.ReadInt32("Unk1");
-            packet.ReadInt32("Unk2");
-            packet.ReadByte("Unk3");
-            packet.ReadByte("Unk4");
+            packet.ReadInt32("AzeriteTier");
+            packet.ReadInt32("AzeritePowerID");
+            packet.ReadByte("ContainerSlot");
+            packet.ReadByte("Slot");
         }
 
         [Parser(Opcode.CMSG_AZERITE_EMPOWERED_ITEM_VIEWED)]

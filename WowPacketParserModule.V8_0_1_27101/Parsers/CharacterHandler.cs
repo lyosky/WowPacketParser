@@ -32,7 +32,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadPackedGuid128("BnetAccountID");
                 packet.ReadPackedGuid128("Player Guid");
 
-                packet.ReadUInt64("CommunityDbID");// not known which community is meant yet, guild?
+                packet.ReadUInt64("GuildClubMemberID");
                 packet.ReadUInt32("VirtualRealmAddress");
 
                 packet.ReadByteE<Race>("Race");
@@ -43,12 +43,12 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadWoWString("Name", bits15);
             }
         }
-        
+
         public static void ReadCharactersData(Packet packet, params object[] idx)
         {
             packet.ReadPackedGuid128("Guid", idx);
 
-            packet.ReadUInt64("CommunityDbID", idx); // not known which community is meant yet, guild?
+            packet.ReadUInt64("GuildClubMemberID", idx);
 
             packet.ReadByte("ListPosition", idx);
             var race = packet.ReadByteE<Race>("RaceID", idx);
@@ -64,8 +64,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadByte("CustomDisplay", idx, j);
 
             packet.ReadByte("ExperienceLevel", idx);
-            var zone = packet.ReadUInt32<ZoneId>("ZoneID", idx);
-            var mapId = packet.ReadUInt32<MapId>("MapID", idx);
+            var zone = packet.ReadInt32<ZoneId>("ZoneID", idx);
+            var mapId = packet.ReadInt32<MapId>("MapID", idx);
 
             var pos = packet.ReadVector3("PreloadPos", idx);
 
@@ -79,7 +79,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadUInt32("PetCreatureFamilyID", idx);
 
             for (uint j = 0; j < 2; ++j)
-                packet.ReadUInt32("ProfessionIDs", idx, j);
+                packet.ReadInt32("ProfessionIDs", idx, j);
 
             for (uint j = 0; j < 23; ++j)
             {
@@ -90,9 +90,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ReadTime("LastPlayedTime", idx);
 
-            packet.ReadUInt16("SpecID", idx);
-            packet.ReadUInt32("Unknown703", idx);
-            packet.ReadUInt32("LastLoginBuild", idx);
+            packet.ReadInt16("SpecID", idx);
+            packet.ReadInt32("Unknown703", idx);
+            packet.ReadInt32("LastLoginBuild", idx);
             packet.ReadUInt32("Flags4", idx);
 
             packet.ResetBitReader();
@@ -106,7 +106,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             if (firstLogin)
             {
-                PlayerCreateInfo startPos = new PlayerCreateInfo { Race = race, Class = klass, Map = mapId, Zone = zone, Position = pos, Orientation = 0 };
+                PlayerCreateInfo startPos = new PlayerCreateInfo { Race = race, Class = klass, Map = (uint)mapId, Zone = (uint)zone, Position = pos, Orientation = 0 };
                 Storage.StartPositions.Add(startPos, packet.TimeSpan);
             }
         }
@@ -116,9 +116,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             packet.ReadBit("Success");
             packet.ReadBit("IsDeletedCharacters");
-            packet.ReadBit("IsDemonHunterCreationAllowed");
+            packet.ReadBit("IsTestDemonHunterCreationAllowed");
             packet.ReadBit("HasDemonHunterOnRealm");
-            packet.ReadBit("Unknown7x");
+            packet.ReadBit("IsDemonHunterCreationAllowed");
 
             var hasDisabledClassesMask = packet.ReadBit("HasDisabledClassesMask");
             packet.ReadBit("IsAlliedRacesCreationAllowed");
@@ -142,36 +142,36 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         {
             packet.ReadPackedGuid128("InspecteeGUID");
 
-            var int48 = packet.ReadInt32("ItemsCount");
-            var int80 = packet.ReadInt32("GlyphsCount");
-            var int112 = packet.ReadInt32("TalentsCount");
-            var int144 = packet.ReadInt32("PvpTalentsCount");
-            packet.ReadUInt32E<Class>("ClassID");
-            packet.ReadUInt32("SpecializationID");
-            packet.ReadUInt32E<Gender>("Gender");
+            var itemCount = packet.ReadUInt32("ItemsCount");
+            var glyphCount = packet.ReadUInt32("GlyphsCount");
+            var talentCount = packet.ReadUInt32("TalentsCount");
+            var pvpTalentCount = packet.ReadUInt32("PvpTalentsCount");
+            packet.ReadInt32E<Class>("ClassID");
+            packet.ReadInt32("SpecializationID");
+            packet.ReadInt32E<Gender>("Gender");
 
-            for (int i = 0; i < int80; i++)
-                packet.ReadInt16("Glyphs", i);
+            for (int i = 0; i < glyphCount; i++)
+                packet.ReadUInt16("Glyphs", i);
 
-            for (int i = 0; i < int112; i++)
-                packet.ReadInt16("Talents", i);
+            for (int i = 0; i < talentCount; i++)
+                packet.ReadUInt16("Talents", i);
 
-            for (int i = 0; i < int144; i++)
-                packet.ReadInt16("PvpTalents", i);
+            for (int i = 0; i < pvpTalentCount; i++)
+                packet.ReadUInt16("PvpTalents", i);
 
             packet.ResetBitReader();
             var hasGuildData = packet.ReadBit("HasGuildData");
-            var unk801Bit = packet.ReadBit("Unk801Bit");
+            var hasAzeriteLevel = packet.ReadBit("HasAzeriteLevel");
 
-            for (int i = 0; i < int48; i++)
+            for (int i = 0; i < itemCount; i++)
             {
                 packet.ReadPackedGuid128("CreatorGUID", i);
                 packet.ReadByte("Index", i);
 
-                var azeritePowerCount = packet.ReadInt32("AzeritePowersCount", i);
-                
+                var azeritePowerCount = packet.ReadUInt32("AzeritePowersCount", i);
+
                 for (int j = 0; j < azeritePowerCount; j++)
-                    packet.ReadUInt32("AzeritePowerId", i, j);
+                    packet.ReadInt32("AzeritePowerId", i, j);
 
                 V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, i);
 
@@ -188,7 +188,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
                 for (int j = 0; j < enchantsCount; j++)
                 {
-                    packet.ReadInt32("Id", i, j);
+                    packet.ReadUInt32("Id", i, j);
                     packet.ReadByte("Index", i, j);
                 }
             }
@@ -196,11 +196,89 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             if (hasGuildData)
             {
                 packet.ReadPackedGuid128("GuildGUID");
-                packet.ReadUInt32("NumGuildMembers");
-                packet.ReadUInt32("GuildAchievementPoints");
+                packet.ReadInt32("NumGuildMembers");
+                packet.ReadInt32("GuildAchievementPoints");
             }
-            if (unk801Bit)
-                packet.ReadUInt32("Unk801_UInt32");
+            if (hasAzeriteLevel)
+                packet.ReadInt32("AzeriteLevel");
+        }
+
+        [Parser(Opcode.CMSG_CREATE_CHARACTER)]
+        public static void HandleClientCharCreate(Packet packet)
+        {
+            var nameLen = packet.ReadBits(6);
+            var hasTemplateSet = packet.ReadBit();
+
+            packet.ReadBit("IsTrialBoost");
+            packet.ReadByteE<Race>("RaceID");
+            packet.ReadByteE<Class>("ClassID");
+            packet.ReadByteE<Gender>("SexID");
+            packet.ReadByte("SkinID");
+            packet.ReadByte("FaceID");
+            packet.ReadByte("HairStyleID");
+            packet.ReadByte("HairColorID");
+            packet.ReadByte("FacialHairStyleID");
+            packet.ReadByte("OutfitID");
+
+            packet.ReadWoWString("Name", nameLen);
+
+            if (hasTemplateSet)
+                packet.ReadInt32("TemplateSetID");
+        }
+
+        [Parser(Opcode.SMSG_CREATE_CHAR)]
+        public static void HandleCharResponse(Packet packet)
+        {
+            packet.ReadByteE<ResponseCode>("Response");
+            packet.ReadPackedGuid128("GUID");
+        }
+
+        public static void ReadPVPBracketData(Packet packet, params object[] idx)
+        {
+            packet.ReadByte("Bracket", idx);
+            packet.ReadInt32("Rating", idx);
+            packet.ReadInt32("Rank", idx);
+            packet.ReadInt32("WeeklyPlayed", idx);
+            packet.ReadInt32("WeeklyWon", idx);
+            packet.ReadInt32("SeasonPlayed", idx);
+            packet.ReadInt32("SeasonWon", idx);
+            packet.ReadInt32("WeeklyBestRating", idx);
+            packet.ReadInt32("Unk710");
+            packet.ReadInt32("Unk801");
+            packet.ReadBit("Unk801_Bit");
+        }
+
+        [Parser(Opcode.SMSG_INSPECT_PVP)]
+        public static void HandleInspectPVP(Packet packet)
+        {
+            packet.ReadPackedGuid128("ClientGUID");
+
+            var bracketCount = packet.ReadBits(3);
+            for (var i = 0; i < bracketCount; i++)
+                ReadPVPBracketData(packet, i, "PVPBracketData");
+        }
+
+        [Parser(Opcode.SMSG_LEVEL_UP_INFO)]
+        public static void HandleLevelUpInfo(Packet packet)
+        {
+            packet.ReadInt32("Level");
+            packet.ReadInt32("HealthDelta");
+
+            for (var i = 0; i < 6; i++)
+                packet.ReadInt32("PowerDelta", (PowerType)i);
+
+            for (var i = 0; i < 4; i++)
+                packet.ReadInt32("StatDelta", (StatType)i);
+
+            packet.ReadInt32("NumNewTalents");
+            packet.ReadInt32("NumNewPvpTalentSlots");
+        }
+
+        [Parser(Opcode.SMSG_AZERITE_XP_GAIN)]
+        public static void HandleAzeriteXpGain(Packet packet)
+        {
+            packet.ReadPackedGuid128("Item");
+            packet.ReadUInt64("AzeriteXPGained");
         }
     }
 }

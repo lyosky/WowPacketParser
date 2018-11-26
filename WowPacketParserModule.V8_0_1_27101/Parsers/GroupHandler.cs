@@ -20,18 +20,18 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadInt32("SequenceNum");
             packet.ReadPackedGuid128("LeaderGUID");
 
-            var playerCount = packet.ReadInt32("PlayerListCount");
+            var playerCount = packet.ReadUInt32("PlayerListCount");
             var hasLFG = packet.ReadBit("HasLfgInfo");
             var hasLootSettings = packet.ReadBit("HasLootSettings");
             var hasDifficultySettings = packet.ReadBit("HasDifficultySettings");
 
-            for (int i = 0; i < playerCount; i++)
+            for (var i = 0; i < playerCount; i++)
             {
                 packet.ResetBitReader();
                 var playerNameLength = packet.ReadBits(6);
-                var bnetIdBits = packet.ReadBits(4); // either 4 or 0
+                var voiceStateLength = packet.ReadBits(6);
                 packet.ReadBit("FromSocialQueue", i);
-                packet.ReadBit("Unk801_Bit", i);
+                packet.ReadBit("VoiceChatSilenced", i);
 
                 packet.ReadPackedGuid128("Guid", i);
 
@@ -42,8 +42,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ReadByteE<Class>("Class", i);
 
                 packet.ReadWoWString("Name", playerNameLength, i);
-                if (bnetIdBits > 0) // according to implementation of CDataStore::GetCString in 8.0.1
-                    packet.ReadCString("BNetIdString", i);
+                packet.ReadDynamicString("VoiceStateID", voiceStateLength, i);
             }
 
             packet.ResetBitReader();
@@ -57,9 +56,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             if (hasDifficultySettings)
             {
-                packet.ReadInt32("DungeonDifficultyID");
-                packet.ReadInt32("RaidDifficultyID");
-                packet.ReadInt32("LegacyRaidDifficultyID");
+                packet.ReadUInt32("DungeonDifficultyID");
+                packet.ReadUInt32("RaidDifficultyID");
+                packet.ReadUInt32("LegacyRaidDifficultyID");
             }
 
             if (hasLFG)
@@ -67,8 +66,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.ResetBitReader();
 
                 packet.ReadByte("MyFlags");
-                packet.ReadInt32("Slot");
-                packet.ReadInt32("MyRandomSlot");
+                packet.ReadUInt32("Slot");
+                packet.ReadUInt32("MyRandomSlot");
                 packet.ReadByte("MyPartialClear");
                 packet.ReadSingle("MyGearDiff");
                 packet.ReadByte("MyStrangerCount");
