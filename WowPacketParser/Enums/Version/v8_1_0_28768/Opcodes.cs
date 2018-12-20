@@ -1,8 +1,8 @@
 ﻿using WowPacketParser.Misc;
 
-namespace WowPacketParser.Enums.Version.V8_0_1_27101
+namespace WowPacketParser.Enums.Version.V8_1_0_28768
 {
-    public static class Opcodes_8_0_1
+    public static class Opcodes_8_1_0
     {
         public static BiDictionary<Opcode, int> Opcodes(Direction direction)
         {
@@ -135,7 +135,7 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.CMSG_CANCEL_AUTO_REPEAT_SPELL, 0x34E8},
             {Opcode.CMSG_CANCEL_CAST, 0x329E},
             {Opcode.CMSG_CANCEL_CHANNELLING, 0x326A},
-            {Opcode.CMSG_CANCEL_GROWTH_AURA, 0x326F},
+            //{Opcode.CMSG_CANCEL_GROWTH_AURA, 0x326F},
             {Opcode.CMSG_CANCEL_MASTER_LOOT_ROLL, 0x3211},
             {Opcode.CMSG_CANCEL_MOD_SPEED_NO_CONTROL_AURAS, 0x31AC},
             {Opcode.CMSG_CANCEL_MOUNT_AURA, 0x3280},
@@ -516,19 +516,19 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.CMSG_QUERY_CORPSE_LOCATION_FROM_CLIENT, 0x3660},
             {Opcode.CMSG_QUERY_CORPSE_TRANSPORT, 0x3661},
             {Opcode.CMSG_QUERY_COUNTDOWN_TIMER, 0x31A8},
-            {Opcode.CMSG_QUERY_CREATURE, 0x3270},
-            {Opcode.CMSG_QUERY_GAME_OBJECT, 0x3271},
-            {Opcode.CMSG_QUERY_GARRISON_CREATURE_NAME, 0x3277},
+            {Opcode.CMSG_QUERY_CREATURE, 0x326F},//-1
+            {Opcode.CMSG_QUERY_GAME_OBJECT, 0x3270},//-1
+            {Opcode.CMSG_QUERY_GARRISON_CREATURE_NAME, 0x3276},//-1
             {Opcode.CMSG_QUERY_GUILD_INFO, 0x368E},
             {Opcode.CMSG_QUERY_INSPECT_ACHIEVEMENTS, 0x3503},
             {Opcode.CMSG_QUERY_NEXT_MAIL_TIME, 0x353B},
-            {Opcode.CMSG_QUERY_NPC_TEXT, 0x3272},
-            {Opcode.CMSG_QUERY_PAGE_TEXT, 0x3274},
-            {Opcode.CMSG_QUERY_PETITION, 0x3278},
-            {Opcode.CMSG_QUERY_PET_NAME, 0x3275},
+            {Opcode.CMSG_QUERY_NPC_TEXT, 0x3271},//-1
+            {Opcode.CMSG_QUERY_PAGE_TEXT, 0x3273},//-1
+            {Opcode.CMSG_QUERY_PETITION, 0x3277},//-1
+            {Opcode.CMSG_QUERY_PET_NAME, 0x3274},//-1
             {Opcode.CMSG_QUERY_PLAYER_NAME, 0x368B},
             {Opcode.CMSG_QUERY_QUEST_COMPLETION_NPCS, 0x3174},
-            {Opcode.CMSG_QUERY_QUEST_INFO, 0x3273},
+            {Opcode.CMSG_QUERY_QUEST_INFO, 0x3272},//-1
             {Opcode.CMSG_QUERY_REALM_NAME, 0x368D},
             {Opcode.CMSG_QUERY_SCENARIO_POI, 0x3656},
             {Opcode.CMSG_QUERY_TIME, 0x34D6},
@@ -1112,7 +1112,7 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_GROUP_DECLINE, 0x27DF},
             {Opcode.SMSG_GROUP_DESTROYED, 0x27E1},
             {Opcode.SMSG_GROUP_INVITE_CONFIRMATION, 0x2860},
-            {Opcode.SMSG_GROUP_NEW_LEADER, 0x264B},
+            {Opcode.SMSG_GROUP_NEW_LEADER, 0x264C},
             {Opcode.SMSG_GROUP_UNINVITE, 0x27E0},
             {Opcode.SMSG_GUILD_ACHIEVEMENT_DELETED, 0x29C5},
             {Opcode.SMSG_GUILD_ACHIEVEMENT_EARNED, 0x29C4},
@@ -1166,7 +1166,7 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_GUILD_ROSTER, 0x29BB},
             {Opcode.SMSG_GUILD_ROSTER_UPDATE, 0x29BC},
             {Opcode.SMSG_GUILD_SEND_RANK_CHANGE, 0x29B9},
-            {Opcode.SMSG_HEALTH_UPDATE, 0x2704},
+            //{Opcode.SMSG_HEALTH_UPDATE, 0x2705},//
             {Opcode.SMSG_HIGHEST_THREAT_UPDATE, 0x2715},
             {Opcode.SMSG_HOTFIX_MESSAGE, 0x25A2},
             {Opcode.SMSG_HOTFIX_RESPONSE, 0x25A3},
@@ -1387,7 +1387,7 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_OPEN_SHIPMENT_NPC_FROM_GOSSIP, 0x27E6},
             {Opcode.SMSG_OPEN_SHIPMENT_NPC_RESULT, 0x27E8},
             {Opcode.SMSG_OPEN_TRANSMOGRIFIER, 0x283E},
-            {Opcode.SMSG_OVERRIDE_LIGHT, 0x26EE},
+            //{Opcode.SMSG_OVERRIDE_LIGHT, 0x26EE},
             {Opcode.SMSG_PAGE_TEXT, 0x2761},
             {Opcode.SMSG_PARTY_COMMAND_RESULT, 0x27E3},
             {Opcode.SMSG_PARTY_INVITE, 0x25CF},
@@ -1451,7 +1451,7 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_PLAY_SPELL_VISUAL_KIT, 0x2C49},
             {Opcode.SMSG_PLAY_TIME_WARNING, 0x2743},
             {Opcode.SMSG_PONG, 0x304E},
-            {Opcode.SMSG_POWER_UPDATE, 0x2705},
+            //{Opcode.SMSG_POWER_UPDATE, 0x2706},//
             {Opcode.SMSG_PRE_RESSURECT, 0x27B5},
             {Opcode.SMSG_PRINT_NOTIFICATION, 0x25E1},
             {Opcode.SMSG_PROC_RESIST, 0x27A7},
@@ -1463,12 +1463,12 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_PVP_SEASON, 0x25D3},
             {Opcode.SMSG_QUERY_BATTLE_PET_NAME_RESPONSE, 0x270C},
             {Opcode.SMSG_QUERY_COMMUNITY_NAME_RESPONSE, 0x2708},
-            {Opcode.SMSG_QUERY_CREATURE_RESPONSE, 0x2702},
-            {Opcode.SMSG_QUERY_GAME_OBJECT_RESPONSE, 0x2703},
+            {Opcode.SMSG_QUERY_CREATURE_RESPONSE, 0x2703},//0x2702
+            {Opcode.SMSG_QUERY_GAME_OBJECT_RESPONSE, 0x2704},
             {Opcode.SMSG_QUERY_GARRISON_CREATURE_NAME_RESPONSE, 0x292B},
             {Opcode.SMSG_QUERY_GUILD_INFO_RESPONSE, 0x29E5},
             {Opcode.SMSG_QUERY_ITEM_TEXT_RESPONSE, 0x2812},
-            {Opcode.SMSG_QUERY_NPC_TEXT_RESPONSE, 0x2706},
+            {Opcode.SMSG_QUERY_NPC_TEXT_RESPONSE, 0x2705},//
             {Opcode.SMSG_QUERY_PAGE_TEXT_RESPONSE, 0x2709},
             {Opcode.SMSG_QUERY_PETITION_RESPONSE, 0x270D},
             {Opcode.SMSG_QUERY_PET_NAME_RESPONSE, 0x270B},
@@ -1547,11 +1547,11 @@ namespace WowPacketParser.Enums.Version.V8_0_1_27101
             {Opcode.SMSG_RUNE_REGEN_DEBUG, 0x25C8},
             {Opcode.SMSG_SCENARIO_BOOT, 0x27F4},
             {Opcode.SMSG_SCENARIO_COMPLETED, 0x2834},
-            {Opcode.SMSG_SCENARIO_POIS, 0x2651},
-            {Opcode.SMSG_SCENARIO_PROGRESS_UPDATE, 0x264A},
+            {Opcode.SMSG_SCENARIO_POIS, 0x2652},//+1
+            {Opcode.SMSG_SCENARIO_PROGRESS_UPDATE, 0x264B},//+1
             {Opcode.SMSG_SCENARIO_SET_SHOULD_SHOW_CRITERIA, 0x2844},
             {Opcode.SMSG_SCENARIO_SPELL_UPDATE, 0x2843},
-            {Opcode.SMSG_SCENARIO_STATE, 0x2649},
+            {Opcode.SMSG_SCENARIO_STATE, 0x264A},//0x2649
             {Opcode.SMSG_SCENE_OBJECT_EVENT, 0x25F8},
             {Opcode.SMSG_SCENE_OBJECT_PET_BATTLE_FINAL_ROUND, 0x25FD},
             {Opcode.SMSG_SCENE_OBJECT_PET_BATTLE_FINISHED, 0x25FE},

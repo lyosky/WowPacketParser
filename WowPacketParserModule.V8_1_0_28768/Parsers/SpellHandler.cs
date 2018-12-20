@@ -5,7 +5,7 @@ using WowPacketParser.Parsing;
 using WowPacketParser.Store;
 using WowPacketParser.Store.Objects;
 
-namespace WowPacketParserModule.V8_0_1_27101.Parsers
+namespace WowPacketParserModule.V8_1_0_28768.Parsers
 {
     public static class SpellHandler
     {
