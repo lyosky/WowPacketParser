@@ -30,10 +30,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sigil">
       <HintPath>..\packages\Sigil.4.7.0\lib\net45\Sigil.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -75,14 +77,17 @@
     <ProjectReference Include="..\WowPacketParserModule.V6_0_2_19033\WowPacketParserModule.V6_0_2_19033.csproj">
       <Project>{63484313-34d2-4133-b157-a19d12b69d9b}</Project>
       <Name>WowPacketParserModule.V6_0_2_19033</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\WowPacketParserModule.V7_0_3_22248\WowPacketParserModule.V7_0_3_22248.csproj">
       <Project>{7a7109fd-a819-4906-9406-1be84c6a527c}</Project>
       <Name>WowPacketParserModule.V7_0_3_22248</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\WowPacketParser\WowPacketParser.csproj">
       <Project>{0bf6f270-0b6f-4705-8e1a-f57db76db407}</Project>
       <Name>WowPacketParser</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
