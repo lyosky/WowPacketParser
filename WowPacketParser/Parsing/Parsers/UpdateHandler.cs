@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using WowPacketParser.Enums;
@@ -165,10 +165,8 @@ namespace WowPacketParser.Parsing.Parsers
             var dict = new Dictionary<int, UpdateField>();
 
             int objectEnd = UpdateFields.GetUpdateField(ObjectField.OBJECT_END);
-            int size;
-            for (var i = 0; i < mask.Count; i += size)
+            for (var i = 0; i < mask.Count; ++i)
             {
-                size = 1;
                 if (!mask[i])
                     continue;
 
@@ -269,6 +267,7 @@ namespace WowPacketParser.Parsing.Parsers
                     }
                 }
                 int start = i;
+                int size = 1;
                 UpdateFieldType updateFieldType = UpdateFieldType.Default;
                 if (fieldInfo != null)
                 {
@@ -288,9 +287,9 @@ namespace WowPacketParser.Parsing.Parsers
                     fieldData.Add(updateField);
                 }
                 fieldData.Add(blockVal);
-                int currentPosition = i + 1;
                 for (int k = i - start + 1; k < size; ++k)
                 {
+                    int currentPosition = ++i;
                     UpdateField updateField;
                     if (mask[currentPosition])
                         updateField = packet.ReadUpdateField();
@@ -298,7 +297,6 @@ namespace WowPacketParser.Parsing.Parsers
                         updateField = new UpdateField(0);
 
                     fieldData.Add(updateField);
-                    ++currentPosition;
                 }
 
                 switch (updateFieldType)
@@ -429,7 +427,7 @@ namespace WowPacketParser.Parsing.Parsers
                 }
 
                 for (int k = 0; k < fieldData.Count; ++k)
-                    dict.Add(i + k, fieldData[k]);
+                    dict.Add(start + k, fieldData[k]);
             }
 
             return dict;
@@ -584,6 +582,9 @@ namespace WowPacketParser.Parsing.Parsers
 
         public static void ApplyUpdateFieldsChange(WoWObject obj, Dictionary<int, UpdateField> updates, Dictionary<int, List<UpdateField>> dynamicUpdates)
         {
+            if (obj.UpdateFields == null)
+                obj.UpdateFields = new Dictionary<int, UpdateField>(); // can be created by ENUM packet
+
             foreach (var kvp in updates)
                 obj.UpdateFields[kvp.Key] = kvp.Value;
         }
