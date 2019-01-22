@@ -71,6 +71,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             var hitTargetsCount = packet.ReadBits("HitTargetsCount", 16, idx);
             var missTargetsCount = packet.ReadBits("MissTargetsCount", 16, idx);
+            uint unkCount = 0;
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+                unkCount = packet.ReadBits("UnkCount810", 16, idx);
             var missStatusCount = packet.ReadBits("MissStatusCount", 16, idx);
             var remainingPowerCount = packet.ReadBits("RemainingPowerCount", 9, idx);
 
@@ -88,6 +91,10 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             for (var i = 0; i < missTargetsCount; ++i)
                 packet.ReadPackedGuid128("MissTarget", idx, i);
+
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+                for (var i = 0; i < unkCount; ++i)
+                    packet.ReadByte("UnkByte810", idx, i);
 
             for (var i = 0; i < remainingPowerCount; ++i)
                 V6_0_2_19033.Parsers.SpellHandler.ReadSpellPowerData(packet, idx, "RemainingPower", i);
@@ -174,6 +181,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadInt16("PlayerLevelDelta", idx);
             packet.ReadUInt16("PlayerItemLevel", idx);
             packet.ReadUInt16("ScalingHealthItemLevelCurveID", idx);
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+                packet.ReadUInt16("UnkUInt16_810", idx);
             packet.ReadByte("TargetLevel", idx);
             packet.ReadByte("Expansion", idx);
             packet.ReadByte("TargetMinScalingLevel", idx);
@@ -281,6 +290,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadUInt16("MissReason");
             packet.ReadUInt16("ReflectStatus");
 
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+                packet.ReadUInt16("UnkUInt16_810");
+
             packet.ReadSingle("Orientation");
             packet.ReadSingle("UnkFloat");
 
@@ -321,6 +333,19 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ReadByteE<SpellMechanic>("Mechanic");
             packet.ReadByte("Type");
+        }
+
+        [Parser(Opcode.SMSG_SEND_SPELL_CHARGES)] // already since 7.?.?
+        public static void HandleSendSpellCharges(Packet packet)
+        {
+            var int4 = packet.ReadInt32("SpellChargeEntryCount");
+            for (int i = 0; i < int4; i++)
+            {
+                packet.ReadUInt32("Category", i);
+                packet.ReadUInt32("NextRecoveryTime", i);
+                packet.ReadSingle("ChargeModRate", i);
+                packet.ReadByte("ConsumedCharges", i);
+            }
         }
     }
 }
