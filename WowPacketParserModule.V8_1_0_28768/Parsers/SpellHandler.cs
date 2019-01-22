@@ -57,6 +57,8 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
             packet.ReadUInt32("CastFlagsEx", idx);
             packet.ReadUInt32("CastTime", idx);
 
+          
+
             V6_0_2_19033.Parsers.SpellHandler.ReadMissileTrajectoryResult(packet, idx, "MissileTrajectory");
 
             packet.ReadInt32("Ammo.DisplayID", idx);
@@ -66,7 +68,7 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
             V6_0_2_19033.Parsers.SpellHandler.ReadCreatureImmunities(packet, idx, "Immunities");
 
             V6_0_2_19033.Parsers.SpellHandler.ReadSpellHealPrediction(packet, idx, "Predict");
-
+           
             packet.ResetBitReader();
 
             var hitTargetsCount = packet.ReadBits("HitTargetsCount", 16, idx);
@@ -76,7 +78,6 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
 
             var hasRuneData = packet.ReadBit("HasRuneData", idx);
             var targetPointsCount = packet.ReadBits("TargetPointsCount", 16, idx);
-
 
             for (var i = 0; i < missStatusCount; ++i)
                 V6_0_2_19033.Parsers.SpellHandler.ReadSpellMissStatus(packet, idx, "MissStatus", i);
@@ -97,12 +98,14 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
 
             for (var i = 0; i < targetPointsCount; ++i)
                 V6_0_2_19033.Parsers.SpellHandler.ReadLocation(packet, idx, "TargetPoints", i);
+
+            packet.ReadBytes("Unk810 1_Bits",2, idx);
         }
 
         public static void ReadSpellTargetData(Packet packet, uint spellID, params object[] idx)
         {
             packet.ResetBitReader();
-
+            //packet.ReadBits("Unk810_Bits", 2, idx);
             packet.ReadBitsE<TargetFlag>("Flags", 25, idx);
             var hasSrcLoc = packet.ReadBit("HasSrcLocation", idx);
             var hasDstLoc = packet.ReadBit("HasDstLocation", idx);

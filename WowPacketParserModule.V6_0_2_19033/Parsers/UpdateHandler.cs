@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
@@ -67,9 +67,6 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
                     break;
                 case ObjectType.GameObject:
                     obj = new GameObject();
-                    break;
-                case ObjectType.Item:
-                    obj = new Item();
                     break;
                 case ObjectType.Player:
                     obj = new Player();

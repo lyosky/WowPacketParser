@@ -741,8 +741,8 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
 
         private static readonly BiDictionary<Opcode, int> ServerOpcodes = new BiDictionary<Opcode, int>
         {
-            {Opcode.SMSG_ABORT_NEW_WORLD, 0x25AD},
-            {Opcode.SMSG_ACCOUNT_CRITERIA_UPDATE, 0x2654},
+            {Opcode.SMSG_ABORT_NEW_WORLD, 0x25AE},//0x25AD
+            {Opcode.SMSG_ACCOUNT_CRITERIA_UPDATE, 0x2655},//0x2655
             {Opcode.SMSG_ACCOUNT_DATA_TIMES, 0x2752},
             {Opcode.SMSG_ACCOUNT_MOUNT_UPDATE, 0x25C3},
             {Opcode.SMSG_ACCOUNT_TOYS_UPDATE, 0x25C4},
@@ -750,15 +750,15 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_ACHIEVEMENT_EARNED, 0x2662},
             {Opcode.SMSG_ACTIVATE_TAXI_REPLY, 0x26AB},
             {Opcode.SMSG_ACTIVE_GLYPHS, 0x2C53},
-            {Opcode.SMSG_ADD_BATTLENET_FRIEND_RESPONSE, 0x265C},
+            {Opcode.SMSG_ADD_BATTLENET_FRIEND_RESPONSE, 0x265D},//0x265C
             {Opcode.SMSG_ADD_ITEM_PASSIVE, 0x25BF},
             {Opcode.SMSG_ADD_LOSS_OF_CONTROL, 0x269B},
-            {Opcode.SMSG_ADD_RUNE_POWER, 0x26EA},
+            {Opcode.SMSG_ADD_RUNE_POWER, 0x26EB},//0x26EA
             {Opcode.SMSG_ADJUST_SPLINE_DURATION, 0x25E8},
             {Opcode.SMSG_ADVENTURE_MAP_POI_QUERY_RESPONSE, 0x2845},
             {Opcode.SMSG_AE_LOOT_TARGETS, 0x262E},
             {Opcode.SMSG_AE_LOOT_TARGET_ACK, 0x262F},
-            {Opcode.SMSG_AI_REACTION, 0x26E7},
+            {Opcode.SMSG_AI_REACTION, 0x26E8},//0x26E7
             {Opcode.SMSG_ALL_ACCOUNT_CRITERIA, 0x2570},
             {Opcode.SMSG_ALL_ACHIEVEMENT_DATA, 0x256F},
             {Opcode.SMSG_ALL_GUILD_ACHIEVEMENTS, 0x29B8},
@@ -796,11 +796,11 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_AURA_UPDATE, 0x2C22},
             {Opcode.SMSG_AUTH_CHALLENGE, 0x3048},
             {Opcode.SMSG_AUTH_RESPONSE, 0x256C},
-            {Opcode.SMSG_AVAILABLE_HOTFIXES, 0x25A1},
+            {Opcode.SMSG_AVAILABLE_HOTFIXES, 0x25A2},//0x25A1
             {Opcode.SMSG_AZERITE_EMPOWERED_ITEM_RESPEC_OPEN, 0x283F},
             {Opcode.SMSG_AZERITE_XP_GAIN, 0x2878},
-            {Opcode.SMSG_BAN_REASON, 0x26B7},
-            {Opcode.SMSG_BARBER_SHOP_RESULT, 0x26F0},
+            {Opcode.SMSG_BAN_REASON, 0x26B8},//0x26B7
+            {Opcode.SMSG_BARBER_SHOP_RESULT, 0x26F1},//0x26F0
             {Opcode.SMSG_BATTLEFIELD_LIST, 0x2594},
             {Opcode.SMSG_BATTLEFIELD_PORT_DENIED, 0x259A},
             {Opcode.SMSG_BATTLEFIELD_STATUS_ACTIVE, 0x2590},
@@ -849,7 +849,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_BATTLE_PETS_HEALED, 0x260A},
             {Opcode.SMSG_BATTLE_PET_CAGE_DATE_ERROR, 0x26A5},
             {Opcode.SMSG_BATTLE_PET_DELETED, 0x2607},
-            {Opcode.SMSG_BATTLE_PET_ERROR, 0x2657},
+            {Opcode.SMSG_BATTLE_PET_ERROR, 0x2658},//0x2657
             {Opcode.SMSG_BATTLE_PET_JOURNAL, 0x2606},
             {Opcode.SMSG_BATTLE_PET_JOURNAL_LOCK_ACQUIRED, 0x2604},
             {Opcode.SMSG_BATTLE_PET_JOURNAL_LOCK_DENIED, 0x2605},
@@ -899,7 +899,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_CANCEL_AUTO_REPEAT, 0x271B},
             {Opcode.SMSG_CANCEL_COMBAT, 0x273A},
             {Opcode.SMSG_CANCEL_ORPHAN_SPELL_VISUAL, 0x2C46},
-            {Opcode.SMSG_CANCEL_SCENE, 0x2656},
+            {Opcode.SMSG_CANCEL_SCENE, 0x2657},//0x2656
             {Opcode.SMSG_CANCEL_SPELL_VISUAL, 0x2C44},
             {Opcode.SMSG_CANCEL_SPELL_VISUAL_KIT, 0x2C48},
             {Opcode.SMSG_CAN_DUEL_RESULT, 0x2679},
@@ -949,7 +949,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_CHECK_WARGAME_ENTRY, 0x259E},
             {Opcode.SMSG_CLEAR_ALL_SPELL_CHARGES, 0x2C27},
             {Opcode.SMSG_CLEAR_BOSS_EMOTES, 0x25CD},
-            {Opcode.SMSG_CLEAR_COOLDOWN, 0x26EC},
+            {Opcode.SMSG_CLEAR_COOLDOWN, 0x26ED},//0x26EC
             {Opcode.SMSG_CLEAR_COOLDOWNS, 0x2C26},
             {Opcode.SMSG_CLEAR_LOSS_OF_CONTROL, 0x269D},
             {Opcode.SMSG_CLEAR_SPELL_CHARGES, 0x2C28},
@@ -963,14 +963,14 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_COMPLETE_SHIPMENT_RESPONSE, 0x27EA},
             {Opcode.SMSG_CONNECT_TO, 0x304D},
             {Opcode.SMSG_CONQUEST_FORMULA_CONSTANTS, 0x27D3},
-            {Opcode.SMSG_CONSOLE_WRITE, 0x2653},
+            {Opcode.SMSG_CONSOLE_WRITE, 0x2654},//0x2653
             {Opcode.SMSG_CONSUMPTION_CONVERSION_INFO_RESPONSE, 0x2853},
             {Opcode.SMSG_CONSUMPTION_CONVERSION_RESULT, 0x2854},
             {Opcode.SMSG_CONTACT_LIST, 0x27D6},
             {Opcode.SMSG_CONTRIBUTION_COLLECTOR_STATE, 0x286A},
             {Opcode.SMSG_CONTROL_UPDATE, 0x2666},
             {Opcode.SMSG_COOLDOWN_CHEAT, 0x2783},
-            {Opcode.SMSG_COOLDOWN_EVENT, 0x26EB},
+            {Opcode.SMSG_COOLDOWN_EVENT, 0x26EC},//0x26EB
             {Opcode.SMSG_CORPSE_LOCATION, 0x266D},
             {Opcode.SMSG_CORPSE_RECLAIM_DELAY, 0x2796},
             {Opcode.SMSG_CORPSE_TRANSPORT_QUERY, 0x275A},
@@ -978,12 +978,12 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_CREATE_SHIPMENT_RESPONSE, 0x27E9},
             {Opcode.SMSG_CRITERIA_DELETED, 0x2726},
             {Opcode.SMSG_CRITERIA_UPDATE, 0x2720},
-            {Opcode.SMSG_CROSSED_INEBRIATION_THRESHOLD, 0x26F4},
+            {Opcode.SMSG_CROSSED_INEBRIATION_THRESHOLD, 0x26F5},//0x26F4
             {Opcode.SMSG_CUSTOM_LOAD_SCREEN, 0x25E3},
             {Opcode.SMSG_DAILY_QUESTS_RESET, 0x2A80},
             {Opcode.SMSG_DAMAGE_CALC_LOG, 0x2814},
-            {Opcode.SMSG_DB_REPLY, 0x25A0},
-            {Opcode.SMSG_DEATH_RELEASE_LOC, 0x270E},
+            {Opcode.SMSG_DB_REPLY, 0x25A1},//0x25A0
+            {Opcode.SMSG_DEATH_RELEASE_LOC, 0x270F},//0x270E
             {Opcode.SMSG_DEFENSE_MESSAGE, 0x2BB6},
             {Opcode.SMSG_DELETE_CHAR, 0x2748},
             {Opcode.SMSG_DESTROY_ARENA_UNIT, 0x278C},
@@ -993,7 +993,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_DISMOUNT, 0x26E2},
             {Opcode.SMSG_DISMOUNT_RESULT, 0x257B},
             {Opcode.SMSG_DISPEL_FAILED, 0x2C30},
-            {Opcode.SMSG_DISPLAY_GAME_ERROR, 0x25B5},
+            //{Opcode.SMSG_DISPLAY_GAME_ERROR, 0x25B5},
             {Opcode.SMSG_DISPLAY_PLAYER_CHOICE, 0x26A6},
             {Opcode.SMSG_DISPLAY_PROMOTION, 0x266A},
             {Opcode.SMSG_DISPLAY_QUEST_POPUP, 0x2A9D},
@@ -1009,7 +1009,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_DUEL_WINNER, 0x2678},
             {Opcode.SMSG_DURABILITY_DAMAGE_DEATH, 0x2792},
             {Opcode.SMSG_EMOTE, 0x2815},
-            {Opcode.SMSG_ENABLE_BARBER_SHOP, 0x26EF},
+            {Opcode.SMSG_ENABLE_BARBER_SHOP, 0x26F0},//0x26EF
             {Opcode.SMSG_ENABLE_ENCRYPTION, 0x3049},
             {Opcode.SMSG_ENCHANTMENT_LOG, 0x275B},
             {Opcode.SMSG_ENCOUNTER_END, 0x27CB},
@@ -1027,7 +1027,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_FISH_ESCAPED, 0x2701},
             {Opcode.SMSG_FISH_NOT_HOOKED, 0x2700},
             {Opcode.SMSG_FLIGHT_SPLINE_SYNC, 0x2DF7},
-            {Opcode.SMSG_FORCED_DEATH_UPDATE, 0x270F},
+            {Opcode.SMSG_FORCED_DEATH_UPDATE, 0x2710},//0x270F
             {Opcode.SMSG_FORCE_ANIM, 0x279D},
             {Opcode.SMSG_FORCE_OBJECT_RELINK, 0x2669},
             {Opcode.SMSG_FRIEND_STATUS, 0x27D7},
@@ -1166,14 +1166,14 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_GUILD_ROSTER, 0x29BB},
             {Opcode.SMSG_GUILD_ROSTER_UPDATE, 0x29BC},
             {Opcode.SMSG_GUILD_SEND_RANK_CHANGE, 0x29B9},
-            //{Opcode.SMSG_HEALTH_UPDATE, 0x2705},//
+            {Opcode.SMSG_HEALTH_UPDATE, 0x2706},//0x2705
             {Opcode.SMSG_HIGHEST_THREAT_UPDATE, 0x2715},
-            {Opcode.SMSG_HOTFIX_MESSAGE, 0x25A2},
-            {Opcode.SMSG_HOTFIX_RESPONSE, 0x25A3},
+            {Opcode.SMSG_HOTFIX_MESSAGE, 0x25A3},//0x25A2
+            {Opcode.SMSG_HOTFIX_RESPONSE, 0x25A4},//0x25A3
             {Opcode.SMSG_INITIALIZE_FACTIONS, 0x276D},
             {Opcode.SMSG_INITIAL_SETUP, 0x257F},
             {Opcode.SMSG_INIT_WORLD_STATES, 0x2793},
-            {Opcode.SMSG_INSPECT_HONOR_STATS, 0x25B2},
+            {Opcode.SMSG_INSPECT_HONOR_STATS, 0x25B3},//0x25B2
             {Opcode.SMSG_INSPECT_PVP, 0x2769},
             {Opcode.SMSG_INSPECT_RESULT, 0x264F},
             {Opcode.SMSG_INSTANCE_ENCOUNTER_CHANGE_PRIORITY, 0x27FC},
@@ -1191,11 +1191,11 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_INSTANCE_ENCOUNTER_START, 0x2800},
             {Opcode.SMSG_INSTANCE_ENCOUNTER_TIMER_START, 0x27FD},
             {Opcode.SMSG_INSTANCE_GROUP_SIZE_CHANGED, 0x273F},
-            {Opcode.SMSG_INSTANCE_INFO, 0x2652},
+            {Opcode.SMSG_INSTANCE_INFO, 0x2653},//0x2652
             {Opcode.SMSG_INSTANCE_RESET, 0x26B4},
             {Opcode.SMSG_INSTANCE_RESET_FAILED, 0x26B5},
             {Opcode.SMSG_INSTANCE_SAVE_CREATED, 0x27C9},
-            {Opcode.SMSG_INVALIDATE_PAGE_TEXT, 0x270A},
+            {Opcode.SMSG_INVALIDATE_PAGE_TEXT, 0x270B},//0x270A
             {Opcode.SMSG_INVALIDATE_PLAYER, 0x26D9},
             {Opcode.SMSG_INVALID_PROMOTION_CODE, 0x279E},
             {Opcode.SMSG_INVENTORY_CHANGE_FAILURE, 0x276B},
@@ -1206,8 +1206,8 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_ITEM_CHANGED, 0x2729},
             {Opcode.SMSG_ITEM_COOLDOWN, 0x2813},
             {Opcode.SMSG_ITEM_ENCHANT_TIME_UPDATE, 0x27A0},
-            {Opcode.SMSG_ITEM_EXPIRE_PURCHASE_REFUND, 0x25B1},
-            {Opcode.SMSG_ITEM_PURCHASE_REFUND_RESULT, 0x25AF},
+            {Opcode.SMSG_ITEM_EXPIRE_PURCHASE_REFUND, 0x25B2},//0x25B1
+            {Opcode.SMSG_ITEM_PURCHASE_REFUND_RESULT, 0x25B0},//0x25AF
             {Opcode.SMSG_ITEM_PUSH_RESULT, 0x2639},
             {Opcode.SMSG_ITEM_TIME_UPDATE, 0x279F},
             {Opcode.SMSG_KICK_REASON, 0x2837},
@@ -1253,7 +1253,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_LOAD_EQUIPMENT_SET, 0x2756},
             {Opcode.SMSG_LOAD_SELECTED_TROPHY_RESULT, 0x2811},
             {Opcode.SMSG_LOGIN_SET_TIME_SPEED, 0x2755},
-            {Opcode.SMSG_LOGIN_VERIFY_WORLD, 0x25AC},
+            {Opcode.SMSG_LOGIN_VERIFY_WORLD, 0x25AD},//0x25AC
             {Opcode.SMSG_LOGOUT_CANCEL_ACK, 0x26B3},
             {Opcode.SMSG_LOGOUT_COMPLETE, 0x26B2},
             {Opcode.SMSG_LOGOUT_RESPONSE, 0x26B1},
@@ -1270,7 +1270,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_LOOT_ROLLS_COMPLETE, 0x2636},
             {Opcode.SMSG_LOOT_ROLL_WON, 0x2638},
             {Opcode.SMSG_LOSS_OF_CONTROL_AURA_UPDATE, 0x269A},
-            {Opcode.SMSG_MAIL_COMMAND_RESULT, 0x265A},
+            {Opcode.SMSG_MAIL_COMMAND_RESULT, 0x265B},//0x265A
             {Opcode.SMSG_MAIL_LIST_RESULT, 0x27A1},
             {Opcode.SMSG_MAIL_QUERY_NEXT_TIME_RESULT, 0x27A2},
             {Opcode.SMSG_MAP_OBJECTIVES_INIT, 0x27AA},
@@ -1373,12 +1373,12 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_MOVE_UPDATE_WALK_SPEED, 0x2DA6},
             {Opcode.SMSG_NEUTRAL_PLAYER_FACTION_SELECT_RESULT, 0x25F2},
             {Opcode.SMSG_NEW_TAXI_PATH, 0x26AC},
-            {Opcode.SMSG_NEW_WORLD, 0x25AB},
+            {Opcode.SMSG_NEW_WORLD, 0x25AC},//0x25AB
             {Opcode.SMSG_NOTIFY_DEST_LOC_SPELL_CAST, 0x2C43},
             {Opcode.SMSG_NOTIFY_MISSILE_TRAJECTORY_COLLISION, 0x26D8},
-            {Opcode.SMSG_NOTIFY_MONEY, 0x25AE},
-            {Opcode.SMSG_NOTIFY_RECEIVED_MAIL, 0x265B},
-            {Opcode.SMSG_OFFER_PETITION_ERROR, 0x26E8},
+            {Opcode.SMSG_NOTIFY_MONEY, 0x25AF},//0x25AE
+            {Opcode.SMSG_NOTIFY_RECEIVED_MAIL, 0x265C},//0x265B
+            {Opcode.SMSG_OFFER_PETITION_ERROR, 0x26E9},//0x26E8
             {Opcode.SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA, 0x2725},
             {Opcode.SMSG_ON_MONSTER_MOVE, 0x2DA2},
             {Opcode.SMSG_OPEN_ALLIED_RACE_DETAILS_GIVER, 0x2841},
@@ -1387,7 +1387,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_OPEN_SHIPMENT_NPC_FROM_GOSSIP, 0x27E6},
             {Opcode.SMSG_OPEN_SHIPMENT_NPC_RESULT, 0x27E8},
             {Opcode.SMSG_OPEN_TRANSMOGRIFIER, 0x283E},
-            //{Opcode.SMSG_OVERRIDE_LIGHT, 0x26EE},
+            {Opcode.SMSG_OVERRIDE_LIGHT, 0x26EF},//0x26EE
             {Opcode.SMSG_PAGE_TEXT, 0x2761},
             {Opcode.SMSG_PARTY_COMMAND_RESULT, 0x27E3},
             {Opcode.SMSG_PARTY_INVITE, 0x25CF},
@@ -1399,8 +1399,8 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_PENDING_RAID_LOCK, 0x2739},
             {Opcode.SMSG_PETITION_ALREADY_SIGNED, 0x25B8},
             {Opcode.SMSG_PETITION_RENAME_GUILD_RESPONSE, 0x29F7},
-            {Opcode.SMSG_PETITION_SHOW_LIST, 0x26F1},
-            {Opcode.SMSG_PETITION_SHOW_SIGNATURES, 0x26F2},
+            {Opcode.SMSG_PETITION_SHOW_LIST, 0x26F2},//0x26F1
+            {Opcode.SMSG_PETITION_SHOW_SIGNATURES, 0x26F3},//0x26F2
             {Opcode.SMSG_PETITION_SIGN_RESULTS, 0x2798},
             {Opcode.SMSG_PET_ACTION_FEEDBACK, 0x2795},
             {Opcode.SMSG_PET_ACTION_SOUND, 0x26CE},
@@ -1414,8 +1414,8 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_PET_BATTLE_INITIAL_UPDATE, 0x2613},
             {Opcode.SMSG_PET_BATTLE_MAX_GAME_LENGTH_WARNING, 0x261A},
             {Opcode.SMSG_PET_BATTLE_PVP_CHALLENGE, 0x2611},
-            {Opcode.SMSG_PET_BATTLE_QUEUE_PROPOSE_MATCH, 0x2658},
-            {Opcode.SMSG_PET_BATTLE_QUEUE_STATUS, 0x2659},
+            {Opcode.SMSG_PET_BATTLE_QUEUE_PROPOSE_MATCH, 0x2659},//0x2657
+            {Opcode.SMSG_PET_BATTLE_QUEUE_STATUS, 0x265A},//0x2659
             {Opcode.SMSG_PET_BATTLE_REPLACEMENTS_MADE, 0x2616},
             {Opcode.SMSG_PET_BATTLE_REQUEST_FAILED, 0x2610},
             {Opcode.SMSG_PET_BATTLE_ROUND_RESULT, 0x2615},
@@ -1435,7 +1435,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_PET_TAME_FAILURE, 0x26E5},
             {Opcode.SMSG_PET_UNLEARNED_SPELLS, 0x2C50},
             {Opcode.SMSG_PHASE_SHIFT_CHANGE, 0x2577},
-            {Opcode.SMSG_PLAYED_TIME, 0x2711},
+            {Opcode.SMSG_PLAYED_TIME, 0x2712},//0x2711
             {Opcode.SMSG_PLAYER_BOUND, 0x257D},
             {Opcode.SMSG_PLAYER_SAVE_GUILD_EMBLEM, 0x29F6},
             {Opcode.SMSG_PLAYER_SKINNED, 0x2790},
@@ -1444,7 +1444,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_PLAY_OBJECT_SOUND, 0x27B8},
             {Opcode.SMSG_PLAY_ONE_SHOT_ANIM_KIT, 0x277A},
             {Opcode.SMSG_PLAY_ORPHAN_SPELL_VISUAL, 0x2C47},
-            {Opcode.SMSG_PLAY_SCENE, 0x2655},
+            {Opcode.SMSG_PLAY_SCENE, 0x2656},//0x2655
             {Opcode.SMSG_PLAY_SOUND, 0x27B6},
             {Opcode.SMSG_PLAY_SPEAKERBOT_SOUND, 0x27B9},
             {Opcode.SMSG_PLAY_SPELL_VISUAL, 0x2C45},
@@ -1458,21 +1458,21 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_PROPOSE_LEVEL_GRANT, 0x2719},
             {Opcode.SMSG_PUSH_SPELL_TO_ACTION_BAR, 0x2C51},
             {Opcode.SMSG_PVP_CREDIT, 0x271F},
-            {Opcode.SMSG_PVP_LOG_DATA, 0x25B3},
+            {Opcode.SMSG_PVP_LOG_DATA, 0x25B4},//0x25B3
             {Opcode.SMSG_PVP_OPTIONS_ENABLED, 0x25B6},
             {Opcode.SMSG_PVP_SEASON, 0x25D3},
-            {Opcode.SMSG_QUERY_BATTLE_PET_NAME_RESPONSE, 0x270C},
-            {Opcode.SMSG_QUERY_COMMUNITY_NAME_RESPONSE, 0x2708},
+            {Opcode.SMSG_QUERY_BATTLE_PET_NAME_RESPONSE, 0x270D},//0x270B
+            {Opcode.SMSG_QUERY_COMMUNITY_NAME_RESPONSE, 0x2709},//0x2708
             {Opcode.SMSG_QUERY_CREATURE_RESPONSE, 0x2703},//0x2702
             {Opcode.SMSG_QUERY_GAME_OBJECT_RESPONSE, 0x2704},
             {Opcode.SMSG_QUERY_GARRISON_CREATURE_NAME_RESPONSE, 0x292B},
             {Opcode.SMSG_QUERY_GUILD_INFO_RESPONSE, 0x29E5},
             {Opcode.SMSG_QUERY_ITEM_TEXT_RESPONSE, 0x2812},
             {Opcode.SMSG_QUERY_NPC_TEXT_RESPONSE, 0x2705},//
-            {Opcode.SMSG_QUERY_PAGE_TEXT_RESPONSE, 0x2709},
-            {Opcode.SMSG_QUERY_PETITION_RESPONSE, 0x270D},
-            {Opcode.SMSG_QUERY_PET_NAME_RESPONSE, 0x270B},
-            {Opcode.SMSG_QUERY_PLAYER_NAME_RESPONSE, 0x2707},
+            {Opcode.SMSG_QUERY_PAGE_TEXT_RESPONSE, 0x270A},//0x2709
+            {Opcode.SMSG_QUERY_PETITION_RESPONSE, 0x270E},//0x270D
+            {Opcode.SMSG_QUERY_PET_NAME_RESPONSE, 0x270C},//0x270B
+            {Opcode.SMSG_QUERY_PLAYER_NAME_RESPONSE, 0x2708},//0x2707
             {Opcode.SMSG_QUERY_QUEST_INFO_RESPONSE, 0x2A95},
             {Opcode.SMSG_QUERY_TIME_RESPONSE, 0x2723},
             {Opcode.SMSG_QUERY_TREASURE_PICKER_RESPONSE, 0x2850},
@@ -1514,10 +1514,10 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_READ_ITEM_RESULT_FAILED, 0x27F3},
             {Opcode.SMSG_READ_ITEM_RESULT_OK, 0x27ED},
             {Opcode.SMSG_REALM_LOOKUP_INFORMATION, 0x2818},
-            {Opcode.SMSG_REALM_QUERY_RESPONSE, 0x26ED},
+            {Opcode.SMSG_REALM_QUERY_RESPONSE, 0x26EE},//0x26ED
             {Opcode.SMSG_RECRUIT_A_FRIEND_RESPONSE, 0x27D5},
             {Opcode.SMSG_REFER_A_FRIEND_EXPIRED, 0x276A},
-            {Opcode.SMSG_REFER_A_FRIEND_FAILURE, 0x26F3},
+            {Opcode.SMSG_REFER_A_FRIEND_FAILURE, 0x26F4},//0x26F3
             {Opcode.SMSG_REFRESH_COMPONENT, 0x267B},
             {Opcode.SMSG_REFRESH_SPELL_HISTORY, 0x2C2C},
             {Opcode.SMSG_REMOVE_ITEM_PASSIVE, 0x25C0},
@@ -1531,7 +1531,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_RESEARCH_COMPLETE, 0x2585},
             {Opcode.SMSG_RESET_AREA_TRIGGER, 0x2642},
             {Opcode.SMSG_RESET_COMPRESSION_CONTEXT, 0x304F},
-            {Opcode.SMSG_RESET_FAILED_NOTIFY, 0x26E9},
+            {Opcode.SMSG_RESET_FAILED_NOTIFY, 0x26EA},//0x26E9
             {Opcode.SMSG_RESET_RANGED_COMBAT_TIMER, 0x271C},
             {Opcode.SMSG_RESET_WEEKLY_CURRENCY, 0x2574},
             {Opcode.SMSG_RESPEC_WIPE_CONFIRM, 0x2628},
@@ -1584,14 +1584,14 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_SET_FACTION_VISIBLE, 0x2773},
             {Opcode.SMSG_SET_FLAT_SPELL_MODIFIER, 0x2C36},
             {Opcode.SMSG_SET_FORCED_REACTIONS, 0x2764},
-            {Opcode.SMSG_SET_ITEM_PURCHASE_DATA, 0x25B0},
+            {Opcode.SMSG_SET_ITEM_PURCHASE_DATA, 0x25B1},//0x25B0
             {Opcode.SMSG_SET_LOOT_METHOD_FAILED, 0x281E},
             {Opcode.SMSG_SET_MAX_WEEKLY_QUANTITY, 0x25B7},
             {Opcode.SMSG_SET_MELEE_ANIM_KIT, 0x277C},
             {Opcode.SMSG_SET_MOVEMENT_ANIM_KIT, 0x277B},
             {Opcode.SMSG_SET_PCT_SPELL_MODIFIER, 0x2C37},
             {Opcode.SMSG_SET_PET_SPECIALIZATION, 0x2643},
-            {Opcode.SMSG_SET_PLAYER_DECLINED_NAMES_RESULT, 0x2710},
+            {Opcode.SMSG_SET_PLAYER_DECLINED_NAMES_RESULT, 0x2711},//0x2710
             {Opcode.SMSG_SET_PLAY_HOVER_ANIM, 0x25CC},
             {Opcode.SMSG_SET_PROFICIENCY, 0x277E},
             {Opcode.SMSG_SET_SPELL_CHARGES, 0x2C29},
@@ -1690,7 +1690,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_UPDATE_EXPANSION_LEVEL, 0x2665},
             {Opcode.SMSG_UPDATE_GAME_TIME_STATE, 0x2875},
             {Opcode.SMSG_UPDATE_INSTANCE_OWNERSHIP, 0x26D7},
-            {Opcode.SMSG_UPDATE_LAST_INSTANCE, 0x26B6},
+            {Opcode.SMSG_UPDATE_LAST_INSTANCE, 0x26B7},//0x26B6
             {Opcode.SMSG_UPDATE_OBJECT, 0x2817},
             {Opcode.SMSG_UPDATE_TALENT_DATA, 0x25EC},
             {Opcode.SMSG_UPDATE_TASK_PROGRESS, 0x27DC},
@@ -1711,7 +1711,7 @@ namespace WowPacketParser.Enums.Version.V8_1_0_28768
             {Opcode.SMSG_WAIT_QUEUE_UPDATE, 0x256D},
             {Opcode.SMSG_WARDEN_DATA, 0x2576},
             {Opcode.SMSG_WARFRONT_COMPLETED, 0x27AD},
-            {Opcode.SMSG_WARGAME_REQUEST_SUCCESSFULLY_SENT_TO_OPPONENT, 0x25B4},
+            {Opcode.SMSG_WARGAME_REQUEST_SUCCESSFULLY_SENT_TO_OPPONENT, 0x25B5},//0x25B4
             {Opcode.SMSG_WEATHER, 0x26D4},
             {Opcode.SMSG_WEEKLY_SPELL_USAGE, 0x2C18},
             {Opcode.SMSG_WHO, 0x2BAE},

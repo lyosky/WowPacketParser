@@ -26,18 +26,20 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
             packet.ReadPackedGuid128("PartyGUID");
             packet.ReadInt32("AchievementID");
             packet.ReadSingle("DisplayTime");
-
+           
             var senderNameLen = packet.ReadBits(11);
             var receiverNameLen = packet.ReadBits(11);
-            var prefixLen = packet.ReadBits(5);
-            var channelLen = packet.ReadBits(7);
-            var textLen = packet.ReadBits(12);
+            packet.ReadBits("Unk810_Bits", 1);
+            var prefixLen = packet.ReadBits("prefixLen", 5);
+            var channelLen = packet.ReadBits("channelLen", 7);
+            var textLen = packet.ReadBits("textLen", 12);
             packet.ReadBits("ChatFlags", 11);
 
             packet.ReadBit("HideChatLog");
             packet.ReadBit("FakeSenderName");
             bool unk801bit = packet.ReadBit("Unk801_Bit");
 
+           
             text.SenderName = packet.ReadWoWString("Sender Name", senderNameLen);
             text.ReceiverName = packet.ReadWoWString("Receiver Name", receiverNameLen);
             packet.ReadWoWString("Addon Message Prefix", prefixLen);
@@ -60,11 +62,12 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
         [Parser(Opcode.CMSG_CHAT_ADDON_MESSAGE)]
         public static void HandleAddonMessage(Packet packet)
         {
+            packet.ReadBits("Unk810_Bits", 1);
             var prefixLen = packet.ReadBits(5);
             var testLen = packet.ReadBits(8);
             packet.ReadBit("IsLogged");
             packet.ResetBitReader();
-
+      
             packet.ReadInt32("Type");
             packet.ReadWoWString("Prefix", prefixLen);
             packet.ReadWoWString("Text", testLen);

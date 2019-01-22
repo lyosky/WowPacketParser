@@ -113,7 +113,7 @@ namespace WowPacketParserModule.V8_1_0_28768.Parsers
 
                 Storage.CreatureTemplateQuestItems.Add(questItem, packet.TimeSpan);
             }
-
+            packet.ReadInt32("Unk810x");
             packet.AddSniffData(StoreNameType.Unit, entry.Key, "QUERY_RESPONSE");
 
             Storage.CreatureTemplates.Add(creature, packet.TimeSpan);
