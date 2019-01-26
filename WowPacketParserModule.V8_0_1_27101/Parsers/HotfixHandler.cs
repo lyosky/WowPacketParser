@@ -96,6 +96,11 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         [Parser(Opcode.CMSG_HOTFIX_REQUEST)]
         public static void HandleHotfixQuery(Packet packet)
         {
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+            {
+                packet.ReadUInt32("CurrentBuild");
+                packet.ReadUInt32("InternalBuild");
+            }
             var hotfixCount = packet.ReadUInt32("HotfixCount");
             for (var i = 0u; i < hotfixCount; ++i)
             {
@@ -143,9 +148,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                     packet.AddSniffData(StoreNameType.None, entry, type.ToString());
                     HotfixStoreMgr.AddRecord(type, entry, db2File);
 
-                    if (db2File.Position != db2File.Length)
+                    if (HotfixStoreMgr.GetStore(type) == null)
                     {
-                        db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has missing structure");
+                        db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has missing structure. HotfixBlob entry generated!");
                         db2File.AsHex();
 
                         HotfixBlob hotfixBlob = new HotfixBlob
@@ -156,6 +161,11 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                         };
 
                         Storage.HotfixBlobs.Add(hotfixBlob);
+                    }
+                    else if (db2File.Position != db2File.Length)
+                    {
+                        db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has incorrect structure");
+                        db2File.AsHex();
                     }
 
                     db2File.ClosePacket(false);
@@ -230,9 +240,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 packet.AddSniffData(StoreNameType.None, entry, type.ToString());
                 HotfixStoreMgr.AddRecord(type, entry, db2File);
 
-                if (db2File.Position != db2File.Length)
+                if (HotfixStoreMgr.GetStore(type) == null)
                 {
-                    db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has missing structure, saved as Blob");
+                    db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has missing structure. HotfixBlob entry generated!");
                     db2File.AsHex();
 
                     HotfixBlob hotfixBlob = new HotfixBlob
@@ -243,6 +253,11 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                     };
 
                     Storage.HotfixBlobs.Add(hotfixBlob);
+                }
+                else if (db2File.Position != db2File.Length)
+                {
+                    db2File.WriteLine($"(Entry: {entry} TableHash: {type}) has incorrect structure");
+                    db2File.AsHex();
                 }
 
                 db2File.ClosePacket(false);
