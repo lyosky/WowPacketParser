@@ -46,6 +46,7 @@
     <Compile Include="Enums\MovementFlags2.cs" />
     <Compile Include="Enums\SplineFlag.cs" />
     <Compile Include="Enums\UpdateFields.cs" />
+    <Compile Include="Enums\UpdateFields810.cs" />
     <Compile Include="Hotfix\AchievementEntry.cs" />
     <Compile Include="Hotfix\AnimationDataEntry.cs" />
     <Compile Include="Hotfix\AnimKitEntry.cs" />

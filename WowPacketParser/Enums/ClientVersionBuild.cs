@@ -235,6 +235,8 @@
         V8_1_0_29088 = 29088,
         V8_1_0_29139 = 29139,
         V8_1_0_29235 = 29235,
+        V8_1_0_29285 = 29285,
+        V8_1_0_29297 = 29297,
         // Battle.net - should probably not mix this but oh well
         BattleNetV37165 = 37165,
 
