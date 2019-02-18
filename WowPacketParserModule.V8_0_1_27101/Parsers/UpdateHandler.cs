@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using WowPacketParser.Enums;
 using WowPacketParser.Enums.Version;
 using WowPacketParser.Misc;
@@ -42,18 +41,18 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                 switch (typeString)
                 {
                     case "Values":
-                    {
-                        var guid = packet.ReadPackedGuid128("Object Guid", i);
-                        CoreParsers.UpdateHandler.ReadValuesUpdateBlock(packet, guid, i);
-                        break;
-                    }
+                        {
+                            var guid = packet.ReadPackedGuid128("Object Guid", i);
+                            CoreParsers.UpdateHandler.ReadValuesUpdateBlock(packet, guid, i);
+                            break;
+                        }
                     case "CreateObject1":
                     case "CreateObject2":
-                    {
-                        var guid = packet.ReadPackedGuid128("Object Guid", i);
-                        ReadCreateObjectBlock(packet, guid, map, i);
-                        break;
-                    }
+                        {
+                            var guid = packet.ReadPackedGuid128("Object Guid", i);
+                            ReadCreateObjectBlock(packet, guid, map, i);
+                            break;
+                        }
                 }
             }
         }
@@ -98,7 +97,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                     }
                 case ObjectType.Unit:
                     {
-                        fieldCount = UpdateFields.GetUpdateField(UnitField.UNIT_END);
+                        fieldCount = UpdateFields.GetUpdateField(UnitField.UNIT_FIELD_END);
                         break;
                     }
                 case ObjectType.GameObject:
@@ -134,15 +133,16 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
 
             int objectEnd = UpdateFields.GetUpdateField(ObjectField.OBJECT_END);
-            var dynamicCounterStore = new List<ulong>();
+            var dynamicCounterStore = new List<long>();
             var currentArrayInfo = new List<UpdateFieldInfo>();
-            int maxArrayIndex = 0;
+            long maxArrayIndex = 0;
             int maxArrayPosition = 0;
             int currentArrayPosition = 0;
             int currentArrayIndex = 0;
-            int currentArrayGroup = 0;
             bool isArray = false;
-            for (var i = 0; i < fieldCount - 1; ++i)
+            bool isDynamicArray = false;
+            object value = null;
+            for (var i = 0; i < fieldCount; ++i)
             {
                 string key = "Block Value " + i;
                 UpdateFieldInfo fieldInfo = null;
@@ -263,33 +263,75 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                     dynamicCounter = fieldInfo.IsCounter;
                     flag = fieldInfo.Flag;
 
-                    if (!flags.HasFlag(flag))
+                    if (i > objectEnd && flag != 0 && !flags.HasAnyFlag(flag))
                         continue;
 
-                    if (fieldInfo.ArrayGroup != currentArrayGroup && currentArrayGroup != 0)
+                    // Reset array data if new array starts
+                    if (fieldInfo.ArrayInfo == UpdateFieldArrayInfo.InfoStart)
                     {
+                        isDynamicArray = false;
+                        isArray = false;
+                        currentArrayInfo.Clear();
+                        maxArrayPosition = 0;
+                        maxArrayIndex = 0;
+                        currentArrayIndex = 0;
+                        currentArrayPosition = 0; ;
+                    }
+                    // Reset array data if end is reached
+                    if (maxArrayPosition != 0 && currentArrayPosition > maxArrayPosition)
+                    {
+                        isDynamicArray = false;
                         isArray = false;
                         currentArrayInfo.Clear();
                         maxArrayPosition = 0;
                         maxArrayIndex = 0;
                         currentArrayIndex = 0;
                         currentArrayPosition = 0;
-                        currentArrayGroup = 0;
                     }
-                    if (fieldInfo.ArrayGroup != 0 && currentArrayGroup == 0)
+
+                    // Set isArray if field is part of an arrayGroup
+                    if (fieldInfo.ArrayInfo == UpdateFieldArrayInfo.InfoStart)
                     {
                         isArray = true;
+                    }
+
+                    // fill necessary data if not collected yet
+                    if (isArray && maxArrayPosition == 0 && maxArrayIndex == 0)
+                    {
                         currentArrayInfo.Add(fieldInfo);
+                    }
+
+                    if (fieldInfo.ArrayInfo == UpdateFieldArrayInfo.InfoEnd)
+                    {
+                        switch (fieldInfo.Format)
+                        {
+                            case UpdateFieldType.DynamicByte:
+                            case UpdateFieldType.DynamicUshort:
+                            case UpdateFieldType.DynamicShort:
+                            case UpdateFieldType.DynamicUint:
+                            case UpdateFieldType.DynamicInt:
+                            case UpdateFieldType.DynamicFloat:
+                            case UpdateFieldType.DynamicGuid:
+                            case UpdateFieldType.DynamicCustom:
+                                {
+                                    if (!isDynamicArray)
+                                    {
+                                        isDynamicArray = true;
+                                        maxArrayIndex = dynamicCounterStore[0];
+                                    }
+                                    break;
+                                }
+                        }
 
                         if (fieldInfo.Size > 1)
                         {
                             maxArrayPosition = fieldInfo.Size + currentArrayInfo.Count - 2;
                             maxArrayIndex = ((maxArrayPosition + 1) / currentArrayInfo.Count) - 1;
-                            currentArrayGroup = fieldInfo.ArrayGroup;
                         }
                     }
                 }
 
+                // override fieldinfo with array info
                 if (isArray && maxArrayPosition != 0 && maxArrayIndex != 0)
                 {
                     UpdateFieldInfo overrideFieldInfo = currentArrayInfo[currentArrayPosition % currentArrayInfo.Count];
@@ -302,167 +344,393 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
                     }
                 }
 
-                switch (updateFieldType)
+                if (isDynamicArray)
                 {
-                    case UpdateFieldType.Guid:
+                    for (var arrayIndex = 0; arrayIndex < maxArrayIndex; arrayIndex++)
+                    {
+                        foreach (var arrayInfo in currentArrayInfo)
                         {
-                            if (isArray)
+                            switch (arrayInfo.Format)
                             {
-                                var value = packet.ReadPackedGuid128(key + " + " + currentArrayIndex, index);
+                                case UpdateFieldType.DynamicByte:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadByte(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadByte(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicShort:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadInt16(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadInt16(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicUshort:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadUInt16(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadUInt16(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicUint:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadUInt32(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadUInt32(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicInt:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadInt32(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadInt32(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicFloat:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadSingle(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(value));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadSingle(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(value));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicGuid:
+                                    {
+                                        if (dynDict.ContainsKey(arrayInfo.Value))
+                                        {
+                                            value = packet.ReadPackedGuid128(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            dynDict[arrayInfo.Value].Add(new UpdateField(0));
+                                        }
+                                        else
+                                        {
+                                            var store = new List<UpdateField>();
+                                            value = packet.ReadPackedGuid128(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, index);
+                                            store.Add(new UpdateField(0));
+                                            dynDict.Add(arrayInfo.Value, store);
+                                        }
+                                        break;
+                                    }
+                                case UpdateFieldType.DynamicCustom:
+                                    {
+                                        if (arrayInfo.Name == "CONVERSATION_DYNAMIC_FIELD_10")
+                                        {
+                                            byte curbitval = packet.ReadByte();
+
+                                            for (byte bitPos = 0; bitPos < 2; ++bitPos)
+                                            {
+                                                var bit = ((curbitval >> (7 - bitPos)) & 1) != 0;
+                                                packet.AddValue(arrayIndex > 0 ? arrayInfo.Name + " + " + arrayIndex : arrayInfo.Name, bit, index, bitPos);
+                                            }
+
+                                            if (dynDict.ContainsKey(arrayInfo.Value))
+                                            {
+                                                dynDict[arrayInfo.Value].Add(new UpdateField(curbitval));
+                                            }
+                                            else
+                                            {
+                                                var store = new List<UpdateField>();
+                                                store.Add(new UpdateField(curbitval));
+                                                dynDict.Add(arrayInfo.Value, store);
+                                            }
+                                        }
+                                        break;
+                                    }
+                            }
+                        }
+                    }
+                    dynamicCounterStore.RemoveAt(0);
+                    isDynamicArray = false;
+                    isArray = false;
+                    currentArrayInfo.Clear();
+                    maxArrayPosition = 0;
+                    maxArrayIndex = 0;
+                    currentArrayIndex = 0;
+                    currentArrayPosition = 0;
+                }
+                else
+                {
+                    bool isDynamicValue = false;
+                    switch (updateFieldType)
+                    {
+                        case UpdateFieldType.Guid:
+                            {
+                                value = packet.ReadPackedGuid128();
+
+                                if (isArray)
+                                    currentArrayPosition++;
+
                                 dict.Add(i, new UpdateField(0));
-                                currentArrayPosition++;
+                                break;
                             }
-                            else
+                        case UpdateFieldType.Byte:
                             {
-                                var value = packet.ReadPackedGuid128(key, index);
-                                dict.Add(i, new UpdateField(0));
-                            }
-                            break;
-                        }
-                    case UpdateFieldType.Byte:
-                        {
-                            if (isArray)
-                            {
-                                dict.Add(i, new UpdateField(packet.ReadByte(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadByte(key, index);
+                                value = packet.ReadByte();
+
+                                if (isArray)
+                                    currentArrayPosition++;
+
                                 dict.Add(i, new UpdateField(value));
 
                                 if (dynamicCounter)
-                                    dynamicCounterStore.Add(value);
+                                    dynamicCounterStore.Add((byte)value);
+                                break;
                             }
-                            break;
-                        }
-                    case UpdateFieldType.Ushort:
-                        {
-                            if (isArray)
+                        case UpdateFieldType.Ushort:
                             {
-                                dict.Add(i, new UpdateField(packet.ReadUInt16(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadUInt16(key, index);
+                                value = packet.ReadUInt16();
+                                if (isArray)
+                                    currentArrayPosition++;
+
                                 dict.Add(i, new UpdateField(value));
 
                                 if (dynamicCounter)
-                                    dynamicCounterStore.Add(value);
+                                    dynamicCounterStore.Add((ushort)value);
+                                break;
                             }
-                            break;
-                        }
-                    case UpdateFieldType.Short:
-                        {
-                            if (isArray)
+                        case UpdateFieldType.Short:
                             {
-                                dict.Add(i, new UpdateField(packet.ReadInt16(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadInt16(key, index);
-                                dict.Add(i, new UpdateField(value));
+                                value = packet.ReadInt16();
+                                if (isArray)
+                                    currentArrayPosition++;
 
-                                //if (dynamicCounter)
-                                //    dynamicCounterStore.Add(value);
-                            }
-                            break;
-                        }
-                    case UpdateFieldType.Default:
-                    case UpdateFieldType.Uint:
-                        {
-                            if (isArray)
-                            {
-                                dict.Add(i, new UpdateField(packet.ReadUInt32(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadUInt32(key, index);
                                 dict.Add(i, new UpdateField(value));
 
                                 if (dynamicCounter)
-                                    dynamicCounterStore.Add(value);
+                                    dynamicCounterStore.Add((short)value);
+                                break;
                             }
-                            break;
-                        }
-                    case UpdateFieldType.Int:
-                        {
-                            if (isArray)
+                        case UpdateFieldType.Default:
+                        case UpdateFieldType.Uint:
                             {
-                                dict.Add(i, new UpdateField(packet.ReadInt32(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                                dict.Add(i, new UpdateField(packet.ReadInt32(key, index)));
-                            break;
-                        }
-                    case UpdateFieldType.Float:
-                        {
-                            if (isArray)
-                            {
-                                dict.Add(i, new UpdateField(packet.ReadSingle(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                                dict.Add(i, new UpdateField(packet.ReadSingle(key, index)));
-                            break;
-                        }
-                    case UpdateFieldType.Ulong:
-                        {
-                            if (isArray)
-                            {
-                                dict.Add(i, new UpdateField(packet.ReadUInt64(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadUInt64(key, index);
+                                value = packet.ReadUInt32();
+                                if (isArray)
+
+                                    currentArrayPosition++;
+
                                 dict.Add(i, new UpdateField(value));
 
                                 if (dynamicCounter)
-                                    dynamicCounterStore.Add(value);
+                                    dynamicCounterStore.Add((uint)value);
+                                break;
                             }
-                            break;
-                        }
-                    case UpdateFieldType.Bytes:
-                        {
-                            if (isArray)
+                        case UpdateFieldType.Int:
                             {
-                                dict.Add(i, new UpdateField(packet.ReadUInt32(key + " + " + currentArrayIndex, index)));
-                                currentArrayPosition++;
-                            }
-                            else
-                            {
-                                var value = packet.ReadUInt32();
-                                byte[] intBytes = BitConverter.GetBytes(value);
-                                packet.AddValue(key, intBytes[0] + "/" + intBytes[1] + "/" + intBytes[2] + "/" + intBytes[3], index);
+                                value = packet.ReadInt32();
+                                if (isArray)
+                                    currentArrayPosition++;
+
                                 dict.Add(i, new UpdateField(value));
+
+                                if (dynamicCounter)
+                                    dynamicCounterStore.Add((int)value);
+                                break;
                             }
-                            break;
-                        }
-                    case UpdateFieldType.DynamicUint:
-                        {
-                            var count = dynamicCounterStore[0];
-                            var store = new List<UpdateField>();
-                            for (ulong k = 0; k < count; ++k)
+                        case UpdateFieldType.Time:
                             {
-                                var value = packet.ReadUInt32(count > 1 ? key + " + " + k : key, index);
-                                store.Add(new UpdateField(value));
+                                value = packet.ReadInt32();
+                                if (isArray)
+                                    currentArrayPosition++;
+
+                                dict.Add(i, new UpdateField(value));
+                                value = Utilities.GetDateTimeFromUnixTime((int)value);
+                                break;
                             }
-                            dynDict.Add(i, store);
-                            dynamicCounterStore.RemoveAt(0);
-                            break;
-                        }
-                    case UpdateFieldType.Custom:
+                        case UpdateFieldType.Float:
+                            {
+                                value = packet.ReadSingle();
+                                if (isArray)
+                                    currentArrayPosition++;
+
+                                dict.Add(i, new UpdateField(value));
+                                break;
+                            }
+                        case UpdateFieldType.Ulong:
+                            {
+                                value = packet.ReadUInt64();
+                                if (isArray)
+                                    currentArrayPosition++;
+
+                                dict.Add(i, new UpdateField(value));
+                                break;
+                            }
+                        case UpdateFieldType.Long:
+                            {
+                                value = packet.ReadInt64();
+                                if (isArray)
+
+                                    currentArrayPosition++;
+
+                                dict.Add(i, new UpdateField(value));
+                                break;
+                            }
+                        case UpdateFieldType.Bytes:
+                            {
+                                value = packet.ReadUInt32();
+                                if (isArray)
+
+                                    currentArrayPosition++;
+
+                                dict.Add(i, new UpdateField(value));
+                                break;
+                            }
+                        case UpdateFieldType.DynamicByte:
+                            {
+                                if (!isArray)
+                                {
+                                    var count = dynamicCounterStore[0];
+                                    var store = new List<UpdateField>();
+                                    for (int k = 0; k < count; ++k)
+                                    {
+                                        value = packet.ReadByte(count > 1 ? key + " + " + k : key, index);
+                                        store.Add(new UpdateField(value));
+                                    }
+                                    dynDict.Add(i, store);
+                                    dynamicCounterStore.RemoveAt(0);     
+                                }
+                                isDynamicValue = true;
+                                break;
+                            }
+                        case UpdateFieldType.DynamicUshort:
+                            {
+                                if (!isArray)
+                                {
+                                    var count = dynamicCounterStore[0];
+                                    var store = new List<UpdateField>();
+                                    for (int k = 0; k < count; ++k)
+                                    {
+                                        value = packet.ReadUInt16(count > 1 ? key + " + " + k : key, index);
+                                        store.Add(new UpdateField(value));
+                                    }
+                                    dynDict.Add(i, store);
+                                    dynamicCounterStore.RemoveAt(0);
+                                }
+                                isDynamicValue = true;
+                                break;
+                            }
+                        case UpdateFieldType.DynamicShort:
+                            {
+                                if (!isArray)
+                                {
+                                    var count = dynamicCounterStore[0];
+                                    var store = new List<UpdateField>();
+                                    for (int k = 0; k < count; ++k)
+                                    {
+                                        value = packet.ReadInt16(count > 1 ? key + " + " + k : key, index);
+                                        store.Add(new UpdateField(value));
+                                    }
+                                    dynDict.Add(i, store);
+                                    dynamicCounterStore.RemoveAt(0);
+                                }
+                                isDynamicValue = true;
+                                break;
+                            }
+                        case UpdateFieldType.DynamicUint:
+                            {
+                                if (!isArray)
+                                {
+                                    var count = dynamicCounterStore[0];
+                                    var store = new List<UpdateField>();
+                                    for (int k = 0; k < count; ++k)
+                                    {
+                                        value = packet.ReadUInt32(count > 1 ? key + " + " + k : key, index);
+                                        store.Add(new UpdateField(value));
+                                    }
+                                    dynDict.Add(i, store);
+                                    dynamicCounterStore.RemoveAt(0);
+                                }
+                                isDynamicValue = true;
+                                break;
+                            }
+                        case UpdateFieldType.DynamicInt:
+                            {
+                                if (!isArray)
+                                {
+                                    var count = dynamicCounterStore[0];
+                                    var store = new List<UpdateField>();
+                                    for (int k = 0; k < count; ++k)
+                                    {
+                                        value = packet.ReadInt32(count > 1 ? key + " + " + k : key, index);
+                                        store.Add(new UpdateField(value));
+                                    }
+                                    dynDict.Add(i, store);
+                                    dynamicCounterStore.RemoveAt(0);
+                                }
+                                isDynamicValue = true;
+                                break;
+                            }
+                        case UpdateFieldType.Custom:
+                            {
+                                // TODO: add custom handling
+                                //if (key == UnitField.UNIT_FIELD_FACTIONTEMPLATE.ToString())
+                                //    packet.AddValue(key, value + $" ({ StoreGetters.GetName(StoreNameType.Faction, fieldData[0].Int32Value, false) })", index);
+                                break;
+                            }
+                    }
+
+                    if (!isDynamicValue)
+                    {
+                        if (updateFieldType == UpdateFieldType.Bytes)
                         {
-                            // TODO: add custom handling
-                            //if (key == UnitField.UNIT_FIELD_FACTIONTEMPLATE.ToString())
-                            //    packet.AddValue(key, value + $" ({ StoreGetters.GetName(StoreNameType.Faction, fieldData[0].Int32Value, false) })", index);
-                            break;
+                            byte[] intBytes = BitConverter.GetBytes((uint)value);
+                            packet.AddValue(key + (currentArrayIndex > 0 ? " + " + currentArrayIndex : ""), intBytes[0] + "/" + intBytes[1] + "/" + intBytes[2] + "/" + intBytes[3], index);
                         }
+                        else
+                            packet.AddValue(key + (currentArrayIndex > 0 ? " + " + currentArrayIndex : ""), value, index);
+                    }
                 }
             }
         }
@@ -797,7 +1065,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
                 packet.ReadVector3("RollPitchYaw1", index);
 
-                areaTriggerTemplate.Flags   = 0;
+                areaTriggerTemplate.Flags = 0;
 
                 if (packet.ReadBit("HasAbsoluteOrientation", index))
                     areaTriggerTemplate.Flags |= (uint)AreaTriggerFlags.HasAbsoluteOrientation;

@@ -576,6 +576,7 @@
     <Compile Include="SQL\Builders\Spells.cs" />
     <Compile Include="SQL\Builders\UnitMisc.cs" />
     <Compile Include="SQL\Builders\WDBTemplates.cs" />
+    <Compile Include="SQL\Builders\World_Quest.cs" />
     <Compile Include="SQL\RowList.cs" />
     <Compile Include="SQL\IDataModel.cs" />
     <Compile Include="SQL\DBFieldNameAttribute.cs" />
@@ -661,6 +662,7 @@
     <Compile Include="Store\Objects\CreatureTemplate.cs" />
     <Compile Include="Store\Objects\VehicleTemplateAccessory.cs" />
     <Compile Include="Store\Objects\WeatherUpdate.cs" />
+    <Compile Include="Store\Objects\WorldQuest.cs" />
     <Compile Include="Store\Objects\WoWObject.cs" />
     <Compile Include="Store\Storage.cs" />
     <Compile Include="Store\StoreDictionaries.cs" />

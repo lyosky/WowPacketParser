@@ -34,7 +34,6 @@ namespace WowPacketParser.SQL
             if (_onlyPrimaryKeys && _conditions.GetPrimaryKeyCount() == 1)
             {
                 var field = _databaseFields.Single(f => f.Item2 == _primaryKeyReflectionField);
-
                 whereClause.Append(field.Item1);
                 if (_conditions.Count == 1)
                 {
@@ -62,6 +61,7 @@ namespace WowPacketParser.SQL
             }
             else
             {
+              
                 foreach (Row<T> condition in _conditions)
                 {
                     whereClause.Append("(");
@@ -81,6 +81,7 @@ namespace WowPacketParser.SQL
                         whereClause.Append(" AND ");
                     }
 
+                    //if(whereClause.Length>5)
                     whereClause.Remove(whereClause.Length - 5, 5); // remove last " AND "
                     whereClause.Append(")");
                     whereClause.Append(" OR ");
@@ -120,6 +121,7 @@ namespace WowPacketParser.SQL
                 fieldNames.Append(field.Item1);
                 fieldNames.Append(SQLUtil.CommaSeparator);
             }
+
             fieldNames.Remove(fieldNames.Length - 2, 2); // remove last ", "
 
             if (_whereClause.HasConditions)

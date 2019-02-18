@@ -54,7 +54,9 @@
         weather_updates,
 
         hotfix_data,
-        hotfix_blob
+        hotfix_blob,
+
+        worldquest
         // ReSharper restore InconsistentNaming
     }
 }

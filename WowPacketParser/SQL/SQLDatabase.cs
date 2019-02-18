@@ -210,16 +210,18 @@ namespace WowPacketParser.SQL
         {
             var cond = new RowList<T>();
             cond.AddRange(conditionList.Select(c => c.Item1));
+
             return Get(cond, database);
         }
 
         public static RowList<T> Get<T>(RowList<T> rowList = null, string database = null)
             where T : IDataModel, new()
         {
+          
             // TODO: Add new config option "Verify data against DB"
             if (!SQLConnector.Enabled)
                 return null;
-
+           
             var result = new RowList<T>();
 
             using (var reader = SQLConnector.ExecuteQuery(new SQLSelect<T>(rowList, database).Build()))
@@ -229,7 +231,7 @@ namespace WowPacketParser.SQL
 
                 var fields = SQLUtil.GetFields<T>();
                 var fieldsCount = fields.Select(f => f.Item3.First().Count).Sum();
-
+          
                 while (reader.Read())
                 {
                     var instance = (T)Activator.CreateInstance(typeof(T));

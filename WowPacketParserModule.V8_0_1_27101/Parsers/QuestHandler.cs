@@ -625,7 +625,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadBit("CloseChoiceFrame");
             packet.ReadBit("HideWarboardHeader");
             packet.ReadBit("KeepOpenAfterChoice");
-
+           
             for (var i = 0u; i < responseCount; ++i)
                 ReadPlayerChoiceResponse(packet, "PlayerChoiceResponse", i);
 
@@ -634,17 +634,20 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
         public static void ReadPlayerChoiceResponse(Packet packet, params object[] indexes)
         {
+            packet.ReadBytes("UnkID", 4);
             packet.ReadInt32("ResponseID", indexes);
             packet.ReadInt32("ChoiceArtFileID", indexes);
             packet.ReadInt32("Flags", indexes);
             packet.ReadUInt32("WidgetSetID", indexes);
             packet.ReadByte("GroupID", indexes);
+
             packet.ResetBitReader();
-            var answerLength = packet.ReadBits(9);
-            var headerLength = packet.ReadBits(9);
-            var descriptionLength = packet.ReadBits(11);
-            var confirmationTextLength = packet.ReadBits(7);
-            var hasReward = packet.ReadBit();
+            packet.ReadBytes("UnkID>>", 16);
+            var answerLength = packet.ReadBits("answerLength", 9);
+            var headerLength = packet.ReadBits("headerLength", 9);
+            var descriptionLength = packet.ReadBits("descriptionLength",11);
+            var confirmationTextLength = packet.ReadBits("confirmationTextLength",7);
+            var hasReward = packet.ReadBit("hasReward");
             if (hasReward)
                 ReadPlayerChoiceResponseReward(packet, "PlayerChoiceResponseReward", indexes);
 

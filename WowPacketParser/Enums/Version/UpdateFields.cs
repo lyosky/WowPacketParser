@@ -14,9 +14,9 @@ namespace WowPacketParser.Enums.Version
         public string Name;
         public int Size;
         public UpdateFieldType Format;
-        public int ArrayGroup;
         public bool IsCounter;
         public UpdateFieldCreateFlag Flag;
+        public UpdateFieldArrayInfo ArrayInfo;
     }
 
     public static class UpdateFields
@@ -91,38 +91,30 @@ namespace WowPacketParser.Enums.Version
                         .Select(attribute => ((UpdateFieldAttribute)attribute).UFAttribute)
                         .DefaultIfEmpty(UpdateFieldType.Default).First();
 
-                    var vFormat = vEnumType.GetMember(vNames[i])
-                        .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
+                    var vAttribute = vEnumType.GetMember(vNames[i])
+                         .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
                         .Where(attribute => ((UpdateFieldAttribute)attribute).Version <= ClientVersion.VersionDefiningBuild)
-                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version)
-                        .Select(attribute => ((UpdateFieldAttribute)attribute).UFAttribute)
+                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version);
+
+                    var vFormat = vAttribute.Select(attribute => ((UpdateFieldAttribute)attribute).UFAttribute)
                         .DefaultIfEmpty(UpdateFieldType.Default).First();
 
-                    var vArrayGroup = vEnumType.GetMember(vNames[i])
-                        .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
-                        .Where(attribute => ((UpdateFieldAttribute)attribute).Version <= ClientVersion.VersionDefiningBuild)
-                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version)
-                        .Select(attribute => ((UpdateFieldAttribute)attribute).ArrayGroup)
-                        .DefaultIfEmpty(0).First();
-
-                    var vIsDynamicCounter = vEnumType.GetMember(vNames[i])
-                        .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
-                        .Where(attribute => ((UpdateFieldAttribute)attribute).Version <= ClientVersion.VersionDefiningBuild)
-                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version)
+                    var vIsDynamicCounter = vAttribute
                         .Select(attribute => ((UpdateFieldAttribute)attribute).IsDynamicCounter)
                         .DefaultIfEmpty(false).First();
 
-                    var vUpdateFieldCreateFlag = vEnumType.GetMember(vNames[i])
-                        .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
-                        .Where(attribute => ((UpdateFieldAttribute)attribute).Version <= ClientVersion.VersionDefiningBuild)
-                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version)
-                        .Select(attribute => ((UpdateFieldAttribute)attribute).Flag)
+                    var vUpdateFieldCreateFlag = vAttribute
+                         .Select(attribute => ((UpdateFieldAttribute)attribute).Flag)
                         .DefaultIfEmpty(UpdateFieldCreateFlag.None).First();
+
+                    var vUpdateFieldArrayInfo = vAttribute
+                       .Select(attribute => ((UpdateFieldAttribute)attribute).ArrayInfo)
+                       .DefaultIfEmpty(UpdateFieldArrayInfo.None).First();
 
                     if (vFormat != UpdateFieldType.Default)
                         format = vFormat;
 
-                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format, ArrayGroup = vArrayGroup, IsCounter = vIsDynamicCounter, Flag = vUpdateFieldCreateFlag });
+                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format, ArrayInfo = vUpdateFieldArrayInfo, IsCounter = vIsDynamicCounter, Flag = vUpdateFieldCreateFlag });
                     namesResult.Add(vNames[i], (int)vValues.GetValue(i));
                 }
 

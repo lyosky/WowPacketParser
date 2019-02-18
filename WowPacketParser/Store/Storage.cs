@@ -124,6 +124,9 @@ namespace WowPacketParser.Store
         public static readonly DataBag<BroadcastText> BroadcastTexts = new DataBag<BroadcastText>(new List<SQLOutput> { SQLOutput.broadcast_text });
         public static readonly DataBag<BroadcastTextLocale> BroadcastTextLocales = new DataBag<BroadcastTextLocale>(new List<SQLOutput> { SQLOutput.broadcast_text_locale });
 
+        // WorldQuest
+        public static readonly DataBag<WorldQuest> WorldQuests = new DataBag<WorldQuest>(new List<SQLOutput> { SQLOutput.worldquest });
+
         public static void ClearContainers()
         {
             SniffData.Clear();
@@ -212,6 +215,8 @@ namespace WowPacketParser.Store
 
             BroadcastTexts.Clear();
             BroadcastTextLocales.Clear();
+
+            WorldQuests.Clear();
         }
     }
 }

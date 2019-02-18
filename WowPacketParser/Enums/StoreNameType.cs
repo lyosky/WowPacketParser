@@ -31,6 +31,7 @@ namespace WowPacketParser.Enums
         Spell,
         Unit,
         Zone,
+        WorldQuest,
     }
 
     public static class StoreName
@@ -71,6 +72,8 @@ namespace WowPacketParser.Enums
                 return StoreNameType.Unit;
             if (typeof(T) == typeof(ZoneId))
                 return StoreNameType.Zone;
+            if (typeof(T) == typeof(WorldQuestId))
+                return StoreNameType.WorldQuest;
 
             throw new ArgumentOutOfRangeException(typeof(T).ToString());
         }
@@ -95,4 +98,5 @@ namespace WowPacketParser.Enums
     public struct SpellId :  IId { }
     public struct UnitId : IId { }
     public struct ZoneId : IId { }
+    public struct WorldQuestId : IId { }
 }

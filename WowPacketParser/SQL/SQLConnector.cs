@@ -51,6 +51,7 @@ namespace WowPacketParser.SQL
         {
             try
             {
+                //Console.WriteLine(">>test {0}>>", input);
                 using (var command = new MySqlCommand(input, Conn))
                 {
                     command.CommandTimeout = 2147483; // max timeout val, 0 doesn't work

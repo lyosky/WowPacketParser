@@ -538,10 +538,18 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             for (int i = 0; i < count; i++)
             {
                 packet.ReadTime("LastUpdate", i);
-                packet.ReadUInt32<QuestId>("QuestID", i);
-                packet.ReadUInt32("Timer", i);
-                packet.ReadInt32("VariableID", i);
-                packet.ReadInt32("Value", i);
+                var questID = packet.ReadUInt32<QuestId>("QuestID", i);
+                var timer = packet.ReadUInt32("Timer", i);
+                var variableID = packet.ReadInt32("VariableID", i);
+                var value = packet.ReadInt32("Value", i);
+                WorldQuest worldQuest = new WorldQuest
+                {
+                    id = (uint)questID,
+                    duration = (uint)timer,
+                    variable = (int)variableID,
+                    value = (int)value,
+                };
+                Storage.WorldQuests.Add(worldQuest, packet.TimeSpan);
             }
         }
 

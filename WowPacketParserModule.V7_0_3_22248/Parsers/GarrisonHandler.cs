@@ -464,8 +464,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         public static void HandleGarrisonGenerateRecruits(Packet packet)
         {
             packet.ReadPackedGuid128("NpcGuid");
-            packet.ReadUInt32("Unk1");
-            packet.ReadUInt32("Unk2");
+            packet.ReadUInt32("TraitID");
+            packet.ReadUInt32("AbiltyID");
         }
 
         [Parser(Opcode.CMSG_GARRISON_GET_MISSION_REWARD)]
@@ -487,7 +487,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         public static void HandleGarrisonRecruitFollower(Packet packet)
         {
             packet.ReadPackedGuid128("NpcGuid");
-            packet.ReadUInt32("Unk1");
+            packet.ReadUInt32("FollowerID");
         }
 
         [Parser(Opcode.CMSG_GARRISON_REQUEST_CLASS_SPEC_CATEGORY_INFO)]
@@ -509,8 +509,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         public static void HandleGarrisonSetRecruitmentPreferences(Packet packet)
         {
             packet.ReadPackedGuid128("NpcGUID");
-            packet.ReadUInt32("Unk1");
-            packet.ReadUInt32("Unk2");
+            packet.ReadUInt32("TraitID");
+            packet.ReadUInt32("AbiltyID");
         }
 
         [Parser(Opcode.CMSG_GARRISON_SWAP_BUILDINGS)]
@@ -553,6 +553,27 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         {
             packet.ReadUInt32E<GarrisonSiteLevel>("GarrSiteLevelId");
             packet.ReadUInt32E<GarrisonResult>("Result");
+        }
+
+        [Parser(Opcode.SMSG_GARRISON_OPEN_TALENT_NPC)]
+        public static void HandleGarrisonOpenTalentNpc(Packet packet)
+        {
+            packet.ReadPackedGuid128("NpcGuid");
+        }
+
+        [Parser(Opcode.SMSG_GARRISON_OPEN_RECRUITMENT_NPC)]
+        public static void HandleGarrisonOpenRecruitmentNpc(Packet packet)
+        {
+            packet.ReadPackedGuid128("NpcGuid");
+            var FollowerCount = packet.ReadUInt32("FollowerCount");
+           
+            
+            for (uint i = 0; i < FollowerCount; i++)
+                ReadGarrisonFollower(packet, i);
+    
+
+            packet.ReadBool("CanRecruitFollower");
+            packet.ReadBool("Unk1");
         }
     }
 }
