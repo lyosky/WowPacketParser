@@ -81,7 +81,6 @@ namespace WowPacketParser.SQL
                         whereClause.Append(" AND ");
                     }
 
-                    //if(whereClause.Length>5)
                     whereClause.Remove(whereClause.Length - 5, 5); // remove last " AND "
                     whereClause.Append(")");
                     whereClause.Append(" OR ");
