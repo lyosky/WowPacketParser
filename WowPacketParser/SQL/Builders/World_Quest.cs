@@ -27,5 +27,19 @@ namespace WowPacketParser.SQL.Builders
 
                return SQLUtil.Compare(Storage.WorldQuests, templatesDb, StoreNameType.WorldQuest);
         }
+
+        [BuilderMethod]
+        public static string WorldQuestReward()
+        {
+            if (Storage.WorldQuestRewards.IsEmpty())
+                return string.Empty;
+
+            if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.worldquest))
+                return string.Empty;
+
+            var templatesDb = SQLDatabase.Get(Storage.WorldQuestRewards);
+
+            return SQLUtil.Compare(Storage.WorldQuestRewards, templatesDb, StoreNameType.WorldQuest);
+        }
     }
 }

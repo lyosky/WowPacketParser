@@ -126,6 +126,7 @@ namespace WowPacketParser.Store
 
         // WorldQuest
         public static readonly DataBag<WorldQuest> WorldQuests = new DataBag<WorldQuest>(new List<SQLOutput> { SQLOutput.worldquest });
+        public static readonly DataBag<WorldQuestReward> WorldQuestRewards = new DataBag<WorldQuestReward>(new List<SQLOutput> { SQLOutput.worldquest });
 
         public static void ClearContainers()
         {
@@ -217,6 +218,7 @@ namespace WowPacketParser.Store
             BroadcastTextLocales.Clear();
 
             WorldQuests.Clear();
+            WorldQuestRewards.Clear();
         }
     }
 }

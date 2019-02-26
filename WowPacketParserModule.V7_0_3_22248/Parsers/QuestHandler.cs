@@ -4,6 +4,7 @@ using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
 using WowPacketParser.Store;
 using WowPacketParser.Store.Objects;
+using WowPacketParser.SQL;
 
 namespace WowPacketParserModule.V7_0_3_22248.Parsers
 {
@@ -726,9 +727,10 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         [Parser(Opcode.SMSG_QUERY_TREASURE_PICKER_RESPONSE)]
         public static void HandleQueryQuestRewardResponse(Packet packet)
         {
-            packet.ReadInt32("QuestId");
+            var questId = packet.ReadInt32("QuestId");
             packet.ReadInt32("QuestTimer");
-
+            var questType = 0;
+            SQLDatabase.WorldQuestInfos.TryGetValue(questId, out questType);
             var itemCount = packet.ReadInt32("ItemCount");
             int currencyCount = packet.ReadInt32("CurrencyCount");
 
@@ -738,29 +740,96 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             {
                 for (int i = 0; i < currencyCount; i++)
                 {
-                    packet.ReadInt32("CurrencyID", i);
-                    packet.ReadInt32("Amount", i);
+                    var currencyID = packet.ReadInt32("CurrencyID", i);
+                    var amount = packet.ReadInt32("Amount", i);
+                    WorldQuestReward worldquestreward = new WorldQuestReward
+                    {
+                        id = questId,
+                        questType = questType,
+                        rewardType = 2,
+                        rewardId = currencyID,
+                        rewardContext = 0,
+                        rewardCount = amount
+                    };
+                    Storage.WorldQuestRewards.Add(worldquestreward, packet.TimeSpan);
                 }
 
                 for (var i = 0; i < itemCount; ++i)
                 {
-                    V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, i);
-                    packet.ReadInt32("Quantity", i);
+                    //V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, i);
+                    var itemId = packet.ReadInt32<ItemId>("ItemID", i);
+                    var context = 0;
+                    packet.ReadUInt32("RandomPropertiesSeed", i);
+                    packet.ReadUInt32("RandomPropertiesID", i);
+
+                    packet.ResetBitReader();
+
+                    var hasBonuses = packet.ReadBit("HasItemBonus", i);
+                    var hasModifications = packet.ReadBit("HasModifications", i);
+                    if (hasBonuses)
+                    {
+                        context = packet.ReadByte("Context", i);
+
+                        var bonusCount = packet.ReadUInt32();
+                        for (var j = 0; j < bonusCount; ++j)
+                            packet.ReadUInt32("BonusListID", i, j);
+                    }
+
+                    if (hasModifications)
+                    {
+                        var mask = packet.ReadUInt32();
+                        for (var j = 0; mask != 0; mask >>= 1, ++j)
+                            if ((mask & 1) != 0)
+                                packet.ReadInt32(((ItemModifier)j).ToString(), i);
+                    }
+
+                    packet.ResetBitReader();
+                    var quantity=packet.ReadInt32("Quantity", i);
+                    WorldQuestReward worldquestreward = new WorldQuestReward
+                    {
+                        id = questId,
+                        questType = questType,
+                        rewardType = 1,
+                        rewardId = itemId,
+                        rewardContext = context,
+                        rewardCount = quantity
+                    };
+                    Storage.WorldQuestRewards.Add(worldquestreward, packet.TimeSpan);
                 }
             }
             else
             {
                 for (var i = 0; i < itemCount; ++i)
                 {
-                    packet.ReadInt32<ItemId>("ItemId");
-                    packet.ReadInt32("Quantity");
-                    packet.ReadByte("Context");
+                    var itemId = packet.ReadInt32<ItemId>("ItemId");
+                    var quantity = packet.ReadInt32("Quantity");
+                    var context = packet.ReadByte("Context");
+                    WorldQuestReward worldquestreward = new WorldQuestReward
+                    {
+                        id = questId,
+                        questType = questType,
+                        rewardType = 1,
+                        rewardId = itemId,
+                        rewardContext = context,
+                        rewardCount = quantity
+                    };
+                    Storage.WorldQuestRewards.Add(worldquestreward, packet.TimeSpan);
                 }
 
                 for (int i = 0; i < currencyCount; i++)
                 {
-                    packet.ReadInt32("CurrencyID", i);
-                    packet.ReadInt32("Amount", i);
+                    var currencyID = packet.ReadInt32("CurrencyID", i);
+                    var amount = packet.ReadInt32("Amount", i);
+                    WorldQuestReward worldquestreward = new WorldQuestReward
+                    {
+                        id = questId,
+                        questType = questType,
+                        rewardType = 2,
+                        rewardId = currencyID,
+                        rewardContext = 0,
+                        rewardCount = amount
+                    };
+                    Storage.WorldQuestRewards.Add(worldquestreward, packet.TimeSpan);
                 }
             }
         }

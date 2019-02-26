@@ -27,6 +27,7 @@ namespace WowPacketParser.SQL
         public static Dictionary<string, List<int>> BroadcastTexts { get; } = new Dictionary<string, List<int>>();
         public static Dictionary<string, List<int>> BroadcastText1s { get; } = new Dictionary<string, List<int>>();
         public static List<POIData> POIs { get; } = new List<POIData>();
+        public static readonly Dictionary<int, int> WorldQuestInfos = new Dictionary<int, int>();
 
         private static readonly StoreNameType[] ObjectTypes =
         {
@@ -80,6 +81,7 @@ namespace WowPacketParser.SQL
 
             LoadBroadcastText();
             LoadPointsOfinterest();
+            LoadWorldQuestInfo();
 
             var endTime = DateTime.Now;
             var span = DateTime.Now.Subtract(startTime);
@@ -145,6 +147,27 @@ namespace WowPacketParser.SQL
                         DBC.DBC.BroadcastText.TryAdd(id, broadcastText);
                     else
                         DBC.DBC.BroadcastText[id] = broadcastText;
+                }
+            }
+        }
+
+        private static void LoadWorldQuestInfo()
+        {
+            string query =
+                "SELECT ID, QuestInfoID " +
+                $"FROM {Settings.TDBDatabase}.quest_template ";
+            using (var reader = SQLConnector.ExecuteQuery(query))
+            {
+                if (reader == null)
+                    return;
+
+                while (reader.Read())
+                {
+                    var questid = Convert.ToInt32(reader["ID"]);
+                    var questinfoid = Convert.ToInt32(reader["QuestInfoID"]);
+
+                    if (!WorldQuestInfos.ContainsKey(questid))
+                        WorldQuestInfos[questid]=questinfoid;
                 }
             }
         }
