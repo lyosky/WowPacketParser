@@ -575,5 +575,19 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadBool("CanRecruitFollower");
             packet.ReadBool("Unk1");
         }
+
+        [Parser(Opcode.SMSG_GARRISON_FOLLOWER_CHANGED_STATUS)]
+        public static void HandleGarrisonFollowerChangedStatus(Packet packet)
+        {
+            packet.ReadUInt32E<GarrisonSiteLevel>("GarrSiteLevelId");
+            ReadGarrisonFollower(packet, "Follower", 0);       
+        }
+
+        [Parser(Opcode.SMSG_GARRISON_REMOVE_FOLLOWER_FROM_BUILDING_RESULT)]
+        public static void HandleGarrisonRemoveFollowerFromBuildingResult(Packet packet)
+        {
+            packet.ReadUInt64("FollowerDbId");
+            packet.ReadUInt32E<GarrisonResult>("Result");
+        }
     }
 }
