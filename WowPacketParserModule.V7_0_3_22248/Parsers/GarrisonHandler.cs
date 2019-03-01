@@ -304,7 +304,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         public static void HandleGarrisonLandingPageShipmentInfo(Packet packet)
         {
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_2_0_23706))
-                packet.ReadUInt32("UnkUInt32");
+                packet.ReadUInt32("GarrisonType");
 
             uint shipmentsCount = packet.ReadUInt32("ShipmentsCount");
             for (uint i = 0; i < shipmentsCount; i++)
@@ -588,6 +588,16 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         {
             packet.ReadUInt64("FollowerDbId");
             packet.ReadUInt32E<GarrisonResult>("Result");
+        }
+
+        [Parser(Opcode.SMSG_GARRISON_RESEARCH_TALENT)]
+        public static void HandleGarrisonResearchTalentResult(Packet packet)
+        {
+            packet.ReadUInt32E<GarrisonResult>("Result");
+            packet.ReadUInt32E<GarrisonType>("GarrTypeId");
+            packet.ReadUInt32("GarrTalentID");
+            packet.ReadTime("StartTime");
+            packet.ReadInt32("Unk3");
         }
     }
 }
