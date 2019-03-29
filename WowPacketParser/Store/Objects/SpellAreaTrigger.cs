@@ -26,10 +26,10 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("FacingCurveId")]
         public int? FacingCurveId = 0;
 
-        [DBFieldName("AnimId")]
+        [DBFieldName("AnimId",TargetedDatabase.Zero, TargetedDatabase.Legion)]
         public int? AnimId = 0;
 
-        [DBFieldName("AnimKitId")]
+        [DBFieldName("AnimKitId", TargetedDatabase.Zero, TargetedDatabase.Legion)]
         public int? AnimKitId = 0;
 
         [DBFieldName("DecalPropertiesId")]

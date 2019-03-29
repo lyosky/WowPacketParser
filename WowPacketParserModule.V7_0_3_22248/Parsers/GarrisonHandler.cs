@@ -597,7 +597,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadUInt32E<GarrisonType>("GarrTypeId");
             packet.ReadUInt32("GarrTalentID");
             packet.ReadTime("StartTime");
-            packet.ReadInt32("Unk3");
+            packet.ReadInt32("Unk3"); //TIME?
         }
     }
 }

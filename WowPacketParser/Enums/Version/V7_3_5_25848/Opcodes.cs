@@ -766,6 +766,7 @@ namespace WowPacketParser.Enums.Version.V7_3_5_25848
            {Opcode.SMSG_ARENA_ERROR, 0x2711},
            {Opcode.SMSG_ARENA_PREP_OPPONENT_SPECIALIZATIONS, 0x2665},
            {Opcode.SMSG_ARTIFACT_FORGE_OPENED, 0x27E2},
+           {Opcode.SMSG_ARTIFACT_ATTUNE_SOCKETED_RELIC_DATA, 0x27E9},
            {Opcode.SMSG_ARTIFACT_KNOWLEDGE, 0x27EA},
            {Opcode.SMSG_ARTIFACT_RESPEC_CONFIRM, 0x27E5},
            {Opcode.SMSG_ARTIFACT_TRAITS_REFUNDED, 0x27E6},

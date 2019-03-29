@@ -16,7 +16,7 @@ namespace WowPacketParser.Enums.Version
         public UpdateFieldType Format;
         public bool IsCounter;
         public UpdateFieldCreateFlag Flag;
-        public UpdateFieldArrayInfo ArrayInfo;
+        public int ArrayMemberCount;
     }
 
     public static class UpdateFields
@@ -107,14 +107,14 @@ namespace WowPacketParser.Enums.Version
                          .Select(attribute => ((UpdateFieldAttribute)attribute).Flag)
                         .DefaultIfEmpty(UpdateFieldCreateFlag.None).First();
 
-                    var vUpdateFieldArrayInfo = vAttribute
-                       .Select(attribute => ((UpdateFieldAttribute)attribute).ArrayInfo)
-                       .DefaultIfEmpty(UpdateFieldArrayInfo.None).First();
+                    var vUpdateFieldArrayMemberCount = vAttribute
+                        .Select(attribute => ((UpdateFieldAttribute)attribute).ArrayMemberCount)
+                        .DefaultIfEmpty(0).First();
 
                     if (vFormat != UpdateFieldType.Default)
                         format = vFormat;
 
-                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format, ArrayInfo = vUpdateFieldArrayInfo, IsCounter = vIsDynamicCounter, Flag = vUpdateFieldCreateFlag });
+                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format, ArrayMemberCount = vUpdateFieldArrayMemberCount, IsCounter = vIsDynamicCounter, Flag = vUpdateFieldCreateFlag });
                     namesResult.Add(vNames[i], (int)vValues.GetValue(i));
                 }
 
@@ -524,8 +524,21 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V8_1_0_29235:
                 case ClientVersionBuild.V8_1_0_29285:
                 case ClientVersionBuild.V8_1_0_29297:
+                case ClientVersionBuild.V8_1_0_29482:
+                case ClientVersionBuild.V8_1_0_29600:
+                case ClientVersionBuild.V8_1_0_29621:
                     {
                         return "V8_1_0_28724";
+                    }
+                case ClientVersionBuild.V8_1_5_29683:
+                case ClientVersionBuild.V8_1_5_29701:
+                case ClientVersionBuild.V8_1_5_29718:
+                case ClientVersionBuild.V8_1_5_29732:
+                case ClientVersionBuild.V8_1_5_29737:
+                case ClientVersionBuild.V8_1_5_29814:
+                case ClientVersionBuild.V8_1_5_29869:
+                    {
+                        return "V8_1_5_29683";
                     }
                 default:
                 {
