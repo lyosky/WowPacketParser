@@ -12,7 +12,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
     {
         public static void ReadRewardItem(Packet packet, params object[] idx)
         {
-            V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, idx);
+            Substructures.ItemHandler.ReadItemInstance(packet, idx);
             packet.ReadInt32("Quantity", idx);
         }
 
@@ -280,6 +280,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             quest.QuestRewardID = packet.ReadInt32("TreasurePickerID");
             quest.Expansion = packet.ReadInt32("Expansion");
 
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_5_29683))
+                packet.ReadInt32("Unk815");
+
             packet.ResetBitReader();
 
             uint logTitleLen = 0;
@@ -292,7 +295,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             uint questTurnTargetNameLen = 0;
             uint questCompletionLogLen = 0;
 
-            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724) && ClientVersion.RemovedInVersion(ClientVersionBuild.V8_1_5_29683))
             {
                 logTitleLen = packet.ReadBits(10);
                 logDescriptionLen = packet.ReadBits(12);
@@ -403,7 +406,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
         public static void ReadTreasurePickItem(Packet packet, params object[] indexes)
         {
-            V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, indexes);
+            Substructures.ItemHandler.ReadItemInstance(packet, indexes);
             packet.ReadUInt32("Quantity", indexes);
         }
 
@@ -574,7 +577,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             uint portraitTurnInTextLen = 0;
             uint portraitTurnInNameLen = 0;
 
-            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724) && ClientVersion.RemovedInVersion(ClientVersionBuild.V8_1_5_29683))
             {
                 questTitleLen = packet.ReadBits(10);
                 rewardTextLen = packet.ReadBits(12);

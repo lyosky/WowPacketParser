@@ -632,7 +632,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadBit("LaunchQuest");
             packet.ReadBit("HideChatMessage");
 
-            V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, "ItemReward");
+            Substructures.ItemHandler.ReadItemInstance(packet, "ItemReward");
         }
 
         [Parser(Opcode.SMSG_DISPLAY_PLAYER_CHOICE)]
@@ -706,7 +706,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
         public static void ReadPlayerChoiceResponseRewardEntry(Packet packet, params object[] indexes)
         {
-            V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, indexes);
+            Substructures.ItemHandler.ReadItemInstance(packet, indexes);
             packet.ReadInt32("Quantity", indexes);
         }
 
@@ -756,7 +756,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
 
                 for (var i = 0; i < itemCount; ++i)
                 {
-                    //V6_0_2_19033.Parsers.ItemHandler.ReadItemInstance(packet, i);
+                    //Substructures.ItemHandler.ReadItemInstance(packet, i);
                     var itemId = packet.ReadInt32<ItemId>("ItemID", i);
                     var context = 0;
                     packet.ReadUInt32("RandomPropertiesSeed", i);
