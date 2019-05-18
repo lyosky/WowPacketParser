@@ -51,13 +51,20 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadPackedGuid128("NpcGUID");
         }
 
-        [Parser(Opcode.CMSG_ARTIFACT_ATTUNE_PREVIEW_RELIC)]
+       
         [Parser(Opcode.CMSG_ARTIFACT_ATTUNE_SOCKETED_RELIC)]
         public static void HandleArtifactAttuneSocketedRelic(Packet packet)
         {
             packet.ReadPackedGuid128("ArtifactGUID");
             packet.ReadPackedGuid128("ForgeGUID");
             packet.ReadInt32("RelicSlotIndex");
+        }
+
+        [Parser(Opcode.CMSG_ARTIFACT_ATTUNE_PREVIEW_RELIC)]
+        public static void HandleArtifactAttunePreviewRelic(Packet packet)
+        {
+            packet.ReadPackedGuid128("ArtifactGUID");
+            packet.ReadPackedGuid128("ForgeGUID");
         }
 
         [Parser(Opcode.SMSG_ARTIFACT_ATTUNE_SOCKETED_RELIC_DATA)]

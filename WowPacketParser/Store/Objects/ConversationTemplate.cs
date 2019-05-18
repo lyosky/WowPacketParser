@@ -81,6 +81,7 @@ namespace WowPacketParser.Store.Objects
                     actor.ConversationActorId = actorTemplate.Id;
                     actor.Guid = actorTemplate.Guid;
                     actor.Idx = actorIdx;
+                    actor.ConversationActorNearId = actorTemplate.CreatureId;
 
                     Storage.ConversationLineTemplates.Add(line);
                     Storage.ConversationActors.Add(actor);

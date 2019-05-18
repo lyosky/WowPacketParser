@@ -301,6 +301,7 @@
     <Compile Include="Parsers\AuctionHouseHandler.cs" />
     <Compile Include="Parsers\AuthenticationHandler.cs" />
     <Compile Include="Parsers\BattlegroundHandler.cs" />
+    <Compile Include="Parsers\BattlePayHandler.cs" />
     <Compile Include="Parsers\BattlePetHandler.cs" />
     <Compile Include="Parsers\BlackMarketHandler.cs" />
     <Compile Include="Parsers\CalendarHandler.cs" />

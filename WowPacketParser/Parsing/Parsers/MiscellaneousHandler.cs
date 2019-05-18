@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using WowPacketParser.Enums;
 using WowPacketParser.Enums.Version;
@@ -126,23 +126,41 @@ namespace WowPacketParser.Parsing.Parsers
         [Parser(Opcode.SMSG_MULTIPLE_PACKETS_2)]
         public static void HandleMultiplePackets2(Packet packet)
         {
-
-            if (ClientVersion.AddedInVersion(ClientType.Cataclysm))
-            {
-                packet.ReadToEnd();
-                throw new NotImplementedException("This opcode heavily relies on ALL" +
-                                                  "of its contained packets to be parsed successfully");
-                // Some sort of infinite loop happens here...
-            }
-
             packet.WriteLine("{");
-            packet.WriteLine();
+            int i = 0;
             while (packet.CanRead())
             {
-                packet.Opcode = packet.ReadUInt16();
+                int opcode = 0;
+                int len = 0;
+                byte[] bytes = null;
+                if (ClientVersion.AddedInVersion(ClientVersionBuild.V4_3_0_15005))
+                {
+                    opcode = packet.ReadUInt16();
+                    // Why are there so many 0s in some packets? Should we have some check if opcode == 0 here?
+                    len = packet.ReadUInt16();
+                    bytes = packet.ReadBytes(len);
+                }
+                else if (ClientVersion.AddedInVersion(ClientVersionBuild.V4_2_2_14545))
+                {
+                    len = packet.ReadUInt16();
+                    opcode = packet.ReadUInt16();
+                    bytes = packet.ReadBytes(len - 2);
+                }
+                else
+                {
+                    packet.ReadToEnd();
+                }
 
-                Handler.Parse(packet, true);
-                packet.WriteLine();
+                if (bytes == null || len == 0)
+                    continue;
+
+                if (i > 0)
+                    packet.WriteLine();
+
+                packet.Write("[{0}] ", i++);
+
+                using (Packet newpacket = new Packet(bytes, opcode, packet.Time, packet.Direction, packet.Number, packet.Writer, packet.FileName))
+                    Handler.Parse(newpacket, true);
             }
             packet.WriteLine("}");
         }

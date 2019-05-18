@@ -12,6 +12,9 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("ConversationActorId", true)]
         public uint? ConversationActorId;
 
+        [DBFieldName("ConversationActorNearId", true)]
+        public uint? ConversationActorNearId;
+
         [DBFieldName("Idx", true)]
         public uint? Idx;
 
