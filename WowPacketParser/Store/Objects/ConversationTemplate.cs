@@ -71,7 +71,7 @@ namespace WowPacketParser.Store.Objects
                     ActorIdx = lines[i].ActorIndex,
                     Flags = lines[i].Flags
                 };
-
+                
                 if (i == 0)
                     FirstLineID = line.Id;
 
@@ -81,7 +81,7 @@ namespace WowPacketParser.Store.Objects
                     ConversationId = Id,
                     ConversationActorId = actorTemplate.Id,
                     Guid = actorTemplate.Guid,
-                    actor.ConversationActorNearId = actorTemplate.CreatureId;
+                    ConversationActorNearId = actorTemplate.CreatureId
                 };
 
                 Storage.ConversationLineTemplates.Add(line);

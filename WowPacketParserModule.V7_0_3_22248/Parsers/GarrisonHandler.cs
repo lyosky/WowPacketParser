@@ -26,6 +26,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             var missionRewardCount = packet.ReadInt32("MissionRewardCount", indexes);
             for (int i = 0; i < missionRewardCount; i++)
                 ReadGarrisonMissionReward(packet, indexes, i);
+        }
 
         public static void ReadGarrisonMissionRewards(Packet packet, params object[] indexes)
         {
