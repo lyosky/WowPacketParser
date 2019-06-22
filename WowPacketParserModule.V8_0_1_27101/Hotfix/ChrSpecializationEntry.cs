@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -9,7 +9,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public string Name { get; set; }
         public string FemaleName { get; set; }
         public string Description { get; set; }
-        public int ID { get; set; }
+        public uint ID { get; set; }
         public sbyte ClassID { get; set; }
         public sbyte OrderIndex { get; set; }
         public sbyte PetTalentType { get; set; }

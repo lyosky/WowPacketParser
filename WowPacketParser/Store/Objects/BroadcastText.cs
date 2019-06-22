@@ -25,7 +25,6 @@ namespace WowPacketParser.Store.Objects
             SoundEntriesID2 = SoundEntriesID[1];
         }
 
-
         [DBFieldName("Text", LocaleConstant.enUS)]
         public string Text;
 

@@ -2,6 +2,8 @@
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.SQL;
+using WowPacketParser.Store.Objects.UpdateFields;
+using WowPacketParser.Store.Objects.UpdateFields.LegacyImplementation;
 
 namespace WowPacketParser.Store.Objects
 {
@@ -26,10 +28,10 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("FacingCurveId")]
         public int? FacingCurveId = 0;
 
-        [DBFieldName("AnimId",TargetedDatabase.Zero, TargetedDatabase.Legion)]
+        [DBFieldName("AnimId")]
         public int? AnimId = 0;
 
-        [DBFieldName("AnimKitId", TargetedDatabase.Zero, TargetedDatabase.Legion)]
+        [DBFieldName("AnimKitId")]
         public int? AnimKitId = 0;
 
         [DBFieldName("DecalPropertiesId")]
@@ -47,12 +49,19 @@ namespace WowPacketParser.Store.Objects
         // Will be inserted as comment to facilitate SpellMiscId research
         public uint spellId = 0;
 
+        public IAreaTriggerData AreaTriggerData;
+
+        public SpellAreaTrigger() : base()
+        {
+            AreaTriggerData = new AreaTriggerData(this);
+        }
+
         public override void LoadValuesFromUpdateFields()
         {
-            spellId             = UpdateFields.GetValue<AreaTriggerField, uint>(AreaTriggerField.AREATRIGGER_SPELLID);
-            DecalPropertiesId   = UpdateFields.GetValue<AreaTriggerField, uint>(AreaTriggerField.AREATRIGGER_DECAL_PROPERTIES_ID);
-            TimeToTarget        = UpdateFields.GetValue<AreaTriggerField, uint>(AreaTriggerField.AREATRIGGER_TIME_TO_TARGET);
-            TimeToTargetScale   = UpdateFields.GetValue<AreaTriggerField, uint>(AreaTriggerField.AREATRIGGER_TIME_TO_TARGET_SCALE);
+            spellId             = (uint)AreaTriggerData.SpellID;
+            DecalPropertiesId   = AreaTriggerData.DecalPropertiesID;
+            TimeToTarget        = AreaTriggerData.TimeToTarget;
+            TimeToTargetScale   = AreaTriggerData.TimeToTargetScale;
 
             if (Settings.UseDBC)
             {

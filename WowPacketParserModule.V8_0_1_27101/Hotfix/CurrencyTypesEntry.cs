@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -17,5 +17,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public uint Flags { get; set; }
         public sbyte Quality { get; set; }
         public int FactionID { get; set; }
+        [HotfixVersion(ClientVersionBuild.V8_1_5_29683, false)]
+        public int ItemGroupSoundsID { get; set; }
     }
 }

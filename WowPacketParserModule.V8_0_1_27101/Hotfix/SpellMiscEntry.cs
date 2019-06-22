@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -17,7 +17,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public int SpellIconFileDataID { get; set; }
         public int ActiveIconFileDataID { get; set; }
         [HotfixArray(14)]
-        public uint[] Attributes { get; set; }
+        public int[] Attributes { get; set; }
         public int SpellID { get; set; }
     }
 }

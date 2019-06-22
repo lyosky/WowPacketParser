@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -7,6 +7,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
     public class ItemBonusListLevelDeltaEntry
     {
         public short ItemLevelDelta { get; set; }
-        public int ID { get; set; }
+        public uint ID { get; set; }
     }
 }

@@ -18,8 +18,7 @@ namespace WowPacketParser.Misc
             { ObjectTypeLegacy.Corpse,                 ObjectType.Corpse },
             { ObjectTypeLegacy.AreaTrigger,            ObjectType.AreaTrigger },
             { ObjectTypeLegacy.SceneObject,            ObjectType.SceneObject },
-            { ObjectTypeLegacy.Conversation,           ObjectType.Conversation },
-            { ObjectTypeLegacy.Map,                    ObjectType.Map },
+            { ObjectTypeLegacy.Conversation,           ObjectType.Conversation }
         };
 
         public static ObjectType Convert(ObjectTypeLegacy type)
@@ -44,9 +43,9 @@ namespace WowPacketParser.Misc
             { ObjectType801.Corpse,                 ObjectType.Corpse },
             { ObjectType801.AreaTrigger,            ObjectType.AreaTrigger },
             { ObjectType801.SceneObject,            ObjectType.SceneObject },
-            { ObjectType801.Conversation,           ObjectType.Conversation },
-            { ObjectType801.Map,                    ObjectType.Map },
+            { ObjectType801.Conversation,           ObjectType.Conversation }
         };
+
         public static ObjectType Convert(ObjectType801 type)
         {
             if (!ConvDict801.ContainsKey(type))

@@ -265,7 +265,9 @@ namespace WowPacketParser.Misc
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_29814, new DateTime(2019, 03, 22)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_29869, new DateTime(2019, 03, 27)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_29896, new DateTime(2019, 04, 01)),
-            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_29981, new DateTime(2019, 04, 15)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_29981, new DateTime(2019, 04, 05)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_30477, new DateTime(2019, 05, 31)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V8_1_5_30706, new DateTime(2019, 06, 05)),
         };
 
         private static ClientType _expansion;
@@ -335,8 +337,11 @@ namespace WowPacketParser.Misc
                         return ClientVersionBuild.V4_2_0_14333;
                     case ClientVersionBuild.V4_3_0_15005:
                     case ClientVersionBuild.V4_3_0a_15050:
+                        return ClientVersionBuild.V4_3_0_15005;
                     case ClientVersionBuild.V4_3_2_15211:
+                        return ClientVersionBuild.V4_3_2_15211;
                     case ClientVersionBuild.V4_3_3_15354:
+                        return ClientVersionBuild.V4_3_3_15354;
                     case ClientVersionBuild.V4_3_4_15595:
                         return ClientVersionBuild.V4_3_4_15595;
                     case ClientVersionBuild.V5_0_4_16016:
@@ -512,7 +517,7 @@ namespace WowPacketParser.Misc
                     case ClientVersionBuild.V8_0_1_27791:
                     case ClientVersionBuild.V8_0_1_27843:
                     case ClientVersionBuild.V8_0_1_27980:
-                    case ClientVersionBuild.V8_0_1_28153:  
+                    case ClientVersionBuild.V8_0_1_28153:
                         return ClientVersionBuild.V8_0_1_27101;
                     case ClientVersionBuild.V8_1_0_28724:
                     case ClientVersionBuild.V8_1_0_28768:
@@ -536,7 +541,9 @@ namespace WowPacketParser.Misc
                     case ClientVersionBuild.V8_1_5_29869:
                     case ClientVersionBuild.V8_1_5_29896:
                     case ClientVersionBuild.V8_1_5_29981:
-                        return ClientVersionBuild.V8_1_0_28724;
+                    case ClientVersionBuild.V8_1_5_30477:
+                    case ClientVersionBuild.V8_1_5_30706:
+                        return ClientVersionBuild.V8_0_1_27101;
                     case ClientVersionBuild.BattleNetV37165:
                         return ClientVersionBuild.BattleNetV37165;
                     case ClientVersionBuild.Zero:

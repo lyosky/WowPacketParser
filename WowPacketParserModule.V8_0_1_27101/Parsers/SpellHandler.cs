@@ -147,7 +147,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var hasRuneData = packet.ReadBit("HasRuneData", idx);
             var targetPointsCount = packet.ReadBits("TargetPointsCount", 16, idx);
 
-
             for (var i = 0; i < missStatusCount; ++i)
                 V6_0_2_19033.Parsers.SpellHandler.ReadSpellMissStatus(packet, idx, "MissStatus", i);
 
@@ -217,9 +216,9 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ReadInt16("PlayerLevelDelta", idx);
             packet.ReadUInt16("PlayerItemLevel", idx);
-            packet.ReadUInt16("ScalingHealthItemLevelCurveID", idx);
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
-                packet.ReadUInt16("UnkUInt16_810", idx);
+                packet.ReadUInt16("TargetItemLevel", idx);
+            packet.ReadUInt16("ScalingHealthItemLevelCurveID", idx);
             packet.ReadByte("TargetLevel", idx);
             packet.ReadByte("Expansion", idx);
             packet.ReadByte("TargetMinScalingLevel", idx);
@@ -326,7 +325,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ReadUInt16("MissReason");
             packet.ReadUInt16("ReflectStatus");
-
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V8_1_0_28724))
                 packet.ReadUInt16("UnkUInt16_810");
 

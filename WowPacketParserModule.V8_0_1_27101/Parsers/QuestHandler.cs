@@ -13,6 +13,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
         public static void ReadRewardItem(Packet packet, params object[] idx)
         {
             Substructures.ItemHandler.ReadItemInstance(packet, idx);
+
             packet.ReadInt32("Quantity", idx);
         }
 
@@ -82,7 +83,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             var guestTitleLen = packet.ReadBits(10);
             packet.ReadWoWString("QuestTitle", guestTitleLen, indexes);
         }
-
 
         [Parser(Opcode.SMSG_QUEST_GIVER_QUEST_DETAILS)]
         public static void HandleQuestGiverQuestDetails(Packet packet)
@@ -569,7 +569,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadInt32("PortraitTurnIn");
 
             packet.ResetBitReader();
-
             uint questTitleLen = 0;
             uint rewardTextLen = 0;
             uint portraitGiverTextLen = 0;
@@ -643,14 +642,13 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             packet.ReadInt32("Flags", indexes);
             packet.ReadUInt32("WidgetSetID", indexes);
             packet.ReadByte("GroupID", indexes);
-
             packet.ResetBitReader();
             packet.ReadBytes("UnkID>>", 16);
-            var answerLength = packet.ReadBits("answerLength", 9);
-            var headerLength = packet.ReadBits("headerLength", 9);
-            var descriptionLength = packet.ReadBits("descriptionLength",11);
-            var confirmationTextLength = packet.ReadBits("confirmationTextLength",7);
-            var hasReward = packet.ReadBit("hasReward");
+            var answerLength = packet.ReadBits(9);
+            var headerLength = packet.ReadBits(9);
+            var descriptionLength = packet.ReadBits(11);
+            var confirmationTextLength = packet.ReadBits(7);
+            var hasReward = packet.ReadBit();
             if (hasReward)
                 ReadPlayerChoiceResponseReward(packet, "PlayerChoiceResponseReward", indexes);
 
@@ -761,7 +759,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
             }
         }
 
-        [Parser(Opcode.SMSG_QUEST_GIVER_QUEST_LIST_MESSAGE, ClientVersionBuild.V8_1_0_28724)]
+        [Parser(Opcode.SMSG_QUEST_GIVER_QUEST_LIST_MESSAGE, ClientVersionBuild.V8_1_0_28724, ClientVersionBuild.V8_1_5_29683)]
         public static void HandleQuestgiverQuestList(Packet packet)
         {
             WowGuid guid = packet.ReadPackedGuid128("QuestGiverGUID");

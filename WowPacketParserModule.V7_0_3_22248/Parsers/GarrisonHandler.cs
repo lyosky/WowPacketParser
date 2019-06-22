@@ -25,8 +25,7 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         {
             var missionRewardCount = packet.ReadInt32("MissionRewardCount", indexes);
             for (int i = 0; i < missionRewardCount; i++)
-                ReadGarrisonMissionRewards(packet, indexes, "Rewards", i);
-        }
+                ReadGarrisonMissionReward(packet, indexes, i);
 
         public static void ReadGarrisonMissionRewards(Packet packet, params object[] indexes)
         {
@@ -77,6 +76,19 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadWoWString("CustomName", len, indexes);
         }
 
+        public static void ReadGarrisonTalents(Packet packet, params object[] indexes)
+        {
+            packet.ReadInt32("GarrTalentID", indexes);
+            packet.ReadInt32("ResearchStartTime", indexes);
+            packet.ReadInt32("Flags", indexes);
+        }
+
+        public static void ReadFollowerSoftCapInfo(Packet packet, params object[] indexes)
+        {
+            packet.ReadInt32("GarrFollowerTypeID", indexes);
+            packet.ReadUInt32("Count", indexes);
+        }
+
         public static void ReadGarrisonShipment(Packet packet, params object[] indexes)
         {
             packet.ReadInt32("ShipmentRecId", indexes);
@@ -102,19 +114,6 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
         {
             packet.ReadInt32("GarrClassSpecId", indexes);
             packet.ReadInt32("GarrClassSpecPlayerCondId", indexes);
-        }
-
-        public static void ReadGarrisonTalents(Packet packet, params object[] indexes)
-        {
-            packet.ReadInt32("GarrTalentID", indexes);
-            packet.ReadInt32("ResearchStartTime", indexes);
-            packet.ReadInt32("Flags", indexes);
-        }
-
-        public static void ReadFollowerSoftCapInfo(Packet packet, params object[] indexes)
-        {
-            packet.ReadInt32("GarrFollowerTypeID", indexes);
-            packet.ReadUInt32("Count", indexes);
         }
 
         [Parser(Opcode.SMSG_DISPLAY_TOAST)]

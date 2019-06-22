@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -13,6 +13,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public uint ChallengeOrigin { get; set; }
         [HotfixVersion(ClientVersionBuild.V8_1_0_28724, false)]
         [HotfixArray(2)]
-        public int[] Unknown1 { get; set; }
+        public int[] ChallengeTimeOffset { get; set; }
     }
 }

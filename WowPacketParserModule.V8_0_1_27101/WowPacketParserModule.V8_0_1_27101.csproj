@@ -33,7 +33,7 @@
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sigil">
+    <Reference Include="Sigil, Version=4.7.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Sigil.4.7.0\lib\net45\Sigil.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -44,9 +44,7 @@
     <Compile Include="Enums\CharacterUndeleteResult.cs" />
     <Compile Include="Enums\MovementFlag.cs" />
     <Compile Include="Enums\MovementFlags2.cs" />
-    <Compile Include="Enums\SplineFlag.cs" />
     <Compile Include="Enums\UpdateFields.cs" />
-    <Compile Include="Enums\UpdateFields810.cs" />
     <Compile Include="Hotfix\AchievementEntry.cs" />
     <Compile Include="Hotfix\AnimationDataEntry.cs" />
     <Compile Include="Hotfix\AnimKitEntry.cs" />
@@ -67,12 +65,13 @@
     <Compile Include="Hotfix\ArtifactUnlockEntry.cs" />
     <Compile Include="Hotfix\AuctionHouseEntry.cs" />
     <Compile Include="Hotfix\BankBagSlotPricesEntry.cs" />
-    <Compile Include="Hotfix\BannedAddOnsEntry.cs" />
+    <Compile Include="Hotfix\BannedAddonsEntry.cs" />
     <Compile Include="Hotfix\BarberShopStyleEntry.cs" />
     <Compile Include="Hotfix\BattlemasterListEntry.cs" />
     <Compile Include="Hotfix\BattlePetBreedQualityEntry.cs" />
     <Compile Include="Hotfix\BattlePetBreedStateEntry.cs" />
     <Compile Include="Hotfix\BattlePetSpeciesEntry.cs" />
+    <Compile Include="Hotfix\BattlePetSpeciesStateEntry810.cs" />
     <Compile Include="Hotfix\BattlePetSpeciesStateEntry.cs" />
     <Compile Include="Hotfix\BroadcastTextEntry.cs" />
     <Compile Include="Hotfix\Cfg_RegionsEntry.cs" />
@@ -101,6 +100,7 @@
     <Compile Include="Hotfix\CurveEntry.cs" />
     <Compile Include="Hotfix\CurvePointEntry.cs" />
     <Compile Include="Hotfix\DestructibleModelDataEntry.cs" />
+    <Compile Include="Hotfix\DifficultyEntry810.cs" />
     <Compile Include="Hotfix\DifficultyEntry.cs" />
     <Compile Include="Hotfix\DungeonEncounterEntry.cs" />
     <Compile Include="Hotfix\DurabilityCostsEntry.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="Hotfix\EmotesTextSoundEntry.cs" />
     <Compile Include="Hotfix\ExpectedStatEntry.cs" />
     <Compile Include="Hotfix\ExpectedStatModEntry.cs" />
+    <Compile Include="Hotfix\FactionEntry810.cs" />
     <Compile Include="Hotfix\FactionEntry.cs" />
     <Compile Include="Hotfix\FactionTemplateEntry.cs" />
     <Compile Include="Hotfix\GameObjectDisplayInfoEntry.cs" />
@@ -133,7 +134,9 @@
     <Compile Include="Hotfix\GuildColorBorderEntry.cs" />
     <Compile Include="Hotfix\GuildColorEmblemEntry.cs" />
     <Compile Include="Hotfix\GuildPerkSpellsEntry.cs" />
+    <Compile Include="Hotfix\HeirloomEntry815.cs" />
     <Compile Include="Hotfix\HeirloomEntry.cs" />
+    <Compile Include="Hotfix\HolidaysEntry810.cs" />
     <Compile Include="Hotfix\HolidaysEntry.cs" />
     <Compile Include="Hotfix\HotfixSerializer.cs" />
     <Compile Include="Hotfix\ImportPriceArmorEntry.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Hotfix\ItemBonusEntry.cs" />
     <Compile Include="Hotfix\ItemBonusListLevelDeltaEntry.cs" />
     <Compile Include="Hotfix\ItemBonusTreeNodeEntry.cs" />
+    <Compile Include="Hotfix\ItemChildEquipmentEntry810.cs" />
     <Compile Include="Hotfix\ItemChildEquipmentEntry.cs" />
     <Compile Include="Hotfix\ItemClassEntry.cs" />
     <Compile Include="Hotfix\ItemCurrencyCostEntry.cs" />
@@ -183,8 +187,8 @@
     <Compile Include="Hotfix\LiquidTypeEntry.cs" />
     <Compile Include="Hotfix\LockEntry.cs" />
     <Compile Include="Hotfix\MailTemplateEntry.cs" />
-    <Compile Include="Hotfix\MapDifficultyEntry.cs" />
     <Compile Include="Hotfix\MapDifficultyEntry810.cs" />
+    <Compile Include="Hotfix\MapDifficultyEntry.cs" />
     <Compile Include="Hotfix\MapEntry.cs" />
     <Compile Include="Hotfix\ModifierTreeEntry.cs" />
     <Compile Include="Hotfix\MountCapabilityEntry.cs" />
@@ -204,7 +208,7 @@
     <Compile Include="Hotfix\PowerDisplayEntry.cs" />
     <Compile Include="Hotfix\PowerTypeEntry.cs" />
     <Compile Include="Hotfix\PrestigeLevelInfoEntry.cs" />
-    <Compile Include="Hotfix\PvPDifficultyEntry.cs" />
+    <Compile Include="Hotfix\PVPDifficultyEntry.cs" />
     <Compile Include="Hotfix\PVPItemEntry.cs" />
     <Compile Include="Hotfix\PvpTalentCategoryEntry.cs" />
     <Compile Include="Hotfix\PvpTalentEntry.cs" />
@@ -230,6 +234,7 @@
     <Compile Include="Hotfix\SkillLineAbilityEntry.cs" />
     <Compile Include="Hotfix\SkillLineEntry.cs" />
     <Compile Include="Hotfix\SkillRaceClassInfoEntry.cs" />
+    <Compile Include="Hotfix\SoundKitEntry810.cs" />
     <Compile Include="Hotfix\SoundKitEntry.cs" />
     <Compile Include="Hotfix\SpecializationSpellsEntry.cs" />
     <Compile Include="Hotfix\SpellAuraOptionsEntry.cs" />
@@ -267,8 +272,10 @@
     <Compile Include="Hotfix\SummonPropertiesEntry.cs" />
     <Compile Include="Hotfix\TactKeyEntry.cs" />
     <Compile Include="Hotfix\TalentEntry.cs" />
+    <Compile Include="Hotfix\TaxiNodesEntry815.cs" />
     <Compile Include="Hotfix\TaxiNodesEntry.cs" />
     <Compile Include="Hotfix\TaxiPathEntry.cs" />
+    <Compile Include="Hotfix\TaxiPathNodeEntry810.cs" />
     <Compile Include="Hotfix\TaxiPathNodeEntry.cs" />
     <Compile Include="Hotfix\TotemCategoryEntry.cs" />
     <Compile Include="Hotfix\ToyEntry.cs" />
@@ -318,9 +325,42 @@
     <Compile Include="Parsers\ScenarioHandler.cs" />
     <Compile Include="Parsers\SessionHandler.cs" />
     <Compile Include="Parsers\SpellHandler.cs" />
+    <Compile Include="Parsers\UpdateFieldsHandler.cs" />
     <Compile Include="Parsers\VoiceChatHandler.cs" />
     <Compile Include="Parsers\UpdateHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateFields\ActivePlayerData.cs" />
+    <Compile Include="UpdateFields\AreaTriggerData.cs" />
+    <Compile Include="UpdateFields\ArenaCooldown.cs" />
+    <Compile Include="UpdateFields\ArtifactPower.cs" />
+    <Compile Include="UpdateFields\AzeriteEmpoweredItemData.cs" />
+    <Compile Include="UpdateFields\AzeriteItemData.cs" />
+    <Compile Include="UpdateFields\CharacterRestriction.cs" />
+    <Compile Include="UpdateFields\ContainerData.cs" />
+    <Compile Include="UpdateFields\ConversationActor.cs" />
+    <Compile Include="UpdateFields\ConversationData.cs" />
+    <Compile Include="UpdateFields\ConversationLine.cs" />
+    <Compile Include="UpdateFields\CorpseData.cs" />
+    <Compile Include="UpdateFields\DynamicObjectData.cs" />
+    <Compile Include="UpdateFields\GameObjectData.cs" />
+    <Compile Include="UpdateFields\ItemData.cs" />
+    <Compile Include="UpdateFields\ItemEnchantment.cs" />
+    <Compile Include="UpdateFields\ObjectData.cs" />
+    <Compile Include="UpdateFields\PassiveSpellHistory.cs" />
+    <Compile Include="UpdateFields\PlayerData.cs" />
+    <Compile Include="UpdateFields\PVPInfo.cs" />
+    <Compile Include="UpdateFields\QuestLog.cs" />
+    <Compile Include="UpdateFields\Research.cs" />
+    <Compile Include="UpdateFields\RestInfo.cs" />
+    <Compile Include="UpdateFields\ScaleCurve.cs" />
+    <Compile Include="UpdateFields\SceneObjectData.cs" />
+    <Compile Include="UpdateFields\SkillInfo.cs" />
+    <Compile Include="UpdateFields\SocketedGem.cs" />
+    <Compile Include="UpdateFields\SpellFlatModByLabel.cs" />
+    <Compile Include="UpdateFields\SpellPctModByLabel.cs" />
+    <Compile Include="UpdateFields\UnitChannel.cs" />
+    <Compile Include="UpdateFields\UnitData.cs" />
+    <Compile Include="UpdateFields\VisibleItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WowPacketParserModule.Substructures\WowPacketParserModule.Substructures.csproj">
@@ -346,5 +386,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -120,12 +120,8 @@ namespace WowPacketParser.Parsing.Parsers
             {
                 if (!obj.Movement.HasWpsOrRandMov)
                     if (obj.Movement.Position != newObj.Movement.Position)
-                    {
-                        UpdateField uf;
-                        if (obj.UpdateFields.TryGetValue(UpdateFields.GetUpdateField(UnitField.UNIT_FIELD_FLAGS), out uf))
-                            if ((uf.UInt32Value & (uint) UnitFlags.IsInCombat) == 0) // movement could be because of aggro so ignore that
-                                obj.Movement.HasWpsOrRandMov = true;
-                    }
+                        if (((obj as Unit).UnitData.Flags & (uint) UnitFlags.IsInCombat) == 0) // movement could be because of aggro so ignore that
+                            obj.Movement.HasWpsOrRandMov = true;
             }
         }
 
@@ -426,12 +422,7 @@ namespace WowPacketParser.Parsing.Parsers
                 }
 
                 for (int k = 0; k < fieldData.Count; ++k)
-                {
-                    if (dict.ContainsKey(start + k))
-                        dict[start + k] = fieldData[k];
-                    else
-                        dict.Add(start + k, fieldData[k]);
-                }
+                    dict.Add(start + k, fieldData[k]);
             }
 
             return dict;

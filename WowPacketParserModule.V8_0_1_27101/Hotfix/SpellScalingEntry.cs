@@ -1,4 +1,4 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
@@ -10,6 +10,6 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public int Class { get; set; }
         public uint MinScalingLevel { get; set; }
         public uint MaxScalingLevel { get; set; }
-        public ushort ScalesFromItemLevel { get; set; }
+        public short ScalesFromItemLevel { get; set; }
     }
 }

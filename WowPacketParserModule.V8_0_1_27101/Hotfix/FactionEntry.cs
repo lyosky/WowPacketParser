@@ -1,9 +1,9 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
 {
-    [HotfixStructure(DB2Hash.Faction)]
+    [HotfixStructure(DB2Hash.Faction, ClientVersionBuild.V8_0_1_27101, ClientVersionBuild.V8_1_0_28724)]
     public class FactionEntry
     {
         [HotfixArray(4)]
@@ -14,10 +14,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public short ReputationIndex { get; set; }
         public ushort ParentFactionID { get; set; }
         public byte Expansion { get; set; }
-        [HotfixVersion(ClientVersionBuild.V8_1_0_28724, false)]
-        public uint FriendshipRepID { get; set; }
-        [HotfixVersion(ClientVersionBuild.V8_1_0_28724, true)]
-        public byte FriendshipRepId { get; set; }
+        public byte FriendshipRepID { get; set; }
         public byte Flags { get; set; }
         public ushort ParagonFactionID { get; set; }
         [HotfixArray(4)]

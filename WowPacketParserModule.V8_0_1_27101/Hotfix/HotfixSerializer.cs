@@ -18,7 +18,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
                 deserializationEmitter.NewObject<T>();
                 deserializationEmitter.StoreLocal(deserializationResultLocal);
 
-                foreach (var propInfo in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                foreach (var propInfo in typeof (T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
                     if (propInfo.GetGetMethod() == null || propInfo.GetSetMethod() == null || !ShouldRead(propInfo))
                         continue;

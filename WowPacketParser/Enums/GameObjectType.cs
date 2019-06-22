@@ -46,14 +46,14 @@
         GarrisonMonument       = 44,
         GarrisonShipment       = 45,
         GarrisonMonumentPlaque = 46,
-        ArtifactForge = 47,
-        UILink = 48,
-        KeystoneReceptacle = 49,
-        GatheringNode = 50,
-        ChallengeModeReward = 51,
-        Multi = 52,
-        SiegeableMulti = 53,
-        SieagableMo = 54,
-        PvpReward = 55
+        ArtifactForge          = 47,
+        UILink                 = 48,
+        KeystoneReceptacle     = 49,
+        GatheringNode          = 50,
+        ChallengeModeReward    = 51,
+        Multi                  = 52,
+        SiegeableMulti         = 53,
+        SieagableMo            = 54,
+        PvpReward              = 55
     }
 }

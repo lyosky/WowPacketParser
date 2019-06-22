@@ -5,8 +5,6 @@ using WowPacketParser.DBC;
 using WowPacketParser.Enums;
 using WowPacketParser.Misc;
 using WowPacketParser.Parsing;
-using WowPacketParserModule.V7_0_3_22248.Enums;
-using MovementFlag = WowPacketParserModule.V6_0_2_19033.Enums.MovementFlag;
 using SplineFlag = WowPacketParserModule.V7_0_3_22248.Enums.SplineFlag;
 
 namespace WowPacketParserModule.V8_0_1_27101.Parsers

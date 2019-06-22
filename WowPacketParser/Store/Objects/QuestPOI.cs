@@ -50,7 +50,7 @@ namespace WowPacketParser.Store.Objects
         [DBFieldName("PlayerConditionID", TargetedDatabase.WarlordsOfDraenor)]
         public int? PlayerConditionID;
 
-        [DBFieldName("WoDUnk1", TargetedDatabase.WarlordsOfDraenor)]
+        [DBFieldName("SpawnTrackingID", TargetedDatabase.WarlordsOfDraenor)]
         public int? SpawnTrackingID;
 
         [DBFieldName("AlwaysAllowMergingBlobs", TargetedDatabase.Legion)]

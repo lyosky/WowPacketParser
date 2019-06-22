@@ -2,12 +2,12 @@
 {
     public enum GarrisonSite
     {
-        None = 0,
-        Lunarfall = 2,
-        Frostwall = 71,
+        None              = 0,
+        Lunarfall         = 2,
+        Frostwall         = 71,
         AllianceClassHall = 161,
-        HordeClassHall = 163,
-        AllianceBfA = 168,
-        HordeBfA = 169
+        HordeClassHall    = 163,
+        AllianceBfA       = 168,
+        HordeBfA          = 169
     }
 }

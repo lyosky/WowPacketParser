@@ -2,9 +2,9 @@
 {
     public enum GarrisonType : int
     {
-        None = 0,
+        None            = 0,
         DraenorGarrison = 2,
-        OrderHall = 3,
-        BfA = 9
+        OrderHall       = 3,
+        BfA             = 9
     }
 }

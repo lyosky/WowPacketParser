@@ -14,9 +14,6 @@ namespace WowPacketParser.Enums.Version
         public string Name;
         public int Size;
         public UpdateFieldType Format;
-        public bool IsCounter;
-        public UpdateFieldCreateFlag Flag;
-        public int ArrayMemberCount;
     }
 
     public static class UpdateFields
@@ -91,30 +88,7 @@ namespace WowPacketParser.Enums.Version
                         .Select(attribute => ((UpdateFieldAttribute)attribute).UFAttribute)
                         .DefaultIfEmpty(UpdateFieldType.Default).First();
 
-                    var vAttribute = vEnumType.GetMember(vNames[i])
-                         .SelectMany(member => member.GetCustomAttributes(typeof(UpdateFieldAttribute), false))
-                        .Where(attribute => ((UpdateFieldAttribute)attribute).Version <= ClientVersion.VersionDefiningBuild)
-                        .OrderByDescending(attribute => ((UpdateFieldAttribute)attribute).Version);
-
-                    var vFormat = vAttribute.Select(attribute => ((UpdateFieldAttribute)attribute).UFAttribute)
-                        .DefaultIfEmpty(UpdateFieldType.Default).First();
-
-                    var vIsDynamicCounter = vAttribute
-                        .Select(attribute => ((UpdateFieldAttribute)attribute).IsDynamicCounter)
-                        .DefaultIfEmpty(false).First();
-
-                    var vUpdateFieldCreateFlag = vAttribute
-                         .Select(attribute => ((UpdateFieldAttribute)attribute).Flag)
-                        .DefaultIfEmpty(UpdateFieldCreateFlag.None).First();
-
-                    var vUpdateFieldArrayMemberCount = vAttribute
-                        .Select(attribute => ((UpdateFieldAttribute)attribute).ArrayMemberCount)
-                        .DefaultIfEmpty(0).First();
-
-                    if (vFormat != UpdateFieldType.Default)
-                        format = vFormat;
-
-                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format, ArrayMemberCount = vUpdateFieldArrayMemberCount, IsCounter = vIsDynamicCounter, Flag = vUpdateFieldCreateFlag });
+                    result.Add((int)vValues.GetValue(i), new UpdateFieldInfo() { Value = (int)vValues.GetValue(i), Name = vNames[i], Size = 0, Format = format });
                     namesResult.Add(vNames[i], (int)vValues.GetValue(i));
                 }
 
@@ -139,7 +113,7 @@ namespace WowPacketParser.Enums.Version
                     return fieldValue;
             }
 
-            return Convert.ToInt32(field);
+            return -1;
         }
 
         public static string GetUpdateFieldName<T>(int field) // where T: System.Enum // C# 7.3
@@ -244,8 +218,8 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V4_1_0_13914:
                 case ClientVersionBuild.V4_1_0a_14007:
                 {
-                     // This is not named V4_1_0_13914 because I didn't dump against 13914 - Warpten.
-                     return "V4_1_0_14007";
+                    // This is not named V4_1_0_13914 because I didn't dump against 13914 - Warpten.
+                    return "V4_1_0_14007";
                 }
                 case ClientVersionBuild.V4_2_0_14333:
                 case ClientVersionBuild.V4_2_0a_14480:
@@ -511,9 +485,9 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V8_0_1_27843:
                 case ClientVersionBuild.V8_0_1_27980:
                 case ClientVersionBuild.V8_0_1_28153:
-                    {
-                        return "V8_0_1_27101";
-                    }
+                {
+                    return "V8_0_1_27101";
+                }
                 case ClientVersionBuild.V8_1_0_28724:
                 case ClientVersionBuild.V8_1_0_28768:
                 case ClientVersionBuild.V8_1_0_28807:
@@ -527,9 +501,9 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V8_1_0_29482:
                 case ClientVersionBuild.V8_1_0_29600:
                 case ClientVersionBuild.V8_1_0_29621:
-                    {
-                        return "V8_1_0_28724";
-                    }
+                {
+                    return "V8_1_0_28724";
+                }
                 case ClientVersionBuild.V8_1_5_29683:
                 case ClientVersionBuild.V8_1_5_29701:
                 case ClientVersionBuild.V8_1_5_29718:
@@ -539,9 +513,11 @@ namespace WowPacketParser.Enums.Version
                 case ClientVersionBuild.V8_1_5_29869:
                 case ClientVersionBuild.V8_1_5_29896:
                 case ClientVersionBuild.V8_1_5_29981:
-                    {
-                        return "V8_1_5_29683";
-                    }
+                case ClientVersionBuild.V8_1_5_30477:
+                case ClientVersionBuild.V8_1_5_30706:
+                {
+                    return "V8_1_5_29683";
+                }
                 default:
                 {
                     return "V3_3_5a_12340";

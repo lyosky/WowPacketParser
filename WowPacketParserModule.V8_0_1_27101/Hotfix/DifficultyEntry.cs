@@ -1,9 +1,9 @@
-﻿using WowPacketParser.Enums;
+using WowPacketParser.Enums;
 using WowPacketParser.Hotfix;
 
 namespace WowPacketParserModule.V8_0_1_27101.Hotfix
 {
-    [HotfixStructure(DB2Hash.Difficulty, HasIndexInData = false)]
+    [HotfixStructure(DB2Hash.Difficulty, ClientVersionBuild.V8_0_1_27101, ClientVersionBuild.V8_1_0_28724, HasIndexInData = false)]
     public class DifficultyEntry
     {
         public string Name { get; set; }
@@ -13,10 +13,7 @@ namespace WowPacketParserModule.V8_0_1_27101.Hotfix
         public byte FallbackDifficultyID { get; set; }
         public byte MinPlayers { get; set; }
         public byte MaxPlayers { get; set; }
-        [HotfixVersion(ClientVersionBuild.V8_1_0_28724, true)]
         public byte Flags { get; set; }
-        [HotfixVersion(ClientVersionBuild.V8_1_0_28724, false)]
-        public ushort flags { get; set; }
         public byte ItemContext { get; set; }
         public byte ToggleDifficultyID { get; set; }
         public ushort GroupSizeHealthCurveID { get; set; }
