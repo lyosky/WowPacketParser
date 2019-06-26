@@ -740,8 +740,8 @@ namespace WowPacketParserModule.V8_0_1_27101.Parsers
 
             packet.ResetBitReader();
 
-            uint questTitleLen = packet.ReadBits(10);
-            uint completionTextLen = packet.ReadBits(12);
+            uint questTitleLen = packet.ReadBits(9);
+            uint completionTextLen = packet.ReadBits(13);
 
             packet.ReadWoWString("QuestTitle", questTitleLen);
             questRequestItems.CompletionText = packet.ReadWoWString("CompletionText", completionTextLen);
