@@ -624,6 +624,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadInt64("MoneyReward");
             packet.ReadInt32("SkillLineIDReward");
             packet.ReadInt32("NumSkillUpsReward");
+            if (ClientVersion.RemovedInVersion(ClientVersionBuild.V7_2_0_23706))
+                Substructures.ItemHandler.ReadItemInstance(packet, "ItemReward");
 
             packet.ResetBitReader();
 
@@ -632,7 +634,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadBit("LaunchQuest");
             packet.ReadBit("HideChatMessage");
 
-            Substructures.ItemHandler.ReadItemInstance(packet, "ItemReward");
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_2_0_23706))
+                Substructures.ItemHandler.ReadItemInstance(packet, "ItemReward");
         }
 
         [Parser(Opcode.SMSG_DISPLAY_PLAYER_CHOICE)]
@@ -641,7 +644,8 @@ namespace WowPacketParserModule.V7_0_3_22248.Parsers
             packet.ReadInt32("ChoiceID");
             var responseCount = packet.ReadUInt32();
             packet.ReadPackedGuid128("SenderGUID");
-            packet.ReadInt32("UiTextureKitID");
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_3_5_25848))
+                packet.ReadInt32("UiTextureKitID");
             packet.ResetBitReader();
             var questionLength = packet.ReadBits(8);
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V7_2_5_24330))
